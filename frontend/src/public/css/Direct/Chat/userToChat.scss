@@ -1,0 +1,38 @@
+@import "../../partials/generales";
+
+@use "generales/flex";
+
+.userToChat {
+  @include flex(row, flex-start, center);
+  width: 100%;
+  margin: 0;
+  padding: 1em;
+  &:focus,
+  &:active {
+    background-color: map-get($colors, bg-gris);
+  }
+  & > .userToChat__profilePic {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border: 1px solid map-get($colors, bc-gris);
+    border-radius: 50%;
+    margin-right: 1em;
+  } //fin userToChat__profilePic
+
+  & > .userToChat__username-container {
+    @include flex(column, flex-start, flex-start);
+    height: 100%;
+
+    & > .chat-username-conv {
+      font-weight: 300;
+      font-size: 1.1em;
+    } //fin chat-username-conv
+
+    & > .chat-username-sent-msg {
+      width: 90%;
+      color: map-get($colors, tx-gris);
+      font-size: 0.9em;
+    } //fin chat-username-sent-msg
+  } //fin userToChat__username-container
+} //fin userToChat

@@ -1,0 +1,54 @@
+@import "../../../partials/generales";
+
+@use "generales/flex";
+
+.msgTooltip {
+  @include flex(row, center, center);
+  background-color: #000;
+  color: #fff;
+  font-weight: 700;
+  padding: 0.5em;
+  margin: 0;
+  border: none;
+  border-radius: 0.6em;
+  position: absolute;
+  z-index: 50;
+
+  &:after {
+    content: "";
+    position: absolute;
+
+    margin-left: -10px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #000 transparent transparent transparent;
+  }
+  & > span {
+    margin: 0 0.3em;
+    text-align: center;
+  } //fin span
+} //fin msgTooltip
+
+.msg_tooltip_left {
+  top: -40%;
+  left: 22.5%;
+  -webkit-box-shadow: -4px 0px 27px -9px rgba(0, 0, 0, 0.21);
+  -moz-box-shadow: -4px 0px 27px -9px rgba(0, 0, 0, 0.21);
+  box-shadow: -4px 0px 27px -9px rgba(0, 0, 0, 0.21);
+  &:after {
+    top: 100%;
+    left: 12%;
+  }
+}
+
+.msg_tooltip_right {
+  top: -40%;
+  right: 22.5%;
+  -webkit-box-shadow: 4px 4px 27px -9px rgba(0, 0, 0, 0.21);
+  -moz-box-shadow: 4px 4px 27px -9px rgba(0, 0, 0, 0.21);
+  box-shadow: 4px 4px 27px -9px rgba(0, 0, 0, 0.21);
+  &:after {
+    top: 100%;
+    right: 7%;
+  }
+}

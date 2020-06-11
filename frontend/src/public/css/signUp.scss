@@ -1,0 +1,34 @@
+@import "partials/generales";
+@import "partials/sprites";
+
+@use 'generales/flex';
+
+.b-signUp {
+  overflow: hidden;
+}
+
+.container-r {
+  @include flex(column, center, center);
+  margin: 0 auto;
+  width: 300px;
+
+  & > .box {
+    & > .header-l {
+      @include flex(column, center, center);
+      margin: 0.7em auto;
+    } //fin log-headeras
+  }
+
+  & .form-register {
+    margin-top: 0.5em;
+    @include flex(column, center, space-between);
+  }
+  & > .download-container {
+    text-align: center;
+    @include flex(column, center, space-between);
+
+    & > .icons-download {
+      @include flex(row, space-evenly, center);
+    }
+  } //fin download-container
+} //fin container

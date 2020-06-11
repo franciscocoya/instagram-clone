@@ -1,0 +1,102 @@
+@import "partials/generales";
+@import "partials/sprites";
+@import "userProfile";
+
+@use 'generales/flex';
+
+$colors: (
+  bt-azul: #0095f6,
+  bt-azul-hover: #b2dffc,
+  bg-input: #fafafa,
+  bc-gris: #dfdfdf,
+  tx-gris: #8e8e8e,
+  l-web: #00376b,
+);
+
+.header-profile {
+  width: 100%;
+  padding-top: 3%;
+
+  & > .wrapper-profile_pict_progress {
+    @include flex(row, center, center);
+    margin-right: 2em;
+
+    & > .profile-picture {
+      @include flex(row, center, center);
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: transparent;
+
+      & > label {
+        cursor: pointer;
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        & > .border-loader {
+          border: none;
+          width: 287px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          transform: translate(-7px, 1px);
+        }
+        & > img {
+          width: 150px;
+          height: 150px;
+          object-fit: cover;
+          border-radius: 50%;
+          padding: 0.1em;
+          border: 1px solid map-get($colors, bc-gris);
+        }
+      }
+      & > input {
+        width: 100%;
+        height: 100%;
+        display: none;
+      } //fin input
+    } //fin profile-picture
+  }
+
+  & > .profile-info {
+    & > .c-username {
+      & > p {
+        margin: 0 auto;
+      }
+      & > button {
+        width: 100px;
+        margin: 0 1.5em 0;
+      }
+      width: 100%;
+      @include flex(row, flex-start, center);
+      & > div,
+      & > .link-editarPerfil {
+        margin: 0 0.9em;
+      }
+    } //fin c-username
+
+    & > .bio {
+      & > pre {
+        word-wrap: break-word;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+    }
+  } //fin profile-info
+} //fin header-profile
+
+.header-tags {
+  width: 90%;
+  margin: 2em auto;
+  @include flex(row, center, center);
+  border-top: 1px solid map-get($colors, bc-gris);
+}
+
+.personal-profile-body {
+  position: relative;
+}
+
+body {
+  overflow-x: visible;
+}

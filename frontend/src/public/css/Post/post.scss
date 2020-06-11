@@ -1,0 +1,283 @@
+@import "../partials/generales";
+
+@use 'generales/flex';
+@use 'generales/grid';
+
+.post-body {
+  @include flex(row, center, center);
+  overflow: hidden;
+}
+
+.post {
+  @include flex(row, center, center);
+
+  & > .post-overlay {
+    @include flex(column, center, center);
+    position: relative;
+    & > .close-post {
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      top: 0;
+      left: 0;
+      @include flex(row, flex-end, center);
+      color: #fff;
+      & > svg {
+        cursor: pointer;
+        z-index: 3;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+    } //fin close-post
+
+    & > .post-frame {
+      @include grid(1, 59% auto, 0%);
+      width: 815px;
+      height: 600px;
+      z-index: 4;
+      & > .p-col-1 {
+        height: 600px;
+
+        position: relative;
+        cursor: pointer;
+        user-select: none; /* supported by Chrome and Opera */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        background-color: map-get($colors, tx-gris);
+        & > img {
+          width: 100%;
+          height: 600px;
+          object-fit: cover;
+          background-color: map-get($colors, tx-gris);
+        }
+        & > .heart-overlay-1 {
+          @include flex(column, center, center);
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          background-color: transparent;
+          & > .coreSpriteLikeAnimationHeart {
+            display: none;
+            background-image: url("../../assets/sprites.png");
+            background-repeat: no-repeat;
+            background-position: 0 -98px;
+            height: 81px;
+            width: 92px;
+          }
+        } //fin heart-overlay
+      } //fin p-col-1
+
+      & > .p-col-2 {
+        overflow: hidden;
+        //height: 100%;
+        @include grid(13% 60% 50px auto auto auto, 1, 0);
+        background-color: #fff;
+
+        & > .post-header {
+          @include grid(1, 85% auto, 0.7em);
+          & > .p-header-1 {
+            @include grid(1, 23% auto, 0.3em);
+            width: 100%;
+            & > .cont-img {
+              @include flex(row, center, center);
+              width: 35px;
+              height: 100%;
+              margin: 0 auto;
+              & > img {
+                width: 35px;
+                height: 35px;
+                object-fit: cover;
+                margin: 0;
+              }
+            } //fin cont-img
+
+            & > .profile-info {
+              @include flex(column, center, flex-start);
+              margin: 0;
+              & > .profile-username {
+                @include flex(row, flex-start, center);
+                & > p {
+                  text-align: left;
+                  margin: 0 0.5em 0 0;
+                  font-size: 0.8em;
+                  font-weight: 700;
+                }
+
+                & > button {
+                  width: auto;
+                }
+
+                & > #bt-following {
+                  color: #000;
+                  font-size: 0.8em;
+                  padding: 0;
+                  margin: 0 0 0 0.5em;
+                }
+              } //profile-username
+
+              & > .post-location {
+                margin: 0;
+                & > span {
+                  line-height: 0;
+                  width: 100%;
+                  height: 100%s;
+                  font-size: 0.9em;
+                  font-weight: 300;
+                  word-wrap: break-word;
+                  margin: 0;
+                  padding: 0;
+                }
+              }
+            } //fin profile-info
+          } //fin p-header-1
+
+          & > .p-header-2 {
+            @include flex(row, flex-start, center);
+            & > svg {
+              cursor: pointer;
+            }
+          }
+        } //fin post-header
+
+        & > .post-body {
+          width: calc(100% + 17px);
+          background-color: #fff;
+          font-size: 0.9em;
+          overflow-y: scroll;
+          text-align: left;
+
+          //Lista de comentarios
+          & > ul {
+            width: 100%;
+            & > li {
+              margin-bottom: 1.8em;
+              //Descripcion del post
+              & > .post-description {
+                margin: 0.5em auto;
+                @include grid(1, 20% auto, 0.3em);
+                & > .cont-img {
+                  @include flex(row, center, center);
+                  width: 35px;
+                  height: 35px;
+                  margin: 0 auto;
+                  & > img {
+                    width: 35px;
+                    height: 35px;
+                    object-fit: cover;
+                  }
+                }
+                & > .cont-descripcion {
+                  & > .c-username {
+                    & > span {
+                      font-weight: 700;
+                    }
+                  }
+                  & > pre {
+                    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                    margin: 0;
+                    padding-right: 0.7em;
+                    word-wrap: break-word;
+                    white-space: pre-wrap;
+                    font-size: 0.9em;
+                    text-align: left;
+                    line-height: 1.19em;
+                    & > span {
+                      font-weight: 700;
+                      margin-right: 0.3em;
+                    }
+                  }
+                } //fin cont-descripcion
+              } //fin post-descripcion
+            } //fin li
+          } //fin ul
+        } //fin post-body
+
+        & > .cont-media {
+          @include flex(row, flex-start, center);
+          & > .wrapper-media {
+            width: 100%;
+            @include flex(row, space-between, center);
+            margin: 0 1.2em;
+
+            & > .wrapper-media__col1 {
+              @include grid(1, repeat(3, 1fr), 1.2em);
+              & > .bt-like {
+                & > svg {
+                  &:nth-of-type(2) {
+                    display: none;
+                  }
+                }
+              } //fin bt-like
+            } //fin wrapper-media__col1
+          }
+        } //fin .cont-media
+
+        & > .cont-likes {
+          padding-left: 1.2em;
+          & > span {
+            font-weight: 700;
+          }
+        } //fin cont-likes
+
+        & > .cont-post-date {
+          padding-left: 1.2em;
+          & > span {
+            text-transform: uppercase;
+            font-size: 0.7em;
+            font-weight: 700;
+            color: map-get($colors, tx-gris);
+          }
+        } //fin cont-post-date
+
+        & > .cont-add-comment {
+          @include flex(row, center, center);
+          & > .wrapper-add-comment {
+            @include grid(1, 75% auto, 0);
+
+            & > input {
+              background-color: transparent;
+              border: none;
+
+              padding-left: 1.2em;
+
+              &:active,
+              &:enabled,
+              &:focus {
+                outline: none;
+              }
+            }
+
+            & > button {
+              cursor: default;
+              color: map-get($colors, bt-azul-hover);
+            }
+          } //fin wrapper-add-comment
+        } //fin cont-add-comment
+      } //fin p-col-2
+    } //fin post-frame
+  } //fin post overlay
+} //fin post
+
+.w-post {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 7;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: map-get($colors, bg-overlay);
+}
+
+//TODO:Cuando se muestre el post, body con overflow a hidden
+// body {
+//   overflow: hidden;
+// }

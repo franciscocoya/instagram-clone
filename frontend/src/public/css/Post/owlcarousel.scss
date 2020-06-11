@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css?family=Over+the+Rainbow|Playfair+Display:400,600,700,900&display=swap");
+
+@import "../partials/generales";
+@use "generales/flex";
+
+.coreSpriteRightPaginationArrow {
+  background-image: url("../../assets/sprites.png");
+  background-repeat: no-repeat;
+  background-position: -76px -319px;
+  height: 40px;
+  width: 40px;
+}
+
+.coreSpriteLeftPaginationArrow {
+  background-image: url("../../assets/sprites.png");
+  background-repeat: no-repeat;
+  background-position: -34px -319px;
+  height: 40px;
+  width: 40px;
+}
+
+.filter {
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  & > .filter-name {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: map-get($colors, bg-overlay);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-size: 1.2em;
+    font-weight: 700;
+
+    & > p {
+      margin: 0;
+      padding: 0.2em;
+      font-size: 2em;
+      font-weight: 500;
+      color: #fff;
+      transition: 0.1s ease-in-out;
+    } //fin p
+  } //fin filter-name
+
+  &:hover .filter-name {
+    @include flex(column, center, center);
+  }
+} //fin filter
+
+.owl-nav {
+  @include flex(row, space-between, center);
+  position: absolute;
+}
+
+.w-owl {
+  height: 300px;
+  position: relative;
+  & .container-fluid {
+    height: 300px;
+    & > .owl-carousel {
+      height: 300px;
+      & > .owl-stage-outer {
+        height: 300px;
+        & > .owl-stage {
+          height: 300px;
+          & > .owl-item {
+            height: 300px;
+            & > .border-gradient {
+              height: 300px;
+              & > .filter {
+                height: 300px;
+                & > figure {
+                  height: 300px;
+                  & > img {
+                    max-height: 100%;
+                    width: auto;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

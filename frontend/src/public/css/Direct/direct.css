@@ -1,0 +1,2343 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap&subset=latin-ext");
+body {
+  font-family: "Lato", sans-serif;
+}
+
+/**
+ * MIXINS
+ * **/
+/**
+ * ESTILOS
+ * **/
+.body {
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.box {
+  margin-bottom: 0.5em;
+  padding: 0.7em 2em;
+  width: 100%;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+}
+
+.logo-small {
+  -webkit-transform: scale(0.6);
+          transform: scale(0.6);
+}
+
+/**
+ * ****************************
+ * **/
+input,
+textarea {
+  padding: 0.6em;
+  background-color: #fafafa;
+  border: 1px solid #dfdfdf;
+  margin: 0.2em 0;
+  border-radius: 3px;
+}
+
+input:active, input:focus,
+textarea:active,
+textarea:focus {
+  border: 1px solid #dfdfdf;
+}
+
+::-webkit-input-placeholder {
+  color: #8e8e8e;
+  font-size: 1.1em;
+  font-weight: 300;
+}
+
+:-ms-input-placeholder {
+  color: #8e8e8e;
+  font-size: 1.1em;
+  font-weight: 300;
+}
+
+::-ms-input-placeholder {
+  color: #8e8e8e;
+  font-size: 1.1em;
+  font-weight: 300;
+}
+
+::placeholder {
+  color: #8e8e8e;
+  font-size: 1.1em;
+  font-weight: 300;
+}
+
+input,
+textarea {
+  outline: none;
+}
+
+.input-transparent {
+  border: none;
+  background: transparent;
+  outline: none;
+  text-indent: 15px;
+}
+
+.input-transparent:active, .input-transparent:focus {
+  border: none;
+}
+
+.input-transparent:active::-webkit-input-placeholder, .input-transparent:focus::-webkit-input-placeholder {
+  text-align: left;
+}
+
+.input-transparent:active:-ms-input-placeholder, .input-transparent:focus:-ms-input-placeholder {
+  text-align: left;
+}
+
+.input-transparent:active::-ms-input-placeholder, .input-transparent:focus::-ms-input-placeholder {
+  text-align: left;
+}
+
+.input-transparent:active::placeholder, .input-transparent:focus::placeholder {
+  text-align: left;
+}
+
+.input-bg-transparent {
+  outline: none;
+  resize: none;
+  border-radius: 0.6em;
+  border: 1px solid #ebebeb;
+  background-color: #fff;
+  font-size: 0.9em;
+  font-weight: 300;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.input-bg-transparent:focus {
+  background-color: #fafafa;
+  border: 1px solid #dfdfdf;
+}
+
+.input-transparent::-webkit-input-placeholder {
+  text-align: center;
+  font-weight: 300;
+  font-size: 1.05em;
+}
+
+.input-transparent:-ms-input-placeholder {
+  text-align: center;
+  font-weight: 300;
+  font-size: 1.05em;
+}
+
+.input-transparent::-ms-input-placeholder {
+  text-align: center;
+  font-weight: 300;
+  font-size: 1.05em;
+}
+
+.input-transparent::placeholder {
+  text-align: center;
+  font-weight: 300;
+  font-size: 1.05em;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.w-50 {
+  width: 50% !important;
+}
+
+.w-96 {
+  width: 96%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.border-gradient {
+  -webkit-transition: 0.1s ease-in-out;
+  transition: 0.1s ease-in-out;
+}
+
+.border-gradient:active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #fff;
+  background: transparent;
+  background-clip: padding-box;
+  border: solid 4px transparent;
+}
+
+.border-gradient:active > .filter > .filter-name > p {
+  font-weight: 700;
+  font-size: 2.5em;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-gradient:active:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  margin: -4px;
+  /* !importanté */
+  border-radius: inherit;
+  /* !importanté */
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+}
+
+.b-bottom-1 {
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.b-bottom-1-light {
+  border-bottom: 1px solid #ebebeb;
+}
+
+.b-1-g {
+  border: 1px solid #dfdfdf;
+}
+
+.b-left-bold {
+  border-left: 3px solid #000;
+}
+
+button, .bt-small {
+  width: 100%;
+  height: 35px;
+  margin-top: 1.1em;
+  padding: 5px 9px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: #0095f6;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+}
+
+button:disabled, .bt-small:disabled {
+  cursor: default;
+  background-color: #b2dffc;
+}
+
+.bt-more-description {
+  background-color: transparent;
+  color: #8e8e8e;
+  font-weight: 400;
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.bt-small {
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+  margin: 0 0.5em;
+}
+
+.bt-small > .tx-bt-white {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.bt-gray {
+  background-color: #fafafa;
+  color: #3b3b3b;
+}
+
+.bt-small-link {
+  outline: none !important;
+  background-color: transparent !important;
+  color: #0095f6;
+  padding: 0 auto;
+  margin: 0;
+}
+
+.bt-small-link-disable {
+  background-color: transparent !important;
+  outline: none;
+  color: #b2dffc;
+  padding: 0 auto;
+  margin: 0;
+}
+
+.bt-border-gray {
+  padding: 0 auto;
+  margin: 0;
+  background-color: transparent;
+  border: 1px solid #dfdfdf;
+  color: #000;
+}
+
+.full-page {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  overflow: hidden;
+  z-index: 7;
+}
+
+.inline {
+  display: inline;
+}
+
+.flex-row, .flex-row-between {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.flex-column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.flex-row-between {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.display-none {
+  display: none;
+}
+
+.grid-pos-1-2 {
+  -ms-grid-row: 1;
+  grid-row: 1;
+  -ms-grid-column: 2;
+  grid-column: 2;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.bg-dark {
+  background-color: rgba(0, 0, 0, 0.623);
+}
+
+.bg-gris {
+  background-color: #fafafa;
+}
+
+.pre-style {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  font-size: 1em;
+  font-weight: 400;
+  text-align: left;
+  line-height: 1.19em;
+}
+
+.pre-style > span {
+  font-weight: 700;
+  margin-right: 0.3em;
+}
+
+.location-text {
+  text-decoration: none;
+  color: #3b3b3b;
+  font-size: 0.9em;
+}
+
+.timeago {
+  margin: 0;
+  padding: 0;
+  font-size: 0.85em;
+  font-weight: 500;
+  color: #8e8e8e;
+}
+
+.lc-black {
+  color: #000;
+}
+
+.lc-black:active, .lc-black:focus, .lc-black:visited {
+  color: #000;
+}
+
+.t-2 {
+  font-weight: 500;
+  font-size: 1.1em;
+  color: #8e8e8e;
+}
+
+.t-subtitle {
+  border-top: 1px solid #fff;
+  padding: 0.5em;
+  margin: 0;
+  font-size: 0.9em !important;
+  color: #fff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tx-s-gris {
+  font-weight: 300;
+  font-size: 0.9em;
+  color: #8e8e8e;
+}
+
+.tx-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.font-weight-bold {
+  font-weight: 700;
+}
+
+.tx-button {
+  color: #fff;
+  font-weight: 700;
+}
+
+.text-transparent {
+  color: transparent;
+}
+
+.bt-svg {
+  background-color: transparent;
+  color: #000;
+}
+
+.bold, .bold-black {
+  font-weight: 500;
+  font-size: 1em;
+  margin-left: 0.3em;
+  color: #0095f6;
+}
+
+.bold-black {
+  color: #0f0f0f;
+}
+
+.bold-red {
+  font-weight: 500;
+  color: #ed4956;
+}
+
+.bold-blue {
+  font-weight: 700;
+  color: #0095f6;
+}
+
+.bold-white {
+  font-weight: 700;
+  color: #fff;
+}
+
+.p-abs {
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-align: center;
+  cursor: text;
+}
+
+.p-fixed {
+  position: fixed;
+}
+
+.p-relative {
+  position: relative;
+}
+
+.modal-container {
+  width: 40%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 auto;
+  border: 1px solid transparent;
+  border-radius: 0.8em;
+  background-color: #fff;
+  color: #000;
+  font-weight: 300;
+  font-size: 0.9em;
+}
+
+.list-style-none {
+  list-style: none;
+}
+
+.mx-05 {
+  margin: 0 0.5em;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.mp-0 {
+  margin: 0;
+  padding: 0;
+}
+
+.p-2 {
+  padding: 2em;
+}
+
+.link {
+  text-decoration: none;
+  outline: none;
+  font-weight: 300;
+  font-size: 0.9em;
+  color: #000;
+}
+
+.decoration-none {
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.separator {
+  margin-top: 0.5em;
+  width: 100%;
+  color: #dfdfdf;
+  font-weight: 700;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.separator > .line {
+  width: 70%;
+  border-top: 1px solid #dfdfdf;
+  margin: 0 0.3em;
+  padding: 0;
+}
+
+.profile-img {
+  margin: 0 0.5em;
+  width: 45px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+}
+
+.expand-img {
+  width: 240;
+  width: 300px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.glyphsSpriteAdd__outline__24__blue_5,
+.glyphsSpriteAdd__outline__24__grey_9,
+.glyphsSpriteAdd_friend__outline__96,
+.glyphsSpriteApp_Icon_30,
+.glyphsSpriteApp_Icon_36,
+.glyphsSpriteApp_Icon_45,
+.glyphsSpriteApp_Icon_60,
+.glyphsSpriteApp_Icon_IGTV_44,
+.glyphsSpriteApp_instagram__outline__24__grey_9,
+.glyphsSpriteApp_messenger__outline__24__grey_9,
+.glyphsSpriteApp_twitter__outline__24__grey_9,
+.glyphsSpriteApp_whatsapp__outline__24__grey_9,
+.glyphsSpriteBirthday_cake,
+.glyphsSpriteCall__outline__24__grey_9,
+.glyphsSpriteCamera__outline__24__grey_9,
+.glyphsSpriteChevron_down__outline__24__grey_5,
+.glyphsSpriteChevron_down__outline__24__grey_9,
+.glyphsSpriteChevron_left__outline__24__grey_9,
+.glyphsSpriteChevron_right__outline__24__grey_5,
+.glyphsSpriteChevron_up__outline__24__grey_5,
+.glyphsSpriteChevron_up__outline__24__grey_9,
+.glyphsSpriteCircle__outline__24__grey_2,
+.glyphsSpriteCircle_add__outline__24__grey_5,
+.glyphsSpriteCircle_add__outline__24__grey_9,
+.glyphsSpriteCircle_check__filled__24__blue_5,
+.glyphsSpriteCircle_check__filled__24__green_5,
+.glyphsSpriteCircle_check__outline__24__blue_5,
+.glyphsSpriteComment__filled__16__white,
+.glyphsSpriteComment__outline__24__grey_9,
+.glyphsSpriteContact_import,
+.glyphsSpriteContact_import_sm,
+.glyphsSpriteDelete__outline__24__grey_0,
+.glyphsSpriteDirect__outline__24__grey_0,
+.glyphsSpriteDirect__outline__24__grey_9,
+.glyphsSpriteDirect__outline__96,
+.glyphsSpriteDownload_2FAC,
+.glyphsSpriteEmail_confirm,
+.glyphsSpriteError__outline__24__grey_9,
+.glyphsSpriteError__outline__96,
+.glyphsSpriteError_glyph_grey,
+.glyphsSpriteFB_Logo,
+.glyphsSpriteFacebook_circle__outline__24__grey_9,
+.glyphsSpriteFacebook_circle_filled_24,
+.glyphsSpriteFb_brand_center_grey,
+.glyphsSpriteForward__outline__24__grey_9,
+.glyphsSpriteFriend_Follow,
+.glyphsSpriteGlyph_chevron_right,
+.glyphsSpriteGlyph_circle_star,
+.glyphsSpriteGlyph_eye_off,
+.glyphsSpriteGlyph_volume_off,
+.glyphsSpriteGlyph_warning,
+.glyphsSpriteGrey_Close,
+.glyphsSpriteHalf_star_black,
+.glyphsSpriteHalf_star_white,
+.glyphsSpriteHashtag__outline__24__grey_9,
+.glyphsSpriteHeart__filled__16__grey_9,
+.glyphsSpriteHeart__filled__16__white,
+.glyphsSpriteHeart__filled__24__grey_9,
+.glyphsSpriteHeart__filled__24__red_5,
+.glyphsSpriteHeart__outline__24__grey_9,
+.glyphsSpriteHome__filled__24__grey_9,
+.glyphsSpriteHome__outline__24__grey_9,
+.glyphsSpriteIG_Lite_Direct_Variant_01,
+.glyphsSpriteIgtv__outline__24__blue_5,
+.glyphsSpriteIgtv__outline__24__grey_5,
+.glyphsSpriteInfo__filled__16__grey_9,
+.glyphsSpriteInput_clear,
+.glyphsSpriteLink__outline__24__grey_9,
+.glyphsSpriteLite_app_icon,
+.glyphsSpriteLocation__outline__24__grey_9,
+.glyphsSpriteLock__outline__24__grey_9,
+.glyphsSpriteLock__outline__96,
+.glyphsSpriteLogged_Out_QP_Glyph,
+.glyphsSpriteMail__outline__24__grey_9,
+.glyphsSpriteMenu__outline__24__grey_9,
+.glyphsSpriteMore_horizontal__filled__24__grey_0,
+.glyphsSpriteMore_horizontal__outline__16__grey_5,
+.glyphsSpriteMore_horizontal__outline__24__grey_5,
+.glyphsSpriteMore_horizontal__outline__24__grey_9,
+.glyphsSpriteNew_feed_activity,
+.glyphsSpriteNew_post__outline__24__grey_9,
+.glyphsSpriteNews_off_outline,
+.glyphsSpriteNews_off_outline_red,
+.glyphsSpritePaging_chevron,
+.glyphsSpritePhone_confirm,
+.glyphsSpritePhoto_grid__outline__24__blue_5,
+.glyphsSpritePhoto_grid__outline__24__grey_5,
+.glyphsSpritePhoto_list__outline__24__blue_5,
+.glyphsSpritePhoto_list__outline__24__grey_5,
+.glyphsSpritePlay__filled__16__grey_9,
+.glyphsSpriteSave__filled__24__grey_9,
+.glyphsSpriteSave__outline__24__blue_5,
+.glyphsSpriteSave__outline__24__grey_5,
+.glyphsSpriteSave__outline__24__grey_9,
+.glyphsSpriteSearch,
+.glyphsSpriteSearch__filled__24__grey_9,
+.glyphsSpriteSearch__outline__24__grey_9,
+.glyphsSpriteSettings__outline__24__grey_9,
+.glyphsSpriteShare__outline__24__grey_9,
+.glyphsSpriteStar_black,
+.glyphsSpriteStar_filled_24,
+.glyphsSpriteStar_filled_white_24,
+.glyphsSpriteStar_half_filled_24,
+.glyphsSpriteStar_half_filled_24_white,
+.glyphsSpriteStar_white,
+.glyphsSpriteStory__outline__24__grey_9,
+.glyphsSpriteTag_up__filled__16__white,
+.glyphsSpriteTag_up__outline__24__blue_5,
+.glyphsSpriteTag_up__outline__24__grey_5,
+.glyphsSpriteUser__filled__16__white,
+.glyphsSpriteUser__filled__24__grey_0,
+.glyphsSpriteUser__filled__24__grey_9,
+.glyphsSpriteUser__outline__24__grey_9,
+.glyphsSpriteUser_follow__filled__24__grey_9,
+.glyphsSpriteUser_follow__outline__24__grey_9,
+.glyphsSpriteUsers__outline__24__grey_9,
+.glyphsSpriteVerified_small,
+.glyphsSpriteVideo_chat__outline__24__grey_9,
+.glyphsSpriteVolume__outline__44,
+.glyphsSpriteVolume_off__filled__44,
+.glyphsSpriteWhite_Close,
+.glyphsSpriteX__filled__12__white,
+.glyphsSpriteX__outline__24__grey_9 {
+  background-image: url("../../assets/glyphs.png");
+}
+
+.glyphsSpriteAdd__outline__24__blue_5,
+.glyphsSpriteAdd__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -404px -258px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteAdd__outline__24__grey_9 {
+  background-position: -146px -196px;
+}
+
+.glyphsSpriteAdd_friend__outline__96 {
+  background-repeat: no-repeat;
+  background-position: -146px 0;
+  height: 96px;
+  width: 96px;
+}
+
+.glyphsSpriteApp_Icon_30,
+.glyphsSpriteApp_Icon_36 {
+  background-repeat: no-repeat;
+  background-position: -404px -226px;
+  height: 30px;
+  width: 30px;
+}
+
+.glyphsSpriteApp_Icon_36 {
+  background-position: 0 -298px;
+  height: 36px;
+  width: 36px;
+}
+
+.glyphsSpriteApp_Icon_45,
+.glyphsSpriteApp_Icon_60 {
+  background-repeat: no-repeat;
+  background-position: -94px -148px;
+  height: 45px;
+  width: 45px;
+}
+
+.glyphsSpriteApp_Icon_60 {
+  background-position: -342px -226px;
+  height: 60px;
+  width: 60px;
+}
+
+.glyphsSpriteApp_Icon_IGTV_44 {
+  background-repeat: no-repeat;
+  background-position: -185px -226px;
+  height: 44px;
+  width: 44px;
+}
+
+.glyphsSpriteApp_instagram__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -172px -196px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteApp_messenger__outline__24__grey_9,
+.glyphsSpriteApp_twitter__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -198px -196px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteApp_twitter__outline__24__grey_9 {
+  background-position: -94px -195px;
+}
+
+.glyphsSpriteApp_whatsapp__outline__24__grey_9,
+.glyphsSpriteBirthday_cake {
+  background-repeat: no-repeat;
+  background-position: -120px -195px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteBirthday_cake {
+  background-position: 0 0;
+  height: 96px;
+  width: 144px;
+}
+
+.glyphsSpriteCall__outline__24__grey_9,
+.glyphsSpriteCamera__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -140px -298px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteCamera__outline__24__grey_9 {
+  background-position: -166px -298px;
+}
+
+.glyphsSpriteChevron_down__outline__24__grey_5,
+.glyphsSpriteChevron_down__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -192px -298px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteChevron_down__outline__24__grey_9 {
+  background-position: -218px -298px;
+}
+
+.glyphsSpriteChevron_left__outline__24__grey_9,
+.glyphsSpriteChevron_right__outline__24__grey_5 {
+  background-repeat: no-repeat;
+  background-position: -244px -298px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteChevron_right__outline__24__grey_5 {
+  background-position: -270px -298px;
+}
+
+.glyphsSpriteChevron_up__outline__24__grey_5,
+.glyphsSpriteChevron_up__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -296px -298px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteChevron_up__outline__24__grey_9 {
+  background-position: -322px -298px;
+}
+
+.glyphsSpriteCircle__outline__24__grey_2,
+.glyphsSpriteCircle_add__outline__24__grey_5 {
+  background-repeat: no-repeat;
+  background-position: -348px -298px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteCircle_add__outline__24__grey_5 {
+  background-position: -374px -298px;
+}
+
+.glyphsSpriteCircle_add__outline__24__grey_9,
+.glyphsSpriteCircle_check__filled__24__blue_5 {
+  background-repeat: no-repeat;
+  background-position: -400px -298px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteCircle_check__filled__24__blue_5 {
+  background-position: 0 -336px;
+}
+
+.glyphsSpriteCircle_check__filled__24__green_5,
+.glyphsSpriteCircle_check__outline__24__blue_5 {
+  background-repeat: no-repeat;
+  background-position: -26px -336px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteCircle_check__outline__24__blue_5 {
+  background-position: -52px -336px;
+}
+
+.glyphsSpriteComment__filled__16__white {
+  background-repeat: no-repeat;
+  background-position: -436px -166px;
+  height: 16px;
+  width: 16px;
+}
+
+.glyphsSpriteComment__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -78px -336px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteContact_import_sm {
+  background-repeat: no-repeat;
+  background-position: -408px -182px;
+  height: 28px;
+  width: 23px;
+}
+
+.glyphsSpriteContact_import {
+  background-repeat: no-repeat;
+  background-position: -408px -148px;
+  height: 32px;
+  width: 25px;
+}
+
+.glyphsSpriteDelete__outline__24__grey_0 {
+  background-repeat: no-repeat;
+  background-position: -104px -336px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteDirect__outline__24__grey_0,
+.glyphsSpriteDirect__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -130px -336px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteDirect__outline__24__grey_9 {
+  background-position: -156px -336px;
+}
+
+.glyphsSpriteDirect__outline__96 {
+  background-repeat: no-repeat;
+  background-position: -146px -98px;
+  height: 96px;
+  width: 96px;
+}
+
+.glyphsSpriteDownload_2FAC,
+.glyphsSpriteEmail_confirm {
+  background-repeat: no-repeat;
+  background-position: 0 -98px;
+  height: 126px;
+  width: 92px;
+}
+
+.glyphsSpriteEmail_confirm {
+  background-position: -342px 0;
+  height: 72px;
+}
+
+.glyphsSpriteError__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -182px -336px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteError__outline__96 {
+  background-repeat: no-repeat;
+  background-position: -244px 0;
+  height: 96px;
+  width: 96px;
+}
+
+.glyphsSpriteError_glyph_grey {
+  background-repeat: no-repeat;
+  background-position: -208px -336px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteFacebook_circle__outline__24__grey_9,
+.glyphsSpriteFacebook_circle_filled_24 {
+  background-repeat: no-repeat;
+  background-position: -234px -336px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteFacebook_circle_filled_24 {
+  background-position: -260px -336px;
+}
+
+.glyphsSpriteFB_Logo,
+.glyphsSpriteFb_brand_center_grey {
+  background-repeat: no-repeat;
+  background-position: -244px -196px;
+  height: 28px;
+  width: 82px;
+}
+
+.glyphsSpriteFB_Logo {
+  background-position: -436px -184px;
+  height: 16px;
+  width: 16px;
+}
+
+.glyphsSpriteForward__outline__24__grey_9,
+.glyphsSpriteFriend_Follow {
+  background-repeat: no-repeat;
+  background-position: -286px -336px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteFriend_Follow {
+  background-position: -436px -152px;
+  height: 12px;
+}
+
+.glyphsSpriteGlyph_chevron_right {
+  background-repeat: no-repeat;
+  background-position: -328px -209px;
+  height: 13px;
+  width: 8px;
+}
+
+.glyphsSpriteGlyph_circle_star,
+.glyphsSpriteGlyph_eye_off {
+  background-repeat: no-repeat;
+  background-position: -94px -98px;
+  height: 48px;
+  width: 48px;
+}
+
+.glyphsSpriteGlyph_eye_off {
+  background-position: -38px -298px;
+  height: 32px;
+  width: 32px;
+}
+
+.glyphsSpriteGlyph_volume_off {
+  background-repeat: no-repeat;
+  background-position: -436px -364px;
+  height: 12px;
+  width: 12px;
+}
+
+.glyphsSpriteGlyph_warning,
+.glyphsSpriteGrey_Close {
+  background-repeat: no-repeat;
+  background-position: -436px -202px;
+  height: 16px;
+  width: 16px;
+}
+
+.glyphsSpriteGrey_Close {
+  background-position: -450px -378px;
+  height: 9px;
+  width: 9px;
+}
+
+.glyphsSpriteHalf_star_black,
+.glyphsSpriteHalf_star_white {
+  background-repeat: no-repeat;
+  background-position: -436px -378px;
+  height: 12px;
+  width: 12px;
+}
+
+.glyphsSpriteHalf_star_white {
+  background-position: -436px -392px;
+}
+
+.glyphsSpriteHashtag__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -312px -336px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteHeart__filled__16__grey_9,
+.glyphsSpriteHeart__filled__16__white {
+  background-repeat: no-repeat;
+  background-position: -436px -220px;
+  height: 16px;
+  width: 16px;
+}
+
+.glyphsSpriteHeart__filled__16__white {
+  background-position: -436px -238px;
+}
+
+.glyphsSpriteHeart__filled__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -338px -336px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteHeart__filled__24__red_5,
+.glyphsSpriteHeart__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -364px -336px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteHeart__outline__24__grey_9 {
+  background-position: -390px -336px;
+}
+
+.glyphsSpriteHome__filled__24__grey_9,
+.glyphsSpriteHome__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: 0 -362px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteHome__outline__24__grey_9 {
+  background-position: -26px -362px;
+}
+
+.glyphsSpriteIG_Lite_Direct_Variant_01 {
+  background-repeat: no-repeat;
+  background-position: 0 -226px;
+  height: 70px;
+  width: 125px;
+}
+
+.glyphsSpriteIgtv__outline__24__blue_5,
+.glyphsSpriteIgtv__outline__24__grey_5 {
+  background-repeat: no-repeat;
+  background-position: -52px -362px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteIgtv__outline__24__grey_5 {
+  background-position: -78px -362px;
+}
+
+.glyphsSpriteInfo__filled__16__grey_9,
+.glyphsSpriteInput_clear {
+  background-repeat: no-repeat;
+  background-position: -436px -256px;
+  height: 16px;
+  width: 16px;
+}
+
+.glyphsSpriteInput_clear {
+  background-position: -436px -130px;
+  height: 20px;
+  width: 20px;
+}
+
+.glyphsSpriteLink__outline__24__grey_9,
+.glyphsSpriteLite_app_icon {
+  background-repeat: no-repeat;
+  background-position: -104px -362px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteLite_app_icon {
+  background-position: -342px -74px;
+  height: 72px;
+  width: 72px;
+}
+
+.glyphsSpriteLocation__outline__24__grey_9,
+.glyphsSpriteLock__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -130px -362px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteLock__outline__24__grey_9 {
+  background-position: -156px -362px;
+}
+
+.glyphsSpriteLock__outline__96 {
+  background-repeat: no-repeat;
+  background-position: -244px -98px;
+  height: 96px;
+  width: 96px;
+}
+
+.glyphsSpriteLogged_Out_QP_Glyph {
+  background-repeat: no-repeat;
+  background-position: -127px -226px;
+  height: 56px;
+  width: 56px;
+}
+
+.glyphsSpriteMail__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -182px -362px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteMenu__outline__24__grey_9,
+.glyphsSpriteMore_horizontal__filled__24__grey_0 {
+  background-repeat: no-repeat;
+  background-position: -208px -362px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteMore_horizontal__filled__24__grey_0 {
+  background-position: -234px -362px;
+}
+
+.glyphsSpriteMore_horizontal__outline__16__grey_5 {
+  background-repeat: no-repeat;
+  background-position: -436px -274px;
+  height: 16px;
+  width: 16px;
+}
+
+.glyphsSpriteMore_horizontal__outline__24__grey_5,
+.glyphsSpriteMore_horizontal__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -260px -362px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteMore_horizontal__outline__24__grey_9 {
+  background-position: -286px -362px;
+}
+
+.glyphsSpriteNew_feed_activity {
+  background-repeat: no-repeat;
+  background-position: -436px -292px;
+  height: 16px;
+  width: 16px;
+}
+
+.glyphsSpriteNew_post__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -312px -362px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteNews_off_outline,
+.glyphsSpriteNews_off_outline_red {
+  background-repeat: no-repeat;
+  background-position: -72px -298px;
+  height: 32px;
+  width: 32px;
+}
+
+.glyphsSpriteNews_off_outline {
+  background-position: -106px -298px;
+}
+
+.glyphsSpritePaging_chevron,
+.glyphsSpritePhone_confirm {
+  background-repeat: no-repeat;
+  background-position: -338px -362px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpritePhone_confirm {
+  background-position: -342px -148px;
+  height: 76px;
+  width: 64px;
+}
+
+.glyphsSpritePhoto_grid__outline__24__blue_5,
+.glyphsSpritePhoto_grid__outline__24__grey_5 {
+  background-repeat: no-repeat;
+  background-position: -364px -362px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpritePhoto_grid__outline__24__grey_5 {
+  background-position: -390px -362px;
+}
+
+.glyphsSpritePhoto_list__outline__24__blue_5,
+.glyphsSpritePhoto_list__outline__24__grey_5 {
+  background-repeat: no-repeat;
+  background-position: 0 -388px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpritePhoto_list__outline__24__grey_5 {
+  background-position: -26px -388px;
+}
+
+.glyphsSpritePlay__filled__16__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -436px -310px;
+  height: 16px;
+  width: 16px;
+}
+
+.glyphsSpriteSave__filled__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -52px -388px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteSave__outline__24__blue_5,
+.glyphsSpriteSave__outline__24__grey_5 {
+  background-repeat: no-repeat;
+  background-position: -78px -388px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteSave__outline__24__grey_5 {
+  background-position: -104px -388px;
+}
+
+.glyphsSpriteSave__outline__24__grey_9,
+.glyphsSpriteSearch__filled__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -130px -388px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteSearch__filled__24__grey_9 {
+  background-position: -156px -388px;
+}
+
+.glyphsSpriteSearch,
+.glyphsSpriteSearch__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -182px -388px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteSearch {
+  background-position: -450px -364px;
+  height: 10px;
+  width: 10px;
+}
+
+.glyphsSpriteSettings__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -208px -388px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteShare__outline__24__grey_9,
+.glyphsSpriteStar_black {
+  background-repeat: no-repeat;
+  background-position: -234px -388px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteStar_black {
+  background-position: -416px -74px;
+  height: 12px;
+  width: 12px;
+}
+
+.glyphsSpriteStar_filled_24,
+.glyphsSpriteStar_filled_white_24 {
+  background-repeat: no-repeat;
+  background-position: -416px -88px;
+  height: 12px;
+  width: 12px;
+}
+
+.glyphsSpriteStar_filled_white_24 {
+  background-position: -328px -196px;
+  height: 11px;
+}
+
+.glyphsSpriteStar_half_filled_24_white {
+  background-repeat: no-repeat;
+  background-position: -416px -102px;
+  height: 12px;
+  width: 12px;
+}
+
+.glyphsSpriteStar_half_filled_24,
+.glyphsSpriteStar_white {
+  background-repeat: no-repeat;
+  background-position: -416px -116px;
+  height: 12px;
+  width: 12px;
+}
+
+.glyphsSpriteStar_white {
+  background-position: -416px -130px;
+}
+
+.glyphsSpriteStory__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -260px -388px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteTag_up__filled__16__white {
+  background-repeat: no-repeat;
+  background-position: -436px -328px;
+  height: 16px;
+  width: 16px;
+}
+
+.glyphsSpriteTag_up__outline__24__blue_5,
+.glyphsSpriteTag_up__outline__24__grey_5 {
+  background-repeat: no-repeat;
+  background-position: -286px -388px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteTag_up__outline__24__grey_5 {
+  background-position: -312px -388px;
+}
+
+.glyphsSpriteUser__filled__16__white {
+  background-repeat: no-repeat;
+  background-position: -436px -346px;
+  height: 16px;
+  width: 16px;
+}
+
+.glyphsSpriteUser__filled__24__grey_0,
+.glyphsSpriteUser__filled__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -338px -388px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteUser__filled__24__grey_9 {
+  background-position: -364px -388px;
+}
+
+.glyphsSpriteUser__outline__24__grey_9,
+.glyphsSpriteUser_follow__filled__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -390px -388px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteUser_follow__filled__24__grey_9 {
+  background-position: -436px 0;
+}
+
+.glyphsSpriteUser_follow__outline__24__grey_9,
+.glyphsSpriteUsers__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -436px -26px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteUsers__outline__24__grey_9 {
+  background-position: -436px -52px;
+}
+
+.glyphsSpriteVerified_small {
+  background-repeat: no-repeat;
+  background-position: -408px -212px;
+  height: 12px;
+  width: 12px;
+}
+
+.glyphsSpriteVideo_chat__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -436px -78px;
+  height: 24px;
+  width: 24px;
+}
+
+.glyphsSpriteVolume__outline__44 {
+  background-repeat: no-repeat;
+  background-position: -231px -226px;
+  height: 44px;
+  width: 44px;
+}
+
+.glyphsSpriteVolume_off__filled__44,
+.glyphsSpriteWhite_Close {
+  background-repeat: no-repeat;
+  background-position: -277px -226px;
+  height: 44px;
+  width: 44px;
+}
+
+.glyphsSpriteWhite_Close {
+  background-position: -450px -392px;
+  height: 9px;
+  width: 9px;
+}
+
+.glyphsSpriteX__filled__12__white {
+  background-repeat: no-repeat;
+  background-position: -422px -212px;
+  height: 12px;
+  width: 12px;
+}
+
+.glyphsSpriteX__outline__24__grey_9 {
+  background-repeat: no-repeat;
+  background-position: -436px -104px;
+  height: 24px;
+  width: 24px;
+}
+
+@media (min-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+  .glyphsSpriteAdd__outline__24__blue_5,
+  .glyphsSpriteAdd__outline__24__grey_9,
+  .glyphsSpriteAdd_friend__outline__96,
+  .glyphsSpriteApp_Icon_30,
+  .glyphsSpriteApp_Icon_36,
+  .glyphsSpriteApp_Icon_45,
+  .glyphsSpriteApp_Icon_60,
+  .glyphsSpriteApp_Icon_IGTV_44,
+  .glyphsSpriteApp_instagram__outline__24__grey_9,
+  .glyphsSpriteApp_messenger__outline__24__grey_9,
+  .glyphsSpriteApp_twitter__outline__24__grey_9,
+  .glyphsSpriteApp_whatsapp__outline__24__grey_9,
+  .glyphsSpriteBirthday_cake,
+  .glyphsSpriteCall__outline__24__grey_9,
+  .glyphsSpriteCamera__outline__24__grey_9,
+  .glyphsSpriteChevron_down__outline__24__grey_5,
+  .glyphsSpriteChevron_down__outline__24__grey_9,
+  .glyphsSpriteChevron_left__outline__24__grey_9,
+  .glyphsSpriteChevron_right__outline__24__grey_5,
+  .glyphsSpriteChevron_up__outline__24__grey_5,
+  .glyphsSpriteChevron_up__outline__24__grey_9,
+  .glyphsSpriteCircle__outline__24__grey_2,
+  .glyphsSpriteCircle_add__outline__24__grey_5,
+  .glyphsSpriteCircle_add__outline__24__grey_9,
+  .glyphsSpriteCircle_check__filled__24__blue_5,
+  .glyphsSpriteCircle_check__filled__24__green_5,
+  .glyphsSpriteCircle_check__outline__24__blue_5,
+  .glyphsSpriteComment__filled__16__white,
+  .glyphsSpriteComment__outline__24__grey_9,
+  .glyphsSpriteContact_import,
+  .glyphsSpriteContact_import_sm,
+  .glyphsSpriteDelete__outline__24__grey_0,
+  .glyphsSpriteDirect__outline__24__grey_0,
+  .glyphsSpriteDirect__outline__24__grey_9,
+  .glyphsSpriteDirect__outline__96,
+  .glyphsSpriteDownload_2FAC,
+  .glyphsSpriteEmail_confirm,
+  .glyphsSpriteError__outline__24__grey_9,
+  .glyphsSpriteError__outline__96,
+  .glyphsSpriteError_glyph_grey,
+  .glyphsSpriteFB_Logo,
+  .glyphsSpriteFacebook_circle__outline__24__grey_9,
+  .glyphsSpriteFacebook_circle_filled_24,
+  .glyphsSpriteFb_brand_center_grey,
+  .glyphsSpriteForward__outline__24__grey_9,
+  .glyphsSpriteFriend_Follow,
+  .glyphsSpriteGlyph_chevron_right,
+  .glyphsSpriteGlyph_circle_star,
+  .glyphsSpriteGlyph_eye_off,
+  .glyphsSpriteGlyph_volume_off,
+  .glyphsSpriteGlyph_warning,
+  .glyphsSpriteGrey_Close,
+  .glyphsSpriteHashtag__outline__24__grey_9,
+  .glyphsSpriteHeart__filled__16__grey_9,
+  .glyphsSpriteHeart__filled__16__white,
+  .glyphsSpriteHeart__filled__24__grey_9,
+  .glyphsSpriteHeart__filled__24__red_5,
+  .glyphsSpriteHeart__outline__24__grey_9,
+  .glyphsSpriteHome__filled__24__grey_9,
+  .glyphsSpriteHome__outline__24__grey_9,
+  .glyphsSpriteIG_Lite_Direct_Variant_01,
+  .glyphsSpriteIgtv__outline__24__blue_5,
+  .glyphsSpriteIgtv__outline__24__grey_5,
+  .glyphsSpriteInfo__filled__16__grey_9,
+  .glyphsSpriteInput_clear,
+  .glyphsSpriteLink__outline__24__grey_9,
+  .glyphsSpriteLite_app_icon,
+  .glyphsSpriteLocation__outline__24__grey_9,
+  .glyphsSpriteLock__outline__24__grey_9,
+  .glyphsSpriteLock__outline__96,
+  .glyphsSpriteLogged_Out_QP_Glyph,
+  .glyphsSpriteMail__outline__24__grey_9,
+  .glyphsSpriteMenu__outline__24__grey_9,
+  .glyphsSpriteMore_horizontal__filled__24__grey_0,
+  .glyphsSpriteMore_horizontal__outline__16__grey_5,
+  .glyphsSpriteMore_horizontal__outline__24__grey_5,
+  .glyphsSpriteMore_horizontal__outline__24__grey_9,
+  .glyphsSpriteNew_feed_activity,
+  .glyphsSpriteNew_post__outline__24__grey_9,
+  .glyphsSpriteNews_off_outline,
+  .glyphsSpriteNews_off_outline_red,
+  .glyphsSpritePaging_chevron,
+  .glyphsSpritePhone_confirm,
+  .glyphsSpritePhoto_grid__outline__24__blue_5,
+  .glyphsSpritePhoto_grid__outline__24__grey_5,
+  .glyphsSpritePhoto_list__outline__24__blue_5,
+  .glyphsSpritePhoto_list__outline__24__grey_5,
+  .glyphsSpritePlay__filled__16__grey_9,
+  .glyphsSpriteSave__filled__24__grey_9,
+  .glyphsSpriteSave__outline__24__blue_5,
+  .glyphsSpriteSave__outline__24__grey_5,
+  .glyphsSpriteSave__outline__24__grey_9,
+  .glyphsSpriteSearch,
+  .glyphsSpriteSearch__filled__24__grey_9,
+  .glyphsSpriteSearch__outline__24__grey_9,
+  .glyphsSpriteSettings__outline__24__grey_9,
+  .glyphsSpriteShare__outline__24__grey_9,
+  .glyphsSpriteStar_filled_24,
+  .glyphsSpriteStar_filled_white_24,
+  .glyphsSpriteStar_half_filled_24,
+  .glyphsSpriteStar_half_filled_24_white,
+  .glyphsSpriteStory__outline__24__grey_9,
+  .glyphsSpriteTag_up__filled__16__white,
+  .glyphsSpriteTag_up__outline__24__blue_5,
+  .glyphsSpriteTag_up__outline__24__grey_5,
+  .glyphsSpriteUser__filled__16__white,
+  .glyphsSpriteUser__filled__24__grey_0,
+  .glyphsSpriteUser__filled__24__grey_9,
+  .glyphsSpriteUser__outline__24__grey_9,
+  .glyphsSpriteUser_follow__filled__24__grey_9,
+  .glyphsSpriteUser_follow__outline__24__grey_9,
+  .glyphsSpriteUsers__outline__24__grey_9,
+  .glyphsSpriteVerified_small,
+  .glyphsSpriteVideo_chat__outline__24__grey_9,
+  .glyphsSpriteVolume__outline__44,
+  .glyphsSpriteVolume_off__filled__44,
+  .glyphsSpriteWhite_Close,
+  .glyphsSpriteX__filled__12__white,
+  .glyphsSpriteX__outline__24__grey_9 {
+    background-image: url("../../assets/glyphs.png");
+  }
+  .glyphsSpriteAdd__outline__24__blue_5 {
+    background-size: 431px 430px;
+    background-position: -400px -254px;
+  }
+  .glyphsSpriteAdd__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -145px -194px;
+  }
+  .glyphsSpriteAdd_friend__outline__96 {
+    background-size: 431px 430px;
+    background-position: -145px 0;
+  }
+  .glyphsSpriteApp_Icon_30,
+  .glyphsSpriteApp_Icon_36 {
+    background-size: 431px 430px;
+    background-position: -400px -223px;
+  }
+  .glyphsSpriteApp_Icon_36 {
+    background-position: 0 -294px;
+  }
+  .glyphsSpriteApp_Icon_45,
+  .glyphsSpriteApp_Icon_60 {
+    background-size: 431px 430px;
+    background-position: -92px -146px;
+  }
+  .glyphsSpriteApp_Icon_60 {
+    background-position: -339px -223px;
+  }
+  .glyphsSpriteApp_Icon_IGTV_44 {
+    background-size: 431px 430px;
+    background-position: -183px -223px;
+  }
+  .glyphsSpriteApp_instagram__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -170px -194px;
+  }
+  .glyphsSpriteApp_messenger__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -195px -194px;
+  }
+  .glyphsSpriteApp_twitter__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -92px -192px;
+  }
+  .glyphsSpriteApp_whatsapp__outline__24__grey_9,
+  .glyphsSpriteBirthday_cake {
+    background-size: 431px 430px;
+    background-position: -117px -192px;
+  }
+  .glyphsSpriteBirthday_cake {
+    background-position: 0 0;
+  }
+  .glyphsSpriteCall__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -136px -294px;
+  }
+  .glyphsSpriteCamera__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -161px -294px;
+  }
+  .glyphsSpriteChevron_down__outline__24__grey_5 {
+    background-size: 431px 430px;
+    background-position: -186px -294px;
+  }
+  .glyphsSpriteChevron_down__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -211px -294px;
+  }
+  .glyphsSpriteChevron_left__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -236px -294px;
+  }
+  .glyphsSpriteChevron_right__outline__24__grey_5 {
+    background-size: 431px 430px;
+    background-position: -261px -294px;
+  }
+  .glyphsSpriteChevron_up__outline__24__grey_5 {
+    background-size: 431px 430px;
+    background-position: -286px -294px;
+  }
+  .glyphsSpriteChevron_up__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -311px -294px;
+  }
+  .glyphsSpriteCircle__outline__24__grey_2 {
+    background-size: 431px 430px;
+    background-position: -336px -294px;
+  }
+  .glyphsSpriteCircle_add__outline__24__grey_5 {
+    background-size: 431px 430px;
+    background-position: -361px -294px;
+  }
+  .glyphsSpriteCircle_add__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -386px -294px;
+  }
+  .glyphsSpriteCircle_check__filled__24__blue_5 {
+    background-size: 431px 430px;
+    background-position: 0 -331px;
+  }
+  .glyphsSpriteCircle_check__filled__24__green_5 {
+    background-size: 431px 430px;
+    background-position: -25px -331px;
+  }
+  .glyphsSpriteCircle_check__outline__24__blue_5 {
+    background-size: 431px 430px;
+    background-position: -50px -331px;
+  }
+  .glyphsSpriteComment__filled__16__white {
+    background-size: 431px 430px;
+    background-position: -412px -73px;
+  }
+  .glyphsSpriteComment__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -75px -331px;
+  }
+  .glyphsSpriteContact_import_sm {
+    background-size: 431px 430px;
+    background-position: -404px -178px;
+  }
+  .glyphsSpriteContact_import {
+    background-size: 431px 430px;
+    background-position: -404px -146px;
+  }
+  .glyphsSpriteDelete__outline__24__grey_0 {
+    background-size: 431px 430px;
+    background-position: -100px -331px;
+  }
+  .glyphsSpriteDirect__outline__24__grey_0 {
+    background-size: 431px 430px;
+    background-position: -125px -331px;
+  }
+  .glyphsSpriteDirect__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -150px -331px;
+  }
+  .glyphsSpriteDirect__outline__96 {
+    background-size: 431px 430px;
+    background-position: -145px -97px;
+  }
+  .glyphsSpriteDownload_2FAC,
+  .glyphsSpriteEmail_confirm {
+    background-size: 431px 430px;
+    background-position: 0 -97px;
+  }
+  .glyphsSpriteEmail_confirm {
+    background-position: -339px 0;
+  }
+  .glyphsSpriteError__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -175px -331px;
+  }
+  .glyphsSpriteError__outline__96 {
+    background-size: 431px 430px;
+    background-position: -242px 0;
+  }
+  .glyphsSpriteError_glyph_grey {
+    background-size: 431px 430px;
+    background-position: -200px -331px;
+  }
+  .glyphsSpriteFacebook_circle__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -225px -331px;
+  }
+  .glyphsSpriteFacebook_circle_filled_24 {
+    background-size: 431px 430px;
+    background-position: -250px -331px;
+  }
+  .glyphsSpriteFB_Logo,
+  .glyphsSpriteFb_brand_center_grey {
+    background-size: 431px 430px;
+    background-position: -242px -194px;
+  }
+  .glyphsSpriteFB_Logo {
+    background-position: -412px -90px;
+  }
+  .glyphsSpriteForward__outline__24__grey_9,
+  .glyphsSpriteFriend_Follow {
+    background-size: 431px 430px;
+    background-position: -275px -331px;
+  }
+  .glyphsSpriteFriend_Follow {
+    background-position: -404px -207px;
+  }
+  .glyphsSpriteGlyph_chevron_right {
+    background-size: 431px 430px;
+    background-position: -118px -406px;
+  }
+  .glyphsSpriteGlyph_circle_star,
+  .glyphsSpriteGlyph_eye_off {
+    background-size: 431px 430px;
+    background-position: -92px -97px;
+  }
+  .glyphsSpriteGlyph_eye_off {
+    background-position: -37px -294px;
+  }
+  .glyphsSpriteGlyph_volume_off {
+    background-size: 431px 430px;
+    background-position: -325px -194px;
+  }
+  .glyphsSpriteGlyph_warning,
+  .glyphsSpriteGrey_Close {
+    background-size: 431px 430px;
+    background-position: -412px -107px;
+  }
+  .glyphsSpriteGrey_Close {
+    background-position: -339px -284px;
+  }
+  .glyphsSpriteHashtag__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -300px -331px;
+  }
+  .glyphsSpriteHeart__filled__16__grey_9 {
+    background-size: 431px 430px;
+    background-position: -412px -124px;
+  }
+  .glyphsSpriteHeart__filled__16__white {
+    background-size: 431px 430px;
+    background-position: -318px -223px;
+  }
+  .glyphsSpriteHeart__filled__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -325px -331px;
+  }
+  .glyphsSpriteHeart__filled__24__red_5 {
+    background-size: 431px 430px;
+    background-position: -350px -331px;
+  }
+  .glyphsSpriteHeart__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -375px -331px;
+  }
+  .glyphsSpriteHome__filled__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -400px -331px;
+  }
+  .glyphsSpriteHome__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: 0 -356px;
+  }
+  .glyphsSpriteIG_Lite_Direct_Variant_01 {
+    background-size: 431px 430px;
+    background-position: 0 -223px;
+  }
+  .glyphsSpriteIgtv__outline__24__blue_5 {
+    background-size: 431px 430px;
+    background-position: -25px -356px;
+  }
+  .glyphsSpriteIgtv__outline__24__grey_5 {
+    background-size: 431px 430px;
+    background-position: -50px -356px;
+  }
+  .glyphsSpriteInfo__filled__16__grey_9,
+  .glyphsSpriteInput_clear {
+    background-size: 431px 430px;
+    background-position: -318px -240px;
+  }
+  .glyphsSpriteInput_clear {
+    background-position: -220px -194px;
+  }
+  .glyphsSpriteLink__outline__24__grey_9,
+  .glyphsSpriteLite_app_icon {
+    background-size: 431px 430px;
+    background-position: -75px -356px;
+  }
+  .glyphsSpriteLite_app_icon {
+    background-position: -339px -73px;
+  }
+  .glyphsSpriteLocation__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -100px -356px;
+  }
+  .glyphsSpriteLock__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -125px -356px;
+  }
+  .glyphsSpriteLock__outline__96 {
+    background-size: 431px 430px;
+    background-position: -242px -97px;
+  }
+  .glyphsSpriteLogged_Out_QP_Glyph {
+    background-size: 431px 430px;
+    background-position: -126px -223px;
+  }
+  .glyphsSpriteMail__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -150px -356px;
+  }
+  .glyphsSpriteMenu__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -175px -356px;
+  }
+  .glyphsSpriteMore_horizontal__filled__24__grey_0 {
+    background-size: 431px 430px;
+    background-position: -200px -356px;
+  }
+  .glyphsSpriteMore_horizontal__outline__16__grey_5 {
+    background-size: 431px 430px;
+    background-position: -411px -294px;
+  }
+  .glyphsSpriteMore_horizontal__outline__24__grey_5 {
+    background-size: 431px 430px;
+    background-position: -225px -356px;
+  }
+  .glyphsSpriteMore_horizontal__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -250px -356px;
+  }
+  .glyphsSpriteNew_feed_activity {
+    background-size: 431px 430px;
+    background-position: -50px -406px;
+  }
+  .glyphsSpriteNew_post__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -275px -356px;
+  }
+  .glyphsSpriteNews_off_outline_red {
+    background-size: 431px 430px;
+    background-position: -70px -294px;
+  }
+  .glyphsSpriteNews_off_outline {
+    background-size: 431px 430px;
+    background-position: -103px -294px;
+  }
+  .glyphsSpritePaging_chevron,
+  .glyphsSpritePhone_confirm {
+    background-size: 431px 430px;
+    background-position: -300px -356px;
+  }
+  .glyphsSpritePhone_confirm {
+    background-position: -339px -146px;
+  }
+  .glyphsSpritePhoto_grid__outline__24__blue_5 {
+    background-size: 431px 430px;
+    background-position: -325px -356px;
+  }
+  .glyphsSpritePhoto_grid__outline__24__grey_5 {
+    background-size: 431px 430px;
+    background-position: -350px -356px;
+  }
+  .glyphsSpritePhoto_list__outline__24__blue_5 {
+    background-size: 431px 430px;
+    background-position: -375px -356px;
+  }
+  .glyphsSpritePhoto_list__outline__24__grey_5 {
+    background-size: 431px 430px;
+    background-position: -400px -356px;
+  }
+  .glyphsSpritePlay__filled__16__grey_9 {
+    background-size: 431px 430px;
+    background-position: -67px -406px;
+  }
+  .glyphsSpriteSave__filled__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: 0 -381px;
+  }
+  .glyphsSpriteSave__outline__24__blue_5 {
+    background-size: 431px 430px;
+    background-position: -25px -381px;
+  }
+  .glyphsSpriteSave__outline__24__grey_5 {
+    background-size: 431px 430px;
+    background-position: -50px -381px;
+  }
+  .glyphsSpriteSave__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -75px -381px;
+  }
+  .glyphsSpriteSearch__filled__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -100px -381px;
+  }
+  .glyphsSpriteSearch,
+  .glyphsSpriteSearch__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -125px -381px;
+  }
+  .glyphsSpriteSearch {
+    background-position: -318px -257px;
+  }
+  .glyphsSpriteSettings__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -150px -381px;
+  }
+  .glyphsSpriteShare__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -175px -381px;
+  }
+  .glyphsSpriteStar_filled_24 {
+    background-size: 431px 430px;
+    background-position: -325px -207px;
+  }
+  .glyphsSpriteStar_filled_white_24 {
+    background-size: 431px 430px;
+    background-position: -126px -280px;
+  }
+  .glyphsSpriteStar_half_filled_24_white {
+    background-size: 431px 430px;
+    background-position: -139px -280px;
+  }
+  .glyphsSpriteStar_half_filled_24 {
+    background-size: 431px 430px;
+    background-position: -152px -280px;
+  }
+  .glyphsSpriteStory__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -200px -381px;
+  }
+  .glyphsSpriteTag_up__filled__16__white {
+    background-size: 431px 430px;
+    background-position: -84px -406px;
+  }
+  .glyphsSpriteTag_up__outline__24__blue_5 {
+    background-size: 431px 430px;
+    background-position: -225px -381px;
+  }
+  .glyphsSpriteTag_up__outline__24__grey_5 {
+    background-size: 431px 430px;
+    background-position: -250px -381px;
+  }
+  .glyphsSpriteUser__filled__16__white {
+    background-size: 431px 430px;
+    background-position: -101px -406px;
+  }
+  .glyphsSpriteUser__filled__24__grey_0 {
+    background-size: 431px 430px;
+    background-position: -275px -381px;
+  }
+  .glyphsSpriteUser__filled__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -300px -381px;
+  }
+  .glyphsSpriteUser__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -325px -381px;
+  }
+  .glyphsSpriteUser_follow__filled__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -350px -381px;
+  }
+  .glyphsSpriteUser_follow__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -375px -381px;
+  }
+  .glyphsSpriteUsers__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -400px -381px;
+  }
+  .glyphsSpriteVerified_small {
+    background-size: 431px 430px;
+    background-position: -165px -280px;
+  }
+  .glyphsSpriteVideo_chat__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: 0 -406px;
+  }
+  .glyphsSpriteVolume__outline__44 {
+    background-size: 431px 430px;
+    background-position: -228px -223px;
+  }
+  .glyphsSpriteVolume_off__filled__44,
+  .glyphsSpriteWhite_Close {
+    background-size: 431px 430px;
+    background-position: -273px -223px;
+  }
+  .glyphsSpriteWhite_Close {
+    background-position: -349px -284px;
+  }
+  .glyphsSpriteX__filled__12__white {
+    background-size: 431px 430px;
+    background-position: -178px -280px;
+  }
+  .glyphsSpriteX__outline__24__grey_9 {
+    background-size: 431px 430px;
+    background-position: -25px -406px;
+  }
+}
+
+@use "generales/flex";
+@use "generales/grid";
+.direct-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
+  position: relative;
+  overflow: hidden;
+}
+
+.direct-body > .direct-body__wrapper {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 35% auto;
+      grid-template-columns: 35% auto;
+  -ms-grid-rows: 1;
+      grid-template-rows: 1;
+  grid-gap: 0;
+  width: 60%;
+  height: 90%;
+  overflow: hidden;
+  background-color: #fff;
+  border: 1px solid #dfdfdf;
+  border-radius: 4px;
+  padding: 0;
+  margin-top: 50px;
+  position: relative;
+}
+
+.direct-body > .direct-body__wrapper > .d-wrapper__col1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  border-right: 1px solid #dfdfdf;
+  overflow: hidden;
+}
+
+.direct-body > .direct-body__wrapper > .d-wrapper__col1 > .col1__header {
+  width: 100%;
+  height: 60px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 85% auto;
+      grid-template-columns: 85% auto;
+  -ms-grid-rows: 1;
+      grid-template-rows: 1;
+  grid-gap: 0.5em;
+  text-align: center;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.direct-body > .direct-body__wrapper > .d-wrapper__col1 > .col1__header > p {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
+.direct-body > .direct-body__wrapper > .d-wrapper__col1 > .col1__header > .cont-show-suggestions {
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.direct-body > .direct-body__wrapper > .d-wrapper__col1 > .col1__body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 0;
+  margin: 0;
+}
+
+.direct-body > .direct-body__wrapper > .d-wrapper__col2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.no-conversations {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+.no-conversations > .no-conversations__wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.no-conversations > .no-conversations__wrapper > .glyphsSpriteDirect__outline__96 {
+  margin-bottom: 1.5em;
+}
+
+.no-conversations > .no-conversations__wrapper > h2 {
+  font-weight: 400;
+  margin: 0.5em;
+}
+
+.no-conversations > .no-conversations__wrapper > p {
+  color: #8e8e8e;
+  font-weight: 500;
+}
+
+.no-conversations > .no-conversations__wrapper > button, .no-conversations > .no-conversations__wrapper > .bt-small {
+  margin-top: 2em;
+  width: auto;
+}
+/*# sourceMappingURL=direct.css.map */

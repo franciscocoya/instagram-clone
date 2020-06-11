@@ -1,0 +1,198 @@
+@import "../partials/generales";
+
+@use "generales/flex";
+@use 'generales/grid';
+
+.w-upload {
+  & > .upload-wrapper {
+    background-color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    & > .upload-main {
+      transform: translateY(80px);
+      @include grid(1, repeat(2, 1fr), 0.5em);
+
+      & > .upload-col-1 {
+        @include flex(column, space-evenly, center);
+
+        & > .cont-image-preview {
+          @include flex(column, center, center);
+          width: 320px; //Default post width = 480px
+          height: 400px; //Default post height = 600px
+          margin-bottom: 2em;
+          z-index: 1;
+          overflow: hidden;
+          background-color: map-get($colors, bg-gris);
+          border: 1px solid map-get($colors, bc-gris);
+          & > .img-preview {
+            top: 0;
+            left: 0;
+            object-fit: contain;
+            max-width: 100%;
+            max-height: 100%;
+          }
+        }
+
+        & > .w-upload-input {
+          @include flex(column, space-between, center);
+          height: 200px;
+          width: 80%;
+          border-radius: 0.5em;
+          border: 1.2px dashed map-get($colors, bc-gris);
+          background-color: map-get($colors, bg-gris);
+          position: relative;
+          text-align: center;
+          overflow: hidden;
+          z-index: 2;
+
+          & > .img-post-input {
+            display: none;
+          } //fin img-post-input
+
+          & > .overlay-text-img {
+            @include flex(column, center, center);
+            position: absolute;
+            z-index: 2;
+            height: 100%;
+            padding: 0.9em;
+
+            & > .drag-icon {
+              & > path {
+                fill: map-get($colors, bt-azul);
+              }
+            }
+            & > p {
+              &:first-child {
+                font-size: 1.1em;
+                font-weight: 700;
+                color: map-get($colors, tx-gris-dark);
+              }
+            } //fin p
+          } //fin overlay-text-img
+
+          & > .overlay-scale-img {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transform: translate(4px, -4px);
+            z-index: 4;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            & > img {
+              width: 40px;
+              object-fit: contain;
+            }
+          } //fin overlay-scale-img
+
+          & > .overlay-rotate-img {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            transform: translate(-4px, -4px);
+            z-index: 4;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            & > img {
+              width: 40px;
+              object-fit: contain;
+            }
+          } //fin overlay-rotate-img
+        } //fin w-uplaod-input
+      } //fin .upload-col-1
+
+      & > .upload-col-2 {
+        @include flex(column, space-evenly, center);
+
+        //Estilos carrousel de filtros de imagen
+        & > .carrousel-filtros-img {
+          overflow: hidden;
+          width: 500px;
+          margin-bottom: 2em;
+
+          & > .cont-title-filtros {
+            @include flex(row, flex-start, center);
+            & > h2 {
+              margin: 0 0 0.5em 0;
+            }
+            & > .chip-selected-filter {
+              @include flex(row, space-between, center);
+              width: 17%;
+              margin: 0 0 0.5em 1.3em;
+              padding: 0 0.8em;
+              border-radius: 0.7em;
+              color: #fff;
+              background-color: #ee524e;
+              font-size: 1.2em;
+              font-weight: 300;
+              text-align: center;
+
+              & > .close-chip {
+                font-weight: 700;
+                cursor: pointer;
+              }
+            } //fin chip-selected-filter
+          } //fin cont-title-filtros
+        } //fin carrousel-filtros-img
+
+        & > .cont-post-description {
+          margin: 2em auto;
+          @include flex(column, center, flex-start);
+          & > div > textarea {
+            width: 96%;
+            height: 50px;
+          } //fin input
+        } //fin cont-post-description
+
+        & > .cont-post-location {
+          @include flex(row, flex-start, center);
+          position: relative;
+          & > div > .country-flag {
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: translate(-10px, 7px);
+            width: 50px;
+            height: 30px;
+            border-radius: 0.3em;
+          }
+
+          & > .placesAutoComp {
+            @include flex(row, flex-start, center);
+          }
+        } //fin cont-post-location
+
+        & > .cont-post-tags {
+          @include flex(column, center, flex-start);
+          margin-top: 2em;
+          & > textarea {
+            width: 96%;
+            height: 60px;
+          }
+        } //fin cont-post-tags
+
+        & > .upload-buttons {
+          @include flex(row, center, center);
+
+          & > .wrapper-buttons-up {
+            @include flex(row, center, center);
+
+            & > button {
+              width: 100px;
+            }
+
+            & > .link-cancelar {
+              & > .bt-cancelar-upload {
+                margin-left: 2em;
+                background-color: transparent;
+                color: map-get($colors, bt-red);
+                border: 1px solid map-get($colors, bt-red);
+              }
+            }
+          } //fin wrapper-buttons-up
+        } //fin upload-buttons
+      } //fin upload-col-2
+    } //fin uplaod-main
+  } //fin upload-wrapper
+} //fin w-upload

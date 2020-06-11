@@ -1,0 +1,34 @@
+@import "../../partials/generales";
+@use "generales/flex";
+
+.replies-container {
+  @include flex(column, flex-start, flex-start);
+  margin: 0;
+  padding: 0;
+
+  & > .bt-show-replies {
+    position: relative;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8em;
+    color: map-get($colors, tx-gris);
+    border: none;
+    outline: none;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+
+    &:before {
+      width: 30px;
+      content: "";
+      position: absolute;
+      left: 23%;
+      top: 50%;
+      border-bottom: 1px solid map-get($colors, tx-gris);
+    } //fin bt before
+  } //fin bt-show-replies
+
+  & > .replies {
+    margin-left: 1em;
+  } //fin replies
+} //fin replies-container

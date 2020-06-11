@@ -1,0 +1,35 @@
+@import "../partials/generales";
+
+@use 'generales/flex';
+
+.body-explore {
+  margin-top: 3em;
+  width: 100%;
+  height: 100%;
+  background-color: map-get($colors, bg-gris);
+
+  & > .suggested-wrapper {
+    width: 90%;
+    padding-top: 2em;
+    margin: 2em auto;
+
+    & > p {
+      color: map-get($colors, tx-gris);
+      font-weight: 700;
+      font-size: 0.9em;
+      margin-bottom: 2em;
+    }
+  } //fin suggested-wrapper
+
+  & > .wrapper-posts {
+    height: 100%;
+    width: 100%;
+    background-color: map-get($colors, bg-gris);
+    & > p {
+      color: map-get($colors, tx-gris);
+      font-weight: 700;
+      font-size: 0.9em;
+      margin: 2em 0 0 6%;
+    }
+  } //fin wrapper-posts
+} //fin body-explore

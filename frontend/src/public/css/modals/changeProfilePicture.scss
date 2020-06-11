@@ -1,0 +1,61 @@
+@import "../partials/generales";
+
+@use "generales/flex";
+
+.w-changePic {
+  @include flex(column, center, center);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 50;
+  background-color: map-get($colors, bg-dark);
+  & > .close-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: 4;
+  }
+  & > .modal-changePic {
+    @include flex(column, center, center);
+    width: 400px;
+    background-color: #fff;
+    border-radius: 0.9em;
+    overflow: hidden;
+    animation-duration: 0.4s;
+    z-index: 5;
+    & > ul {
+      margin: 0;
+      padding: 0;
+      & > li {
+        padding: 1.1em 0;
+        font-size: 0.9em;
+        transition: 0.2s ease-in-out;
+        margin: 0;
+        cursor: pointer;
+        &:hover {
+          background-color: map-get($colors, bg-gris);
+        }
+
+        & > .upload-photo {
+          @include flex(row, center, center);
+          cursor: pointer;
+          margin: 0;
+          padding: 0;
+          z-index: 51;
+        } //fin upload-photo
+
+        &:first-child() {
+          padding: 1.2em 0;
+          font-size: 1.2em;
+          font-weight: 500;
+          &:hover {
+            background: transparent;
+          }
+        }
+      } //fin li
+    } //fin ul
+  } //fin modal-options
+} //fin w-moreOptions

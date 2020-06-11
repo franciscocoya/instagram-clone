@@ -1,0 +1,10 @@
+@import "../../../partials/generales";
+
+.emoji-panel {
+    position: absolute;
+    bottom: 10%;
+    left: 2em;
+    z-index: 50;
+    background-color: #fff;
+    outline: none;
+} //fin emoji-panel

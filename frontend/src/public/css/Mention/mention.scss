@@ -1,0 +1,10 @@
+@import "../partials/generales";
+
+.mention {
+  color: map-get($colors, hashtag-color);
+  font-size: 1em;
+  font-weight: 400 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  cursor: pointer;
+} //fin mention

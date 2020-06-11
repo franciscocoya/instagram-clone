@@ -1,0 +1,179 @@
+@import "../partials/generales";
+@use "generales/flex";
+@use "generales/grid";
+
+//SUGGESTED CONTAINER STYLES
+
+.suggested-container {
+  width: 100%;
+  height: 100%;
+  @include flex(row, center, center);
+  overflow-x: hidden;
+  background-color: map-get($colors, bg-gris);
+  position: relative;
+
+  & > .coreSpritePagingChevron {
+    position: absolute;
+    top: 45%;
+    background-image: url("../../assets/sprites.png");
+    background-repeat: no-repeat;
+    background-position: -405px -216px;
+    height: 24px;
+    width: 24px;
+    z-index: 5;
+    cursor: pointer;
+  }
+  & > .chevron_left {
+    left: 0;
+  } //fin cont-pagging
+
+  & > .chevron_right {
+    transform: scaleX(-1);
+    right: 0;
+  }
+} //fin suggested-container
+
+//USER CARD STYLES
+.user-card {
+  width: 176px;
+  height: 198px;
+  margin-right: 1.2em;
+  @include flex(column, space-evenly, center);
+  border: 1px solid map-get($colors, bc-gris);
+  border-radius: 4px;
+  background-color: #fff;
+
+  & > .user-card__profile-picture {
+    margin: 0;
+    & > img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid map-get($colors, bc-gris);
+    }
+
+    & > .loading_image_profile {
+      border: none;
+      width: 10px;
+      height: 10px;
+    }
+  } //fin profile-picture
+
+  & > .user-card__username {
+    font-size: 0.9em;
+    font-weight: 700;
+    margin: 0.9em;
+  }
+
+  & > .user-card__bt-follow {
+    width: 40%;
+    margin: 0 auto;
+  }
+} //fin user-card
+
+//HORIZONTAL USER SUGGEST STYLES
+
+.horizontal-suggest {
+  @include flex(row, flex-start, center);
+  width: 100%;
+  padding: 0.8em;
+  margin: 0;
+  border-bottom: 1px solid map-get($colors, bc-gris);
+  transition: 0.1s ease-in-out;
+
+  &:last-child {
+    border-bottom: none;
+  }
+  &:hover {
+    background-color: map-get($colors, bg-gris);
+  }
+  & > .horizontal-suggest__img-user-suggest {
+    @include flex(row, center, center);
+    padding: 0;
+    margin: 0 0.8em;
+
+    & > img {
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      object-fit: cover;
+      margin: 0;
+      border: 1px solid map-get($colors, bc-gris);
+    } //fin img
+  } //fin container img-user-suggest
+
+  & > .horizontal-suggest__user-data {
+    @include flex(column, center, flex-start);
+    margin: 0;
+    & > p {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      &:nth-of-type(1) {
+        font-weight: 500;
+        color: map-get($colors, username-gris);
+      }
+
+      &:nth-of-type(2) {
+        font-weight: 300;
+        font-size: 0.9em;
+        color: map-get($colors, tx-gris);
+      }
+    }
+  } //fin user-data
+} //fin horizontal-suggest
+
+//USER SUGGEST WITH CHECKBOX STYLES
+.suggest-With-Checkbox {
+  @include flex(row, space-between, center);
+  padding: 0.8em;
+  margin: 0;
+  border-bottom: 1px solid map-get($colors, bc-gris);
+  transition: 0.1s ease-in-out;
+  cursor: pointer;
+  outline: none;
+  background-color: #fff;
+
+  &:last-child {
+    border-bottom: none;
+  }
+  &:hover {
+    background-color: map-get($colors, bg-gris);
+  }
+  & > .cont-user-data-sug {
+    @include flex(row, flex-start, flex-start);
+    & > .suggest-With-Checkbox__img-user-suggest {
+      @include flex(row, center, center);
+      padding: 0;
+      margin: 0 0.8em;
+
+      & > img {
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        object-fit: cover;
+        margin: 0;
+        border: 1px solid map-get($colors, bc-gris);
+      } //fin img
+    } //fin container img-user-suggest
+
+    & > .suggest-With-Checkbox__user-data {
+      @include flex(column, center, flex-start);
+      margin: 0;
+      & > p {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        &:nth-of-type(1) {
+          font-weight: 500;
+          color: map-get($colors, username-gris);
+        }
+
+        &:nth-of-type(2) {
+          font-weight: 300;
+          font-size: 0.9em;
+          color: map-get($colors, tx-gris);
+        }
+      }
+    } //fin user-data
+  }
+} //fin horizontal-suggest

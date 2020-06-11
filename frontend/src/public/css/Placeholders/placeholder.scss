@@ -1,0 +1,46 @@
+@import "../partials/generales";
+@use "generales/flex";
+@use "generales/grid";
+
+$phColors: (
+  bg-placeholder: #efefef,
+);
+
+//Sytyles User profile(username, fullname, profile_picture) placeholder
+.simple-placeholder {
+  @include flex(row, flex-start, center);
+  margin-bottom: 1em;
+  & > .circle-placeholder-56 {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background-color: map-get($phColors, bg-placeholder);
+    margin: 0;
+    padding: 0;
+    outline: none;
+  } //profile_picture placeholder
+
+  & > .cont-rectangles {
+    @include flex(column, space-evenly, flex-start);
+    margin-left: 0.4em;
+    padding: 0;
+    & > .rounded-rectangle {
+      height: 14px;
+      border-radius: 4px;
+      background-color: map-get($phColors, bg-placeholder);
+      border: none;
+      outline: none;
+      margin-bottom: 0.5em;
+      padding: 0;
+    } //fin rounded rectangle
+  } //fin cont-rectangles
+} //fin simple-placeholder
+
+.ph-116 {
+  width: 116px;
+}
+
+.ph-84 {
+  width: 84px;
+}

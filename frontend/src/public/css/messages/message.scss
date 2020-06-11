@@ -1,0 +1,23 @@
+@import "../partials/generales";
+
+//Mixins
+@use '../partials/generales/flex'; //direction, justify, align
+
+.message {
+    width: 77%;
+    height: 50px;
+    padding: 0 1.1em;
+    @include flex(row, space-between, center);
+    background-color: map-get($colors, message-success);
+    border-radius: 0.5em;
+    margin: 2em auto;
+    color: map-get($colors, tx-dark-green);
+    font-size: 0.9em;
+    font-weight: 900;
+
+    & > .close {
+        cursor: pointer;
+        font-size: 1.7em;
+        font-weight: 300;
+    } //fin close
+} //fin message

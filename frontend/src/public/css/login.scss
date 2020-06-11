@@ -1,0 +1,53 @@
+@import "partials/generales";
+@import "partials/sprites";
+
+@use 'generales/flex';
+
+$colors: (
+  bt-azul: #0095f6,
+  bt-azul-hover: #b2dffc,
+  bg-input: #fafafa,
+);
+
+.b-signIn {
+  overflow: hidden;
+}
+
+.container {
+  margin: 0;
+
+  @include flex(row, center, center);
+  & > .col-1 {
+    margin: 0;
+    padding: 0;
+    @include flex(column, center, flex-start);
+  } //fin .col-1
+
+  & > .col-2 {
+    margin: 0 2em;
+    @include flex(column, space-between, center);
+
+    & > .log-container {
+      @include flex(column, center, center);
+      //Logo instagram
+      & > .header-l {
+        @include flex(row, center, center);
+        margin: 0.7em auto 1.5em;
+      } //fin log-headeras
+
+      .form-signin {
+        width: 100%;
+        @include flex(column, center, space-between);
+      }
+    } //fin log-container
+
+    & > .download-container {
+      text-align: center;
+      @include flex(column, center, space-between);
+
+      & > .icons-download {
+        @include flex(row, space-evenly, center);
+      }
+    } //fin download-container
+  }
+} //fin container

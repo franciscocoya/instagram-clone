@@ -1,0 +1,81 @@
+@import "../partials/generales";
+@import "../partials/glyphs";
+
+@use "generales/flex";
+@use "generales/grid";
+
+.w-share {
+  @include flex(column, center, center);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 30;
+  background-color: map-get($colors, bg-dark);
+  & > .close-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: 4;
+  }
+  & > .modal-share {
+    @include flex(column, center, center);
+    width: 400px;
+    background-color: #fff;
+    border-radius: 0.9em;
+    overflow: hidden;
+    animation-duration: 0.4s;
+    z-index: 5;
+    & > ul {
+      margin: 0;
+      padding: 0;
+      & > li {
+        @include grid(1, 10% auto, 0.4em);
+        width: 100%;
+        padding: 1.1em 1.8em;
+        margin: 0;
+        font-size: 0.9em;
+        transition: 0.2s ease-in-out;
+        text-align: left;
+        cursor: pointer;
+        &:hover {
+          background-color: map-get($colors, bg-gris);
+        }
+        & > span {
+          margin: 0;
+          padding: 0;
+        } //fin span
+
+        //Header modal
+        &:first-child {
+          width: auto;
+          @include flex(row, center, center);
+          cursor: default;
+          text-align: center;
+          position: relative;
+          font-weight: 700;
+          font-size: 1.1em;
+          padding: 0.7em;
+          & > svg {
+            position: absolute;
+            top: 0;
+            transform: translate(175px, 49%);
+            cursor: pointer;
+          }
+          &:hover {
+            background-color: transparent;
+          }
+        } //fin header modal
+
+        //Cancelar
+        &:last-child {
+          & > span {
+            grid-column: 2;
+          }
+        }
+      } //fin li
+    } //fin ul
+  } //fin modal-options
+} //fin w-moreOptions

@@ -1,0 +1,35 @@
+.nametagSpriteNT_Contrast,
+.nametagSpriteNT_Corners,
+.nametagSpriteNT_Pixels {
+    background-image: url("../../assets/nametags.png");
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    height: 120px;
+    width: 120px;
+}
+.nametagSpriteNT_Corners,
+.nametagSpriteNT_Pixels {
+    background-position: -122px 0;
+}
+.nametagSpriteNT_Pixels {
+    background-position: 0 -122px;
+}
+@media (min-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+    .nametagSpriteNT_Contrast,
+    .nametagSpriteNT_Corners,
+    .nametagSpriteNT_Pixels {
+        background-image: url("../../assets/nametags.png");
+    }
+    .nametagSpriteNT_Contrast {
+        background-size: 241px 241px;
+        background-position: 0 0;
+    }
+    .nametagSpriteNT_Corners,
+    .nametagSpriteNT_Pixels {
+        background-size: 241px 241px;
+        background-position: -121px 0;
+    }
+    .nametagSpriteNT_Pixels {
+        background-position: 0 -121px;
+    }
+}

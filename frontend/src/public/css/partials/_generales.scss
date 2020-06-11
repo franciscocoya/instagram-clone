@@ -1,0 +1,605 @@
+@import "fonts";
+
+$colors: (
+  bg-gris: #fafafa,
+  bg-light-gray: #efefef,
+  bt-azul: #0095f6,
+  hashtag-color: #0064a1,
+  bt-azul-hover: #b2dffc,
+  bt-red: #f55a18,
+  bc-gris: #dfdfdf,
+  bc-gris-light: #ebebeb,
+  tx-gris: #8e8e8e,
+  tx-med-dark-gray: rgba(50, 51, 57, 0.5),
+  tx-gris-dark: #3b3b3b,
+  bc-gris-dark: rgb(168, 168, 168),
+  bg-dark: rgba(0, 0, 0, 0.623),
+  tx-red: #ed4956,
+  message-success: #a7ff85ca,
+  tx-dark-green: #086972,
+  bg-overlay: rgba(0, 0, 0, 0.383),
+  username-gris: #262626,
+);
+
+/**
+ * MIXINS
+ * **/
+
+@mixin flex($direction, $justify, $align) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin grid($rows, $columns, $gap) {
+  display: grid;
+  grid-template-columns: $columns;
+  grid-template-rows: $rows;
+  grid-gap: $gap;
+}
+
+/**
+ * ESTILOS
+ * **/
+
+.body {
+  width: 100%;
+  height: 100%;
+  background-color: map-get($colors, bg-gris);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.box {
+  margin-bottom: 0.5em;
+  padding: 0.7em 2em;
+  width: 100%;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid map-get($colors, bc-gris);
+  border-radius: 3px;
+}
+
+.logo-small {
+  transform: scale(0.6);
+}
+
+/**
+ * ****************************
+ * **/
+
+//Inputs
+input,
+textarea {
+  padding: 0.6em;
+  background-color: map-get($colors, bg-gris);
+  border: 1px solid map-get($colors, bc-gris);
+  margin: 0.2em 0;
+  border-radius: 3px;
+
+  &:active,
+  &:focus {
+    border: 1px solid map-get($colors, bc-gris);
+  }
+}
+
+::placeholder {
+  color: map-get($colors, tx-gris);
+  font-size: 1.1em;
+  font-weight: 300;
+}
+
+input,
+textarea {
+  outline: none;
+}
+
+.input-transparent {
+  border: none;
+  background: transparent;
+  outline: none;
+  text-indent: 15px;
+  &:active,
+  &:focus {
+    border: none;
+
+    &::placeholder {
+      text-align: left;
+    }
+  }
+}
+
+.input-bg-transparent {
+  outline: none;
+  resize: none;
+  border-radius: 0.6em;
+  border: 1px solid map-get($colors, bc-gris-light);
+  background-color: #fff;
+  font-size: 0.9em;
+  font-weight: 300;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  &:focus {
+    background-color: map-get($colors, bg-gris);
+    border: 1px solid map-get($colors, bc-gris);
+  } //fin input focus
+}
+
+.input-transparent::placeholder {
+  text-align: center;
+  font-weight: 300;
+  font-size: 1.05em;
+}
+
+//widths & heights
+.w-100 {
+  width: 100%;
+}
+
+.w-50 {
+  width: 50% !important;
+}
+
+.w-96 {
+  width: 96%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+//Borders
+
+.border-gradient {
+  transition: 0.1s ease-in-out;
+  &:active {
+    display: flex;
+    align-items: center;
+    //width: 50vw;
+
+    position: relative;
+    padding: 0;
+    box-sizing: border-box;
+
+    $border: 4px;
+    color: #fff;
+    background: transparent;
+    background-clip: padding-box;
+    border: solid $border transparent;
+
+    & > .filter > .filter-name {
+      & > p {
+        font-weight: 700;
+        font-size: 2.5em;
+        background: -moz-linear-gradient(
+          45deg,
+          #f09433 0%,
+          #e6683c 25%,
+          #dc2743 50%,
+          #cc2366 75%,
+          #bc1888 100%
+        );
+        background: -webkit-linear-gradient(
+          45deg,
+          #f09433 0%,
+          #e6683c 25%,
+          #dc2743 50%,
+          #cc2366 75%,
+          #bc1888 100%
+        );
+        background: linear-gradient(
+          45deg,
+          #f09433 0%,
+          #e6683c 25%,
+          #dc2743 50%,
+          #cc2366 75%,
+          #bc1888 100%
+        );
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      margin: -$border; /* !importanté */
+      border-radius: inherit; /* !importanté */
+      background: -moz-linear-gradient(
+        45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+      );
+      background: -webkit-linear-gradient(
+        45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+      );
+      background: linear-gradient(
+        45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+      );
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+    }
+  }
+}
+
+.b-bottom-1 {
+  border-bottom: 1px solid map-get($colors, bc-gris);
+}
+
+.b-bottom-1-light {
+  border-bottom: 1px solid map-get($colors, bc-gris-light);
+}
+
+.b-1-g {
+  border: 1px solid map-get($colors, bc-gris);
+}
+
+.b-left-bold {
+  border-left: 3px solid #000;
+}
+
+//buttons
+button {
+  width: 100%;
+  height: 35px;
+  margin-top: 1.1em;
+  padding: 5px 9px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: map-get($colors, bt-azul);
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  &:disabled {
+    cursor: default;
+    background-color: map-get($colors, bt-azul-hover);
+  }
+}
+
+.bt-more-description {
+  background-color: transparent;
+  color: map-get($colors, tx-gris);
+  font-weight: 400;
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.bt-small {
+  @extend button;
+  transform: scale(0.8);
+  margin: 0 0.5em;
+  & > .tx-bt-white {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.2em;
+  }
+}
+
+.bt-gray {
+  background-color: map-get($colors, bg-gris);
+  color: map-get($colors, tx-gris-dark);
+}
+
+.bt-small-link {
+  outline: none !important;
+  background-color: transparent !important;
+  color: map-get($colors, bt-azul);
+  padding: 0 auto;
+  margin: 0;
+}
+
+.bt-small-link-disable {
+  background-color: transparent !important;
+  outline: none;
+  color: map-get($colors, bt-azul-hover);
+  padding: 0 auto;
+  margin: 0;
+}
+
+.bt-border-gray {
+  padding: 0 auto;
+  margin: 0;
+  background-color: transparent;
+  border: 1px solid map-get($colors, bc-gris);
+  color: #000;
+}
+
+//displays
+.full-page {
+  width: 100%;
+  height: 100%;
+  @include flex(column, center, center);
+  overflow: hidden;
+  z-index: 7;
+}
+
+.inline {
+  display: inline;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-row-between {
+  @extend .flex-row;
+  justify-content: space-between;
+}
+
+.display-none {
+  display: none;
+}
+
+.grid-pos-1-2 {
+  grid-row: 1;
+  grid-column: 2;
+}
+
+//backgrounds
+.bg-white {
+  background-color: #fff;
+}
+
+.bg-dark {
+  background-color: map-get($colors, bg-dark);
+}
+
+.bg-gris {
+  background-color: map-get($colors, bg-gris);
+}
+
+//Texts
+
+//Pre
+.pre-style {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  font-size: 1em;
+  font-weight: 400;
+  text-align: left;
+  line-height: 1.19em;
+  & > span {
+    font-weight: 700;
+    margin-right: 0.3em;
+  }
+}
+
+.location-text {
+  text-decoration: none;
+  color: map-get($colors, tx-gris-dark);
+  font-size: 0.9em;
+} //fin location-text
+
+.timeago {
+  margin: 0;
+  padding: 0;
+  font-size: 0.85em;
+  font-weight: 500;
+  color: map-get($colors, tx-gris);
+}
+
+.lc-black {
+  color: #000;
+  &:active,
+  &:focus,
+  &:visited {
+    color: #000;
+  }
+}
+
+.t-2 {
+  font-weight: 500;
+  font-size: 1.1em;
+  color: map-get($colors, tx-gris);
+}
+
+.t-subtitle {
+  border-top: 1px solid #fff;
+  padding: 0.5em;
+  margin: 0;
+  font-size: 0.9em !important;
+  color: #fff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tx-s-gris {
+  font-weight: 300;
+  font-size: 0.9em;
+  color: map-get($colors, tx-gris);
+}
+
+.tx-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.font-weight-bold {
+  font-weight: 700;
+}
+
+.tx-button {
+  color: #fff;
+  font-weight: 700;
+}
+
+.text-transparent {
+  color: transparent;
+}
+
+.bt-svg {
+  background-color: transparent;
+  color: #000;
+}
+
+.bold {
+  font-weight: 500;
+  font-size: 1em;
+  margin-left: 0.3em;
+  color: map-get($colors, bt-azul);
+}
+
+.bold-black {
+  @extend .bold;
+  color: rgb(15, 15, 15);
+}
+
+.bold-red {
+  font-weight: 500;
+  color: map-get($colors, tx-red);
+}
+
+.bold-blue {
+  font-weight: 700;
+  color: map-get($colors, bt-azul);
+}
+
+.bold-white {
+  font-weight: 700;
+  color: #fff;
+}
+
+//positions
+.p-abs {
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-align: center;
+  cursor: text;
+}
+
+.p-fixed {
+  position: fixed;
+}
+
+.p-relative {
+  position: relative;
+}
+
+//modals
+.modal-container {
+  width: 40%;
+  @include flex(column, center, center);
+  margin: 0 auto;
+  border: 1px solid transparent;
+  border-radius: 0.8em;
+  background-color: #fff;
+  color: #000;
+  font-weight: 300;
+  font-size: 0.9em;
+}
+
+//lists
+.list-style-none {
+  list-style: none;
+}
+
+//margins
+.mx-05 {
+  margin: 0 0.5em;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.mp-0 {
+  margin: 0;
+  padding: 0;
+}
+
+//paddings
+.p-2 {
+  padding: 2em;
+}
+
+//decorations
+.link {
+  text-decoration: none;
+  outline: none;
+  font-weight: 300;
+  font-size: 0.9em;
+  color: #000;
+}
+
+.decoration-none {
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+}
+
+//separators
+.separator {
+  margin-top: 0.5em;
+  width: 100%;
+  color: map-get($colors, bc-gris);
+  font-weight: 700;
+  @include flex(row, space-between, center);
+  & > .line {
+    width: 70%;
+    border-top: 1px solid map-get($colors, bc-gris);
+    margin: 0 0.3em;
+    padding: 0;
+  }
+}
+
+//IMAGES
+.profile-img {
+  margin: 0 0.5em;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+//IMAGES
+.expand-img {
+  width: 240;
+  width: 300px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

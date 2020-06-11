@@ -1,0 +1,68 @@
+@import "../partials/generales";
+
+//Mixins
+@use '../partials/generales/flex'; //direction, justify, align
+@use '../partials/generales/grid'; //rows, columns, gap
+
+.editProfile {
+  @include flex(column, center, flex-start);
+  margin: 0;
+  border-left: 1px solid map-get($colors, bc-gris);
+  height: 100%;
+
+  & > .edit-header {
+    width: 100%;
+    // @include flex(row, center, center);
+    @include grid(1, 15% auto, 2em);
+    margin-bottom: 1.1em;
+    & > img {
+      width: 100px !important;
+      height: 100px !important;
+      border-radius: 50%;
+      margin: 0 auto;
+      padding: 0;
+      object-fit: cover;
+    }
+
+    & > .cont-info-header {
+      @include flex(column, center, flex-start);
+      & > h2 {
+        font-size: 1.6em;
+        font-weight: 500;
+        margin: 0;
+      }
+
+      & > .f-profile {
+        font-size: 0.9em;
+      }
+    } //fin cont-info-header
+  } //fin exit-header
+
+  & > .editBody {
+    width: 100%;
+    @include flex(column, center, flex-start);
+
+    & > .form-control {
+      width: 100%;
+      @include grid(1, 15% auto, 2em);
+      margin-bottom: 0.7em;
+      & > label {
+        @include flex(row, flex-end, center);
+        text-align: right;
+      }
+
+      & > input,
+      & > textarea {
+        margin: 0;
+        width: 75%;
+        resize: vertical;
+      }
+    } //fin form-control
+
+    & > button {
+      @include flex(row, center, center);
+      width: 15%;
+      margin: 1.5em auto;
+    }
+  } //fin edit-body (form)
+} //fin editprofile

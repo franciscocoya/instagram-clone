@@ -1,0 +1,72 @@
+@import "../../../partials/generales";
+
+@use "generales/flex";
+
+.direct-message {
+  @include flex(row, center, center);
+  position: relative;
+  & > .direct-message__wrapper {
+    border: 1px solid map-get($colors, bc-gris);
+    padding: 1em;
+    margin-bottom: 0.5em;
+    border-radius: 3em;
+  } //fin direct-message__wrapper
+} //fin direct-message
+
+.msg-left {
+  width: 100%;
+  @include flex(row, flex-start, center);
+} //fin msg-left
+
+.msg-right {
+  width: 100%;
+  @include flex(row, flex-end, center);
+} //fin msg-left
+
+.msg_image {
+  @include flex(row, center, center);
+  width: 250px;
+  padding: 0 !important;
+  margin: 0;
+  overflow: hidden;
+  cursor: pointer;
+
+  & > .img-message-content {
+    max-width: 250px;
+    object-fit: cover;
+    margin: 0;
+    padding: 0;
+  } //fin img-message-content
+} //fin msg_image
+
+/**
+ * The following style is set when message is sent by the current user.
+ * */
+.bg-light {
+  background-color: map-get($colors, bg-light-gray);
+  border: none !important;
+} //fin bg light
+
+.msgmopt__right {
+  @include flex(row, flex-end, center);
+}
+
+.msgmopt__left {
+  @include flex(row, flex-start, center);
+}
+
+.wrapper-moreMessageOptions {
+  height: 100%;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  & > .glyphsSpriteMore_horizontal__outline__16__grey_5 {
+    background-image: url("../../../../assets/glyphs.png");
+    background-repeat: no-repeat;
+    background-position: -436px -274px;
+    height: 16px;
+    width: 16px;
+    margin: 0 1em;
+    cursor: pointer;
+  } //fin moreMessageOptions icon
+} //fin wrapper moreMessageOptions icon

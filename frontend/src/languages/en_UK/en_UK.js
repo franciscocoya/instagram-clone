@@ -1,0 +1,1 @@
+const en_UK = {};

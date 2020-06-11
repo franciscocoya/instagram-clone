@@ -1,0 +1,161 @@
+@import "../partials/generales";
+
+@use "generales/flex";
+@use "generales/grid";
+
+li {
+  margin-bottom: 1.8em;
+  //Descripcion del post
+  & > .post-description {
+    margin: 0.5em auto;
+    grid-template-columns: 20% auto 20% !important;
+    & > .cont-img {
+      @include flex(row, center, center);
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      & > img {
+        margin: 0;
+        width: 35px;
+        height: 35px;
+        object-fit: cover;
+      }
+    }
+
+    & > .cont-descripcion {
+      & > .c-username {
+        & > span {
+          font-weight: 700;
+        }
+      }
+      & > pre {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding-right: 0.7em;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        font-size: 0.9em;
+        text-align: left;
+        line-height: 1.19em;
+        & > span {
+          font-weight: 700;
+          margin-right: 0.3em;
+        }
+      }
+
+      & > .container-like {
+        @include grid(1, auto auto auto, 0.2em);
+        color: map-get($colors, tx-gris);
+
+        & > .timeago-comment {
+          @include flex(row, flex-start, center);
+          font-size: 0.75em;
+        }
+
+        & > .comment-likes-count {
+          @include flex(row, center, center);
+          font-size: 0.75em;
+          font-weight: 600;
+          margin: 0;
+        } //fin comment-likes-count
+
+        & > .bt-comment {
+          @include flex(row, flex-end, center);
+          background-color: transparent;
+          outline: none;
+          color: map-get($colors, tx-gris);
+          font-size: 0.75em;
+          font-weight: 600;
+          margin: 0;
+          padding: 0;
+        } //fin bt-comment
+      } //fin container-like
+    } //fin cont-descripcion
+
+    & > .cont-comment-like {
+      @include flex(row, center, center);
+      & > #comment-like {
+        margin: 0;
+        cursor: pointer;
+      } //fin comment-like
+    } //fin cont-comment-like
+  } //fin post-descripcion
+} //fin li
+
+/*
+ * Advance Comment Reply Styles
+ **/
+
+.advance-comment-reply {
+  width: 100%;
+  margin-bottom: 0.5em;
+  padding: 0;
+  transform: translateX(55px); //Comment reply ident
+
+  & > .post-description-reply {
+    @include grid(1, 20% auto 95px, 0.3em);
+    & > .cont-img-reply {
+      & > img {
+        width: 35px;
+        height: 35px;
+      }
+    } //fin cont-img-reply
+
+    & > .cont-reply-description {
+      & > .c-username {
+        margin: 0;
+      } //fin c-username
+
+      & > pre {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      } //fin pre
+    } //fin cont-reply-description
+
+    & > .cont-comment-reply-like {
+      @include grid(repeat(2, 1fr), 1, 0.1em);
+      margin: 0;
+      padding: 0;
+      & > .cont-comment-reply-like__wrapper {
+        @include flex(row, flex-start, center);
+        & > .comment-like-reply {
+          grid-row: 1;
+          margin: 0;
+          cursor: pointer;
+        } //fin comment-like
+      } //fin cont-comment-reply-like__wrapper
+    } //fin cont-comment-reply-like
+  } //fin post-description
+} //fin advance-comment-reply
+
+//timeAgo, likesCount and reply container styles
+.container-like-reply {
+  @include grid(1, repeat(3, 1fr), 0.3em);
+  color: map-get($colors, tx-gris);
+  text-align: left;
+  align-items: top;
+  margin-top: 0.2em;
+  & > .timeago {
+    @include flex(row, center, center);
+    margin: 0;
+    font-size: 0.75em;
+  } //fin timeago
+
+  & > .comment-likes-count {
+    @include flex(row, center, center);
+    margin: 0;
+    font-size: 0.75em;
+    font-weight: 600;
+  } //fin comment-likes-count
+
+  & > .bt-reply-comment {
+    @include flex(row, center, center);
+    background-color: transparent;
+    color: map-get($colors, tx-gris);
+    margin: 0;
+    padding: 0;
+    font-size: 0.75em;
+    font-weight: 600;
+  } //fin bt-reply-comment
+} //fin container-like-reply

@@ -1,0 +1,43 @@
+@import "../partials/generales";
+
+@use "generales/flex";
+
+.error {
+  height: 100%;
+  background-color: map-get($colors, bg-gris);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  .error-wrapper {
+    height: 70%;
+    @include flex(column, center, center);
+    & > h1 {
+      margin: 0;
+      font-size: 11em;
+      //color: #f2f2f2;
+      //text-shadow: #e0e0e0 2px -2px 0;
+      color: transparent;
+      background: #dbdbdb;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      background-clip: text;
+      text-shadow: 0px 3px 3px rgba(255, 255, 255, 0.5);
+    } //fin h1
+
+    & > h2 {
+      font-size: 1.3em;
+      margin: 0;
+    } //fin h2
+
+    & > p {
+      font-size: 0.9em;
+      font-weight: 300;
+      & > .link-redirect-home {
+        font-weight: 400;
+        color: map-get($colors, hashtag-color);
+        cursor: pointer;
+      }
+    } //fin p
+  } //fin error-wrapper
+}

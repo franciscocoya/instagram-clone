@@ -1,0 +1,30 @@
+@import "../partials/generales";
+@use "generales/flex";
+
+$chipColors: (
+  chip-bg-blue: #e0f1ff,
+  fg-blue: #0095f6,
+);
+
+//User Chips Styles
+.user-chip {
+  width: auto;
+  @include grid(1, 80% auto, 0.5em);
+  background-color: map-get($chipColors, chip-bg-blue);
+  color: map-get($chipColors, fg-blue);
+  border: none;
+  border-radius: 0.3em;
+  margin: 0.4em 0.4em 0 0;
+  padding: 0.6em 0.8em;
+  & > p {
+    @include flex(row, center, center);
+    font-weight: 300;
+  }
+
+  & > svg {
+    @include flex(row, center, center);
+    margin: auto 0;
+    padding: 0;
+    cursor: pointer;
+  }
+} //fin user-chip

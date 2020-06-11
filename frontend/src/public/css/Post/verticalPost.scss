@@ -1,0 +1,191 @@
+@import "../partials/generales";
+@use "generales/flex";
+@use "generales/grid";
+
+.postVertical {
+  margin-bottom: 3em;
+  padding: 0;
+  height: auto;
+  width: 600px;
+  background-color: #fff;
+  border-radius: 4px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  //POST HEADER
+  & > .post-header {
+    @include flex(row, space-between, center);
+    padding: 0 1.2em;
+    & > .username-info {
+      @include flex(row, flex-start, center);
+      height: 60px;
+      & > img {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 0.9em;
+        padding: 0.1em;
+      }
+      & > .cont-info {
+        @include flex(column, center, flex-start);
+        & > p {
+          margin: 0;
+          font-size: 0.8em;
+          &:first-child {
+            font-weight: 500;
+          } //fin username
+        } //fin p
+      } //fin cont-info
+    } //fin username-info
+
+    & > .moreOptions {
+      cursor: pointer;
+    }
+  } //fin post-header
+
+  //POST BODY
+  & > .post-body {
+    @include flex(column, center, flex-start);
+    width: 100%;
+    & > .cont-image {
+      @include flex(row, center, center);
+      width: inherit;
+      position: relative;
+      user-select: none; /* supported by Chrome and Opera */
+      -webkit-user-select: none; /* Safari */
+      -khtml-user-select: none; /* Konqueror HTML */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+      cursor: pointer;
+      & > .img-post {
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+      } //fin img-post
+      & > .heart-overlay {
+        width: 100%;
+        height: 100%;
+        @include flex(column, center, center);
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: transparent;
+        & > .coreSpriteLikeAnimationHeart {
+          display: none;
+          background-image: url("../../assets/sprites.png");
+          background-repeat: no-repeat;
+          background-position: 0 -98px;
+          height: 81px;
+          width: 92px;
+        }
+      } //fin heart-overlay
+    } //fin cont-image
+
+    & > .wrapper-body {
+      margin: 0.5em 1.1em 0.1em;
+      width: 95%;
+
+      & > .cont-media {
+        @include flex(row, flex-start, center);
+        width: 100%;
+
+        & > .wrapper-media {
+          @include grid(1, repeat(2, 1fr), 0);
+          width: 100%;
+          & > .wrapper-media__col1 {
+            @include grid(1, repeat(3, 1fr), center);
+            width: 150px;
+            & > button {
+              @include flex(row, flex-start, center);
+            }
+          } //fin wrapper-media__col1
+
+          & > .save-container-v-post {
+            @include flex(row, flex-end, center);
+          } //fin save-container-v-post
+        } //fin wrapper-media
+      } //fin cont-media
+      & > .cont-likes {
+        font-size: 0.9em;
+        font-weight: 500;
+      } //fin cont-likes
+
+      & > .cont-description {
+        margin: 0.5em auto;
+        & > pre {
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+          margin: 0;
+          word-wrap: break-word;
+          white-space: pre-wrap;
+          font-size: 0.9em;
+          text-align: left;
+          line-height: 1.19em;
+          & > span {
+            font-weight: 700;
+            margin-right: 0.3em;
+          }
+        }
+      } //fin cont-description
+
+      & > .link-post {
+        margin: 0;
+        font-size: 0.9em;
+        font-weight: 400;
+        color: map-get($colors, tx-gris);
+        cursor: pointer;
+      } //fin link-post
+
+      & > .last-comments {
+        & > li {
+          margin: 0.3em auto;
+          & > p {
+            margin: 0;
+            font-size: 0.9em;
+            text-align: left;
+            line-height: 1.19em;
+            & > span {
+              font-weight: 700;
+              margin-right: 0.3em;
+            } //fin span
+          } //fin p
+        } //fin li
+      } //fin last-comments
+
+      & > .timeago {
+        font-size: 0.65em;
+        font-weight: 400;
+      } //fin timeago
+    } //fin wrapper-body
+  } //fin post-body
+  //POST FOOTER
+  & > .post-footer {
+    height: 60px;
+    & > .cont-add-comment {
+      height: 100%;
+      @include flex(row, center, center);
+      & > .wrapper-add-comment {
+        height: 100%;
+        @include grid(1, 75% auto, 0);
+
+        & > input {
+          background-color: transparent;
+          border: none;
+          padding-left: 1.2em;
+
+          &:active,
+          &:enabled,
+          &:focus {
+            outline: none;
+          }
+        } //fin input
+
+        & > button {
+          cursor: default;
+          color: map-get($colors, bt-azul-hover);
+          height: 100%;
+          padding-right: 1.3em;
+          @include flex(column, center, flex-end);
+        }
+      } //fin wrapper-add-comment
+    } //fin cont-add-comment
+  } //fin post-footer
+} //fin postVertical

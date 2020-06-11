@@ -1,0 +1,19 @@
+@import "../../partials/generales";
+@use "generales/flex";
+
+.circle-progress-bar {
+  @include flex(row, center, center);
+  position: relative;
+  margin: 0;
+  padding: 0;
+
+  & > .circle-progress-bar__wrapper {
+    @include flex(row, center, center);
+    position: absolute;
+    left: 0;
+    transform: translate(-1.2%, -1%);
+    z-index: 49;
+    margin: 0;
+    padding: 0;
+  } //circle-progress-bar__wrapper
+} //fin circle-progress-bar

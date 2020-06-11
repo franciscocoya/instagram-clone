@@ -1,0 +1,44 @@
+@import "../partials/generales";
+
+@use "generales/flex";
+
+.w-moreOptions {
+  @include flex(column, center, center);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 30;
+  background-color: map-get($colors, bg-dark);
+  & > .close-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: 4;
+  }
+  & > .modal-options {
+    @include flex(column, center, center);
+    width: 400px;
+    background-color: #fff;
+    border-radius: 0.9em;
+    overflow: hidden;
+    animation-duration: 0.4s;
+    z-index: 5;
+    & > ul {
+      margin: 0;
+      padding: 0;
+      & > li {
+        margin: 0;
+        padding: 1.1em 0;
+        font-size: 0.9em;
+        transition: 0.2s ease-in-out;
+        cursor: pointer;
+        &:hover {
+          background-color: map-get($colors, bg-gris);
+        }
+      } //fin li
+    } //fin ul
+  } //fin modal-options
+} //fin w-moreOptions

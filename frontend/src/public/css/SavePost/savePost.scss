@@ -1,0 +1,11 @@
+@import "../partials/generales";
+
+@use 'generales/flex';
+
+.save-post {
+  @include flex(row, center, center);
+
+  & > .save-post-icon {
+    cursor: pointer;
+  } //fin save-post-icon
+} //fin save-post

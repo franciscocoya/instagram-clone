@@ -1,0 +1,210 @@
+@import "../partials/generales";
+
+@use 'generales/flex';
+@use 'generales/grid';
+
+$toolSize: 6; //Number of tools within image-tool.
+
+$mainOpacity: 0.5;
+$toolsColors: (
+  cropColor: rgba(235, 99, 131, $mainOpacity),
+  rotateColor: rgba(250, 145, 145, $mainOpacity),
+  flipHorzColor: rgba(255, 233, 197, $mainOpacity),
+  flipVertColor: rgba(249, 237, 105, $mainOpacity),
+  sizeColor: rgba(180, 242, 225, $mainOpacity),
+  resetColor: rgba(255, 46, 98, $mainOpacity),
+);
+
+.image-tools {
+  margin: 2em auto;
+  width: 80%;
+  padding: 0;
+  .image-tools__body {
+    @include grid(1, repeat($toolSize, 1fr), 0);
+    height: 80px;
+    border: 1px solid map-get($colors, bc-gris);
+    border-radius: 0.6em;
+
+    overflow: hidden;
+
+    & > div {
+      @include flex(column, center, center);
+      margin: 0;
+      padding: 0;
+      transition: 0.1s ease-in;
+      cursor: pointer;
+
+      & > span {
+        font-size: 0.65em;
+        text-align: center;
+        text-transform: uppercase;
+      } //fin span
+    } //fin div
+  } //fin image-tools
+} //fin image-tools
+
+/**
+ * Crop tool styles
+ **/
+
+/**
+ * Rotate tool styles
+ * */
+.rotate-tool {
+  & > img {
+    transition: 0.3s ease-in-out;
+  }
+
+  &:hover {
+    & > img {
+      transform: rotate(100deg);
+    }
+  }
+} //fin rotate-tool
+
+/**
+ * Flip horizontal tool styles
+ **/
+.flip-horizontal-tool {
+  & > img {
+    transition: 0.3s ease-in-out;
+  }
+
+  &:hover {
+    & > img {
+      transform: scaleY(-1);
+    }
+  }
+} //fin flip-horizontal-tool
+
+/**
+ * Flip vertical tool styles
+ **/
+.flip-vertical-tool {
+  & > img {
+    transition: 0.3s ease-in-out;
+  }
+
+  &:hover {
+    & > img {
+      transform: scaleX(-1);
+    }
+  }
+} //fin flip-vertical-tool
+
+/**
+ * Adjust tool styles
+ **/
+.instagam-size-tool {
+  & > img {
+    transition: 0.3s ease-in-out;
+  }
+
+  &:hover {
+    & > img {
+      transform: scaleX(1.1);
+    }
+  }
+} //fin instagam-size-tool
+
+.normalize-icon-size {
+  width: 48px;
+  height: 48px;
+  transition: 0.1s ease-in-out;
+} //fin normalizr-icon-size
+
+/**
+ * MODALS STYLES 
+ **/
+
+.crop-tool-modal {
+  width: 250px;
+  margin: 1.5em 0;
+  padding: 0.3em;
+  font-size: 0.7em;
+  font-weight: 500;
+  border: 1px solid map-get($colors, bc-gris);
+  border-radius: 0.6em;
+  //background-color: map-get($colors, bg-gris);
+  position: relative;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 0;
+    height: 0;
+    margin-top: -13px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 13px solid map-get($colors, bc-gris);
+  } //fin ::before
+
+  & > ul {
+    @include grid(repeat(2, 1fr), repeat(2, 1fr), 0.2em);
+    width: 245px;
+    & > li {
+      @include grid(1, 50px auto auto, 0.3em);
+      width: 80px;
+      margin: 0;
+      & > label {
+        @include flex(row, flex-end, center);
+        color: map-get($colors, tx-gris);
+      } //fin label
+
+      & > input {
+        width: 30px;
+        background-color: #fff;
+        border: 0.9px solid rgba(250, 125, 30, 0.664);
+      } //fin input
+
+      & > span {
+        @include flex(row, flex-start, center);
+        font-weight: 700;
+        color: map-get($colors, tx-gris);
+      } //fin span
+    } //fin li
+  } //fin ul
+} //fin crop-tool-modal
+
+.rotate-tool-modal {
+  @include flex(column, flex-start, flex-start);
+  appearance: none;
+  width: 100%;
+  margin: 1.5em auto;
+  & > #rotate-img-value {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 12px;
+    background: transparent;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    border-radius: 1.2em;
+    margin: 0;
+    padding: 0;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 30px;
+      height: 30px;
+      background: url("../../assets/img/imageTools/degree-32.png");
+      border-radius: 50%;
+      margin: 0;
+      padding: 0;
+      cursor: pointer; /* Cursor on hover */
+    }
+  } //fin rotate-img-value
+
+  & > .rotate-value {
+    font-size: 1.1em;
+    font-weight: 300;
+  } //fin rotate-value
+} //fin rotate-tool-modal

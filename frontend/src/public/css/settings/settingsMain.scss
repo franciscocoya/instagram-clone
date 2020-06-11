@@ -1,0 +1,53 @@
+@import "../partials/generales";
+
+//Mixins
+@use '../partials/generales/flex'; //direction, justify, align
+@use '../partials/generales/grid'; //rows, columns, gap
+
+// body {
+//   overflow: hidden;
+// }
+
+.cont-center {
+  height: 100%;
+  @include flex(column, center, center);
+  & > .container-settings {
+    width: 80%;
+    height: 60%;
+    border-radius: 4px;
+    @include grid(1, 27% auto, 0);
+    overflow: hidden;
+
+    & > .col-1 {
+      height: 100%;
+      @include flex(column, flex-start, flex-start);
+      overflow: hidden;
+
+      & > .l-settings {
+        @include flex(row, flex-start, center);
+        height: 50px;
+        padding: 0.5em 2em;
+        font-weight: 300;
+        font-size: 1.1em;
+        color: rgb(19, 19, 19);
+
+        &:active,
+        &:focus {
+          border-left: 3px solid #000;
+          &:hover {
+            border-left: 3px solid #000;
+          }
+        }
+
+        &:hover {
+          border-left: 3px solid map-get($colors, bc-gris);
+          background-color: map-get($colors, bg-gris);
+        }
+      }
+      & > .link-set-active {
+        border-left: 3px solid map-get($colors, tx-gris-dark);
+        font-weight: 500;
+      }
+    } //fin col-1
+  } //fin editprofile
+} //fin cont-center

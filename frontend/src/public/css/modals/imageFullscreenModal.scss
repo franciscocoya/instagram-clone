@@ -1,0 +1,43 @@
+@import "../partials/generales";
+@use "generales/flex";
+
+.imgFull-modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  margin: 0;
+  padding: 0;
+  @include flex(row, center, center);
+
+  & > .imgFull-modal__wrapper {
+    @include flex(row, center, center);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    & > .close-img-full {
+      width: 100%;
+      height: 100%;
+      background-color: map-get($colors, bg-overlay);
+      z-index: 51;
+      position: absolute;
+    } //fin close-img-full
+
+    & > .img-msg-full {
+      width: auto;
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: cover;
+      border-radius: 1em;
+      border: none;
+      outline: none;
+      z-index: 52;
+      margin: 0;
+      padding: 0;
+    } //fin img-msg-full
+  } //fin imgFull-modal__wrapperd
+} //fin imgFull-modal
