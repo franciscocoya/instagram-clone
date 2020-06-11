@@ -37,15 +37,10 @@ function Like({ userId, postId, refreshCount }) {
       const data = new FormData();
       data.append("postId", postId);
       data.append("userId", userId);
-      const config = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
       await axios
-        .post("http://localhost:4000/p/like/add", data, config)
+        .post("http://localhost:4000/p/like/add", data)
         .then((res) => {
+          setCurrentLike(res.data.like);
           refreshCount();
         })
         .catch((err1) => console.log(`Error al añadir el like. ${err1}`));
@@ -64,6 +59,7 @@ function Like({ userId, postId, refreshCount }) {
       await axios
         .delete(`http://localhost:4000/p/like/remove/${currentLike._id}`)
         .then((res) => {
+          setCurrentLike(null);
           refreshCount();
         })
         .catch((err1) => console.log(`Error al eliminar el like. ${err1}`));

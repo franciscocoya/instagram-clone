@@ -1,5 +1,11 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  FacebookMessengerShareButton,
+  TwitterShareButton,
+} from "react-share";
 
 //Static files
 import "../../public/css/modals/share.css";
@@ -39,30 +45,44 @@ function Share({ close }) {
           <li className="list-style-none">
             <span className="glyphsSpriteFacebook_circle__outline__24__grey_9"></span>
 
-            <span>Compartir en Facebook</span>
+            <FacebookShareButton
+              url={window.location.href}
+              className="url-share"
+            >
+              <span>Compartir en Facebook</span>
+            </FacebookShareButton>
           </li>
           <li className="list-style-none">
             <span className="glyphsSpriteApp_messenger__outline__24__grey_9"></span>
-
-            <span>Compartir en Messenger</span>
+            <FacebookMessengerShareButton
+              url={window.location.href}
+              className="url-share"
+            >
+              <span>Compartir en Messenger</span>
+            </FacebookMessengerShareButton>
           </li>
           <li className="list-style-none">
             <span className="glyphsSpriteApp_twitter__outline__24__grey_9"></span>
-
-            <span>Compartir en Twitter</span>
+            <TwitterShareButton
+              url={window.location.href}
+              className="url-share"
+            >
+              <span>Compartir en Twitter</span>
+            </TwitterShareButton>
           </li>
           <li className="list-style-none">
             <span className="glyphsSpriteMail__outline__24__grey_9"></span>
-
-            <span>Compartir por correo electrónico</span>
+            <EmailShareButton url={window.location.href} className="url-share">
+              <span>Compartir por correo electrónico</span>
+            </EmailShareButton>
           </li>
           <li className="list-style-none">
             <span className="glyphsSpriteLink__outline__24__grey_9"></span>
 
-            <span>Copiar enlace</span>
+            <span className="copy-url">Copiar enlace</span>
           </li>
           <li className="list-style-none" onClick={close}>
-            <span>Cancelar</span>
+            <span className="cancel-share">Cancelar</span>
           </li>
         </ul>
       </div>

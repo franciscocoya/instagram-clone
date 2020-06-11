@@ -43,10 +43,28 @@
         &:hover {
           background-color: map-get($colors, bg-gris);
         }
+
         & > span {
+          @include flex(row, center, center);
+          margin: auto;
+        } //fin span --> Social network icon.
+
+        & > .url-share {
           margin: 0;
-          padding: 0;
-        } //fin span
+          @include flex(row, flex-start, center);
+          & > span {
+            @include flex(row, center, center);
+            margin: 0;
+            padding: 0;
+          } //fin span
+        } //fin url-share
+
+        & > .copy-url,
+        & > .cancel-share {
+          @include flex(row, flex-start, center);
+          margin: 0;
+        } //fin copy-url --> Link to copy current URL.
+        //fin cancel-share
 
         //Header modal
         &:first-child {
