@@ -463,11 +463,15 @@ function VerticalPost({
       resetCommentInput();
       splitDescription();
       setLoadingVertPost(false);
+
+      return () => {
+        setRefreshLikesCount(false);
+      };
     } catch (err) {
       console.log("Error al cargar el post");
       setLoadingVertPost(false);
     }
-  }, [commentHasBeenSent, suggestedMention]);
+  }, [commentHasBeenSent, suggestedMention, refreshLikesCount]);
 
   return (
     <div className="postVertical b-1-g">
