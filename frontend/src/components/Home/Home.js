@@ -156,6 +156,7 @@ function Home({ user, match }) {
                     setOpenShare(false);
                     setOpenSettings(false);
                   }}
+                  postId={postClicked.postId}
                 />
               )}
 

@@ -87,4 +87,30 @@ urlCtrl.get = async (req, res) => {
   }
 };
 
+urlCtrl.getCodeByPostId = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const longUrl = `http://localhost:4000/p/${postId}`;
+    await Url.findOne({ longUrl }, (err1, code) => {
+      if (err1) {
+        res.status(500).json({
+          msg: `Error en el servidor al obtener el código de la URL.`,
+        });
+      }
+      if (!code) {
+        res.status(404).json({
+          msg: `No hay código para el post indicado.`,
+        });
+      }
+      res.status(201).json({
+        shortUrl: code.shortUrl,
+      });
+    });
+  } catch (err) {
+    console.log(
+      `Se ha producido un error al obtener el código de la URL del post. ${err}`
+    );
+  }
+};
+
 module.exports = urlCtrl;
