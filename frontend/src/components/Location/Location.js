@@ -6,6 +6,7 @@ import axios from "axios";
 import UserNavigation from "../Navigations/UserNavigation";
 import LocationMap from "./LocationMap";
 import Grid from "../Grid/Grid";
+import SearchResults from "../Modals/SearchResults";
 
 //Static files
 import "../../public/css/Location/location.css";
@@ -14,6 +15,10 @@ function Location({ user, match }) {
   const { place } = match.params;
   const [posts, setPosts] = useState([]);
   const [featurePost, setFeaturePost] = useState({});
+
+  //Search
+  const [showSearchResults, setShowSearchResults] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
   /**
    * Get all posts by location.
@@ -59,8 +64,20 @@ function Location({ user, match }) {
   }, []);
 
   return (
-    <div className="location">
-      <UserNavigation user={user} />
+    <div className="location p-relative">
+      <UserNavigation
+        user={user}
+        showSuggestions={() => setShowSearchResults(true)}
+        closeSuggestions={() => setShowSearchResults(false)}
+        resultsArr={setSearchResults}
+      />
+      {showSearchResults && (
+        <SearchResults
+          suggestions={searchResults}
+          user={user}
+          close={() => setShowSearchResults(false)}
+        />
+      )}
       <div className="location-wrapper">
         <LocationMap placeName={place} />
         <div className="feature-post-container">

@@ -13,7 +13,7 @@ likeCtrl.addLike = async (req, res) => {
       }
 
       if (!existLike) {
-        const newLike = await new Like({
+        const newLike = await new PostLike({
           postId,
           userId,
         });
@@ -47,16 +47,15 @@ likeCtrl.addLike = async (req, res) => {
 };
 
 likeCtrl.deleteLike = async (req, res) => {
-  const { id } = req.body;
-  await PostLike.findOneAndDelete({ _id: id }, (err, likeRemoved) => {
+  const { likeId } = req.params;
+  await PostLike.findOneAndDelete({ _id: likeId }, (err, likeRemoved) => {
     if (err) {
       res.status(500).json({
         msg: `Error al eliminar el like:  ${err}`,
       });
     }
-    console.log("Like eliminado correctamente");
+
     res.status(201).json({
-      likeRemoved,
       msg: `Like eliminado correctamente`,
     });
   });

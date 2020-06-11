@@ -46,10 +46,9 @@ function Like({ userId, postId, refreshCount }) {
       await axios
         .post("http://localhost:4000/p/like/add", data, config)
         .then((res) => {
-          console.log(res.data);
           refreshCount();
         })
-        .catch((err) => console.log(err));
+        .catch((err1) => console.log(`Error al añadir el like. ${err1}`));
     } catch (err) {
       console.log(`Se ha producido un error al añadir el like. ${err}`);
     }
@@ -63,17 +62,11 @@ function Like({ userId, postId, refreshCount }) {
     data.append("id", currentLike._id);
     try {
       await axios
-        .delete("http://localhost:4000/p/like/remove", data)
+        .delete(`http://localhost:4000/p/like/remove/${currentLike._id}`)
         .then((res) => {
-          const newList = userLikes
-            .slice()
-            .filter((like) => like._id !== currentLike._id);
-
-          console.log(newList);
-          setUserLikes(newList);
           refreshCount();
         })
-        .catch((err) => console.log(err));
+        .catch((err1) => console.log(`Error al eliminar el like. ${err1}`));
     } catch (err) {
       console.log(`Se ha producido un error al eliminar el like. ${err}`);
     }
@@ -115,7 +108,7 @@ function Like({ userId, postId, refreshCount }) {
 
   useEffect(() => {
     checkLike();
-  }, []);
+  }, [isLike]);
 
   return (
     <button className="bt-svg bt-like mp-0" onClick={handleLike}>
