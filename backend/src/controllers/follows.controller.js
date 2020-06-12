@@ -157,27 +157,17 @@ followCtrl.listFollowedBy = async (req, res) => {
 
 followCtrl.isFollowing = async (req, res) => {
   const { follow_by, follow_to } = req.body;
-  await Follow.findOne(
-    { $and: [{ follow_by, follow_to }] },
-    (err, following) => {
-      if (err) {
-        res.status(500).json({
-          msg: `Se ha producido un error al comprobar el follow. ${err}`,
-        });
-      }
-      if (following) {
-        res.status(201).json({
-          isFollowing: true,
-          msg: `El usuario ${follow_by} está siguiendo a ${follow_to}.`,
-        });
-      } else {
-        res.status(201).json({
-          isFollowing: false,
-          msg: `El usuario ${follow_by} no sigue a ${follow_to}.`,
-        });
-      }
+  await Follow.findOne({ follow_by, follow_to }, (err, following) => {
+    if (err) {
+      res.status(500).json({
+        msg: `Se ha producido un error al comprobar el follow. ${err}`,
+      });
     }
-  );
+    res.status(201).json({
+      isFollowing: following ? true : false,
+      msg: `El usuario ${follow_by} está siguiendo a ${follow_to}.`,
+    });
+  });
 };
 
 module.exports = followCtrl;

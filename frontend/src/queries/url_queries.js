@@ -23,3 +23,21 @@ export async function decodeUrl(postId) {
     );
   }
 }
+
+export async function shortUrl(postId) {
+  try {
+    const longUrl = `http://localhost:4000/p/${postId}`;
+    let data = new FormData();
+    data.append("longUrl", longUrl);
+    return await axios
+      .post(`http://localhost:4000/shorten`, data)
+      .then((res) => {
+        return res.data.url.urlCode;
+      })
+      .catch((err1) =>
+        console.log(`An error occurred while shortening the URL... ${err1}`)
+      );
+  } catch (err) {
+    console.log(`An error occurred while shortening the post URL. ${err}`);
+  }
+}

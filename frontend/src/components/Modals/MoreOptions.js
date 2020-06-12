@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
-import axios from "axios";
+
+import { shortUrl } from "../../queries/url_queries";
+import { checkIsFollowing, unfollow } from "../../queries/follow_queries";
 
 //Static files
 import "../../public/css/modals/moreOptions.css";
@@ -18,87 +20,28 @@ function MoreOptions({
   const [urlCode, setUrlCode] = useState("");
   let history = useHistory();
 
-  const checkIsFollowing = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("follow_to", ids.userPostId);
-      formData.append("follow_by", user._id);
-      const config = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
-      await axios
-        .post("http://localhost:4000/follow/isFollowing", formData, config)
-        .then((res) => {
-          const follow = res.data.isFollowing;
-          follow ? setIsFollowing(true) : setIsFollowing(false);
-        })
-        .catch((err) => "");
-    } catch (err) {
-      console.log(`Se ha producido un error al comprobar el follow. ${err}`);
-    }
+  const handleCheckFollowing = async () => {
+    const result = await checkIsFollowing(ids.userPostId, user._id);
+    console.log(result);
+    setIsFollowing(result);
   };
 
   const handleUnfollow = async (e) => {
     e.preventDefault();
-    try {
-      initRefreshPost();
-      let resPost = await axios.get(`http://localhost:4000/p/${ids.postId}`);
-      let userIdR = resPost.data.postRet.user_id;
-      const unFollowData = new FormData();
-      unFollowData.append("follow_by", user._id);
-      unFollowData.append("follow_to", userIdR);
-      console.log(user._id);
-      const config = {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
-      await axios
-        .delete(
-          "http://localhost:4000/follow/unfollow",
-          { data: unFollowData },
-          config
-        )
-        .then((res) => {
-          const data = res.data;
-          console.log(data);
-          close();
-          endRefreshPost();
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(`Se ha producido un error al enviar el follow. ${err}`);
-      endRefreshPost();
-    }
+    initRefreshPost();
+    await unfollow(ids.postId, user._id);
+    close();
+    endRefreshPost();
   };
 
-  const shortURL = async () => {
-    try {
-      const longUrl = `http://localhost:4000/p/${ids.postId}`;
-      let data = new FormData();
-      data.append("longUrl", longUrl);
-      await axios
-        .post(`http://localhost:4000/shorten`, data)
-        .then((res) => {
-          setUrlCode(res.data.url.urlCode);
-        })
-        .catch((err1) =>
-          console.log(`Se ha producido un error al acortar la URL... ${err1}`)
-        );
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al acortar la URL del post. ${err}`
-      );
-    }
+  const handleShortUrl = async () => {
+    const result = await shortUrl(ids.postId);
+    setUrlCode(result);
   };
 
   useEffect(() => {
-    shortURL();
-    checkIsFollowing();
+    handleShortUrl();
+    handleCheckFollowing();
   });
 
   return (

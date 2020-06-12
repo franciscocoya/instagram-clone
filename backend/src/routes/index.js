@@ -166,7 +166,7 @@ router.post("/follow/get", isAuth, getFollow);
 router.get("/follow/allFollows", isAuth, getAllFollows);
 router.get("/follow/listFollows/:userId", isAuth, listFollows);
 router.get("/follow/listFollowedBy/:userId", isAuth, listFollowedBy);
-router.get("/follow/isFollowing", isAuth, isFollowing);
+router.post("/follow/isFollowing", isAuth, isFollowing);
 
 /**
  * MESSAGES ROUTES
