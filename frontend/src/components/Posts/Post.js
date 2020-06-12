@@ -14,14 +14,17 @@ import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import $ from "jquery";
 
-import {
-  checkIsFollowing,
-  unfollow,
-  follow,
-} from "../../queries/follow_queries";
-
 //Queries
+import { checkIsFollowing, follow } from "../../queries/follow_queries";
 import { loadPost } from "../../queries/posts_queries";
+import {
+  getComments,
+  getTotalComments,
+  replyComment,
+  commentPost,
+} from "../../queries/comment_queries";
+import { getTotalLikes } from "../../queries/likes_queries";
+import { getUserByPostId } from "../../queries/user_queries";
 
 //Components
 import { AdvanceComment } from "../Comment/Comment";
@@ -60,14 +63,10 @@ function Post({ onClose, user, match }) {
     filter: "",
   });
   const [relatedPosts, setRelatedPosts] = useState([]);
-  const [pUser, setPUser] = useState({
-    id: "",
-    profile_picture: "",
-    username: "",
-  });
+  const [pUser, setPUser] = useState({});
   const [showGrid, setShowGrid] = useState(true);
   const [commentHasBeenSent, setCommentHasBeenSent] = useState(false);
-  const [isFollowing, setIsFollowing] = useState(false); //Current user follow the post user ?
+  const [isFollowing, setIsFollowing] = useState(false);
   const [showUnfollowModal, setShowUnfollowModal] = useState(false);
   const [sendFollow, setSendFollow] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
@@ -82,27 +81,27 @@ function Post({ onClose, user, match }) {
   const [replyOutputData, setReplyOutputData] = useState(null);
 
   /**
-   * !TODO: Decode post Url
+   *
    * @param {*} e
    */
-  const decodeUrl = async () => {
-    try {
-      let p = await axios
-        .get(`http://localhost:4000/shorten/${id}`)
-        .then((res) => {
-          let pId = res.data.shortenedURL.longUrl.split("/").slice(-1).pop();
-          return pId;
-        })
-        .catch((err1) =>
-          console.log(`Error al obtener el post mediante urlCode. ${err1}`)
-        );
-      return p;
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al decodificar la URL asociada al post. ${err}`
-      );
-    }
-  };
+  // const decodeUrl = async () => {
+  //   try {
+  //     let p = await axios
+  //       .get(`http://localhost:4000/shorten/${id}`)
+  //       .then((res) => {
+  //         let pId = res.data.shortenedURL.longUrl.split("/").slice(-1).pop();
+  //         return pId;
+  //       })
+  //       .catch((err1) =>
+  //         console.log(`Error al obtener el post mediante urlCode. ${err1}`)
+  //       );
+  //     return p;
+  //   } catch (err) {
+  //     console.log(
+  //       `Se ha producido un error al decodificar la URL asociada al post. ${err}`
+  //     );
+  //   }
+  // };
 
   /**
    * Fill heart when user click like.
@@ -166,7 +165,7 @@ function Post({ onClose, user, match }) {
   };
 
   /**
-   * TODO: Enable the send button when comment input not empty.
+   * Enable the send button when comment input not empty.
    * @param {*} e
    */
   const enadleAddComentButton = (e) => {
@@ -194,166 +193,51 @@ function Post({ onClose, user, match }) {
    * but if it's a comment to the published post, the @see commentPost method will be invoked.
    * @param {*} e
    */
-  const handleCommentPost = (e) => {
+  const handleSendCommentPost = async (e) => {
     e.preventDefault();
-    let isCommentReply = checkInputIsComment();
-    console.log(isCommentReply);
-    isCommentReply ? replyCommentPost() : commentPost();
-  };
-
-  /**
-   * Send the comment to backend.
-   * @param {*} e
-   */
-  const commentPost = async () => {
     setCommentHasBeenSent(false);
-    console.log(comment);
-    try {
-      let data = new FormData();
-      data.append("user_id", user._id);
-      data.append("post_id", currentPost.id);
-      data.append("text", comment);
-
-      await axios
-        .post("http://localhost:4000/p/comment/add", data)
-        .then((res) => {
-          console.log(res.data.comment);
-          setCommentHasBeenSent(true);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log("Se ha producido un error al enviar el comentario. " + err);
+    let isCommentReply = checkInputIsComment();
+    isCommentReply ? await handleReplyComment() : await handleCommentPost();
+    setTimeout(() => {
       setCommentHasBeenSent(true);
-    }
+    }, 200);
+    setComment("");
   };
 
-  /**
-   * Responding to a comment whose parameters are stored in a state
-   * called replyOutputData, which contains the comment_id and the text of that comment.
-   */
-  const replyCommentPost = async () => {
-    setCommentHasBeenSent(true);
-    try {
-      let splittedComment = comment.split(" ").slice(1);
-
-      let data = new FormData();
-      data.append("text", splittedComment);
-      data.append("user_id", user._id);
-      data.append("comment_id", replyOutputData.commentToReply);
-
-      await axios
-        .post("http://localhost:4000/p/commentReply/addReply", data)
-        .then((res) => {
-          console.log(res.data);
-          setCommentHasBeenSent(true);
-        })
-        .catch((err1) =>
-          console.log(
-            `Se ha producido un error al guardar la respuesta al comentario ${replyOutputData.commentToReply}. ${err1}`
-          )
-        );
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al responder al comentario. ${err}`
-      );
-      setCommentHasBeenSent(false);
-    }
+  const handleCommentPost = async () => {
+    await commentPost(comment, user._id, currentPost.id);
   };
 
-  /**
-   * Get the user from their id.
-   */
-  const getUserById = async () => {
-    try {
-      let ptId = await decodeUrl();
-      let resPost = await axios.get(`http://localhost:4000/p/${ptId}`);
-      let userIdR = resPost.data.postRet.user_id;
-      await axios
-        .get(`http://localhost:4000/accounts/user/${userIdR}`)
-        .then((res) => {
-          //console.log(res.data.user);
-          setPUser({
-            id: res.data.user._id,
-            profile_picture: res.data.user.profile_picture,
-            username: res.data.user.username,
-          });
-        })
-        .catch((err1) => {
-          console.log(
-            `Se ha producido un error al cargar el usuario del post. ${err1}`
-          );
-        });
-    } catch (err) {
-      console.log(
-        "Se ha producido un error al cargar el usuario del post " + err
-      );
-    }
+  const handleReplyComment = async () => {
+    await replyComment(comment, replyOutputData.commentToReply, user._id);
+    window.location.reload(); //TODO: Refresh component
+  };
+
+  const handleGetUserByPostId = async () => {
+    const result = await getUserByPostId(id);
+    setPUser(result);
   };
 
   /**
    * Count the post likes.
    */
   const listLikes = async () => {
-    try {
-      let ptId = await decodeUrl();
-      await axios
-        .get(`http://localhost:4000/p/likes/${ptId}`)
-        .then((res) => {
-          setLikesCount(res.data.likes);
-        })
-        .catch((err1) =>
-          console.log(
-            `Se ha producido un error al contar los likes del post. ${err1}`
-          )
-        );
-    } catch (err) {
-      console.log(`Se ha producido un error al listar los likes.${err}`);
-    }
+    const result = await getTotalLikes(id);
+    setLikesCount(result);
   };
 
   /**
    * Count the post comments.
    */
   const listComments = async () => {
-    try {
-      let ptId = await decodeUrl();
-      await axios
-        .get(`http://localhost:4000/comments/c/${ptId}`)
-        .then((res) => {
-          setCommentsCount(res.data.commentsCount);
-        })
-        .catch((err1) =>
-          console.log(
-            `Se ha producido un error al contar los comentarios del post. ${err1}`
-          )
-        );
-    } catch (err) {
-      console.log(`Se ha producido un error al listar los comentarios.${err}`);
-    }
+    const result = await getTotalComments(id);
+    setCommentsCount(result);
   };
 
-  /**
-   * Load a list with the latest comments on the post.
-   * @see listComments
-   */
-  const getComments = async () => {
-    try {
-      let ptId = await decodeUrl();
-      await axios
-        .get(`http://localhost:4000/comments/${ptId}`)
-        .then((res) => {
-          setCommentsArr(res.data.comments);
-        })
-        .catch((err1) =>
-          console.log(
-            `Se ha producido un error al cargar los comentarios. ${err1}`
-          )
-        );
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al obtener los comentarios. ${err}`
-      );
-    }
+  const handleGetComments = async () => {
+    const result = await getComments(id);
+    console.log(result);
+    setCommentsArr(result);
   };
 
   /**
@@ -361,7 +245,7 @@ function Post({ onClose, user, match }) {
    */
   const getRelatedPostsByPostUser = async () => {
     const res = await axios.get(
-      `http://localhost:4000/posts/related/${pUser.id}`
+      `http://localhost:4000/posts/related/${pUser._id}`
     );
     setRelatedPosts(res.data.posts);
   };
@@ -402,7 +286,7 @@ function Post({ onClose, user, match }) {
   const handleFollow = async (e) => {
     e.preventDefault();
     setSendFollow(true);
-    await follow(pUser.id, user._id);
+    await follow(pUser._id, user._id);
 
     setTimeout(() => {
       setSendFollow(false);
@@ -413,7 +297,7 @@ function Post({ onClose, user, match }) {
   /**
    * TODO: Type a @username in comment input field to mention the comment to reply.
    */
-  const replyComment = () => {
+  const replyFocusComment = () => {
     if (replyOutputData) {
       const text = replyOutputData.uname + " ";
       setComment(text);
@@ -424,14 +308,14 @@ function Post({ onClose, user, match }) {
   useEffect(() => {
     setLoadingPost(true);
     handleLoadPost();
-    getUserById();
-    getComments();
+    handleGetUserByPostId();
+    handleGetComments();
     listLikes();
     listComments();
     handleCheckIsFollowing();
-    replyComment();
+    replyFocusComment();
     setLoadingPost(false);
-  }, [commentHasBeenSent, sendFollow, replyOutputData, isFollowing]);
+  }, [commentHasBeenSent, sendFollow, replyOutputData]);
 
   return (
     <div className="w-post">
@@ -525,12 +409,12 @@ function Post({ onClose, user, match }) {
                       ) : (
                         <img
                           className={`profile-img ${
-                            user._id !== pUser.id ? "cursor-pointer" : ""
+                            user._id !== pUser._id ? "cursor-pointer" : ""
                           }`}
                           src={pUser.profile_picture}
                           alt={pUser.username}
                           onClick={() => {
-                            if (user._id !== pUser.id) {
+                            if (user._id !== pUser._id) {
                               history.push(`/u/${pUser.username}`);
                             }
                           }}
@@ -545,10 +429,10 @@ function Post({ onClose, user, match }) {
                           ) : (
                             <span
                               className={`mp-0 ${
-                                user._id !== pUser.id ? "cursor-pointer" : ""
+                                user._id !== pUser._id ? "cursor-pointer" : ""
                               }`}
                               onClick={() => {
-                                if (user._id !== pUser.id) {
+                                if (user._id !== pUser._id) {
                                   history.push(`/u/${pUser.username}`);
                                 }
                               }}
@@ -572,7 +456,7 @@ function Post({ onClose, user, match }) {
                           </>
                         ) : (
                           <>
-                            {user._id !== pUser.id && (
+                            {user._id !== pUser._id && (
                               <>
                                 <span className="mp-0">•</span>
                                 {isFollowing ? (
@@ -631,12 +515,12 @@ function Post({ onClose, user, match }) {
                         <div className="cont-img mp-0">
                           <img
                             className={`profile-img mp-0 ${
-                              user._id !== pUser.id ? "cursor-pointer" : ""
+                              user._id !== pUser._id ? "cursor-pointer" : ""
                             }`}
                             src={pUser.profile_picture}
                             alt={pUser.username}
                             onClick={() => {
-                              if (user._id !== pUser.id) {
+                              if (user._id !== pUser._id) {
                                 history.push(`/u/${pUser.username}`);
                               }
                             }}
@@ -646,10 +530,10 @@ function Post({ onClose, user, match }) {
                           <div className="c-username mp-0">
                             <span
                               className={`${
-                                user._id !== pUser.id ? "cursor-pointer" : ""
+                                user._id !== pUser._id ? "cursor-pointer" : ""
                               }`}
                               onClick={() => {
-                                if (user._id !== pUser.id) {
+                                if (user._id !== pUser._id) {
                                   history.push(`/u/${pUser.username}`);
                                 }
                               }}
@@ -723,7 +607,7 @@ function Post({ onClose, user, match }) {
                         </button>
                       </div>
                       {/* TODO: */}
-                      {pUser.id !== user._id && (
+                      {pUser._id !== user._id && (
                         <Save postId={currentPost.id} user={user} />
                       )}
                     </div>
@@ -774,7 +658,7 @@ function Post({ onClose, user, match }) {
                     <button
                       className="bt-small-link mp-0"
                       id="bt-post-comment"
-                      onClick={handleCommentPost}
+                      onClick={handleSendCommentPost}
                     >
                       Publicar
                     </button>

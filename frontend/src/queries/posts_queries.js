@@ -2,6 +2,11 @@ import axios from "axios";
 
 import { decodeUrl } from "./url_queries";
 
+/**
+ * Load the post whose id is passed as a parameter.
+ *
+ * @param {*} postId Post id.
+ */
 export async function loadPost(postId) {
   try {
     let ptId = await decodeUrl(postId);
@@ -15,8 +20,6 @@ export async function loadPost(postId) {
       );
   } catch (err) {
     console.log(`There was a problem loading the post. ${err}`);
-
-    //!history.push("/error/404");
   }
 }
 
