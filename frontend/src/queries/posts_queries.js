@@ -44,3 +44,47 @@ export async function getSuggestedUsers(userId) {
     console.log(`An error ocurred while getting the suggested users. ${err}`);
   }
 }
+
+/**
+ * LOCATION
+ */
+
+/**
+ * Get the featured post associated with the location passed as a parameter.
+ *
+ * @param {*} place The place to get the feature post.
+ */
+export async function getFeaturePost(place) {
+  try {
+    return await axios
+      .get(`http://localhost:4000/posts/feature/${place}`)
+      .then((res) => {
+        return res.data.post;
+      })
+      .catch((err1) =>
+        console.log(`An error occurred while getting featured post... ${err1}`)
+      );
+  } catch (err) {
+    console.log(`An error occurred while getting featured post. ${err}`);
+  }
+}
+
+/**
+ * Gets all the posts associated with the location passed as a parameter.
+ *
+ * @param {*} place Place where the posts are located
+ */
+export async function getPostsByLocation(place) {
+  try {
+    return await axios
+      .get(`http://localhost:4000/posts/place/${place}`)
+      .then((res) => {
+        return res.data.posts;
+      })
+      .catch((err1) =>
+        console.log(`An error ocurred while getting the posts... ${err1}`)
+      );
+  } catch (err) {
+    console.log(`An error ocurred while getting the location posts. ${err}`);
+  }
+}

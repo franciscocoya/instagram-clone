@@ -241,7 +241,7 @@ function Post({ onClose, user, match }) {
   };
 
   /**
-   * TODO: Load the post list of the users that the user follows.
+   * Load the post list of the users that the user follows.
    */
   const getRelatedPostsByPostUser = async () => {
     const res = await axios.get(
@@ -273,7 +273,7 @@ function Post({ onClose, user, match }) {
   };
 
   /**
-   * TODO: Check that the comment field is a reply to another comment.
+   * Check that the comment field is a reply to another comment.
    */
   const checkInputIsComment = () => {
     let commentCopy = comment;
@@ -295,7 +295,7 @@ function Post({ onClose, user, match }) {
   };
 
   /**
-   * TODO: Type a @username in comment input field to mention the comment to reply.
+   * Type a @username in comment input field to mention the comment to reply.
    */
   const replyFocusComment = () => {
     if (replyOutputData) {
@@ -550,7 +550,7 @@ function Post({ onClose, user, match }) {
                         </div>
                       </div>
                     </li>
-                    {/*  TODO: Advance Comment*/}
+
                     {commentsArr.map((c) => (
                       <AdvanceComment
                         key={c._id}
@@ -570,7 +570,6 @@ function Post({ onClose, user, match }) {
                     <Skeleton width={`100%`} height={`50%`} />
                   ) : (
                     <div className="wrapper-media">
-                      {/* TODO: Boton like */}
                       <div className="wrapper-media__col1">
                         <Like
                           userId={user._id}
@@ -606,7 +605,7 @@ function Post({ onClose, user, match }) {
                           </svg>
                         </button>
                       </div>
-                      {/* TODO: */}
+
                       {pUser._id !== user._id && (
                         <Save postId={currentPost.id} user={user} />
                       )}
@@ -621,7 +620,6 @@ function Post({ onClose, user, match }) {
                     {loadingPost ? (
                       <Skeleton width={`80%`} />
                     ) : (
-                      //TODO:
                       <LikeCount
                         refreshCount={() => setRefreshCount(true)}
                         likesCount={likesCount}

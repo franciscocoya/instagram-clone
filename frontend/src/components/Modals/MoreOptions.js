@@ -15,7 +15,6 @@ function MoreOptions({
   initRefreshPost,
   endRefreshPost,
 }) {
-  //data = postId
   const [isFollowing, setIsFollowing] = useState(false);
   const [urlCode, setUrlCode] = useState("");
   let history = useHistory();

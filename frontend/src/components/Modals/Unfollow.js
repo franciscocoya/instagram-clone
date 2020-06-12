@@ -2,6 +2,9 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 
+//Queries
+import { unfollow } from "../../queries/follow_queries";
+
 //static files
 import "../../public/css/modals/unfollow.css";
 import igIcon from "../../public/assets/img/instagram-icon.svg";
@@ -15,36 +18,10 @@ function Unfollow({
   endRefreshPost,
 }) {
   const unfollowPostUser = async (e) => {
-    e.preventDefault();
-    try {
-      initRefreshPost();
-      let resPost = await axios.get(`http://localhost:4000/p/${postId}`);
-      let userIdR = resPost.data.postRet.user_id;
-      const unFollowData = new FormData();
-      unFollowData.append("follow_by", currentUser._id);
-      unFollowData.append("follow_to", userIdR);
-      const config = {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
-      await axios
-        .delete(
-          "http://localhost:4000/follow/unfollow",
-          { data: unFollowData },
-          config
-        )
-        .then((res) => {
-          console.log(res.data);
-          close();
-          endRefreshPost();
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(`Se ha producido un error al enviar el follow. ${err}`);
-      endRefreshPost();
-    }
+    initRefreshPost();
+    await unfollow(postId, currentUser._id);
+    endRefreshPost();
+    close(); //Close the unfollow modal
   };
 
   return (

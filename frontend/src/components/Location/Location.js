@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 
+//Queries
+import {
+  getFeaturePost,
+  getPostsByLocation,
+} from "../../queries/posts_queries";
+
 //Components
 import UserNavigation from "../Navigations/UserNavigation";
 import LocationMap from "./LocationMap";
@@ -20,47 +26,19 @@ function Location({ user, match }) {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
-  /**
-   * Get all posts by location.
-   */
-  const getPostsByLocation = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/posts/place/${place}`)
-        .then((res) => {
-          setPosts(res.data.posts);
-        })
-        .catch((err1) => console.log(`Error al obtener los posts. ${err1}`));
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al obtener los posts de la localización. ${err}`
-      );
-    }
+  const handleGetPostsByLocation = async () => {
+    const result = await getPostsByLocation(place);
+    setPosts(result);
   };
 
-  /**
-   * TODO: Get post with more likes, from the place.
-   */
-  const getFeaturePost = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/posts/feature/${place}`)
-        .then((res) => {
-          setFeaturePost(res.data.post);
-        })
-        .catch((err1) =>
-          console.log(`Error al obtener el post destacado. ${err1}`)
-        );
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al obtener el post destacado. ${err}`
-      );
-    }
+  const handleGetFeaturePost = async () => {
+    const result = await getFeaturePost(place);
+    setFeaturePost(result);
   };
 
   useEffect(() => {
-    getPostsByLocation();
-    getFeaturePost();
+    handleGetPostsByLocation();
+    handleGetFeaturePost();
   }, []);
 
   return (
@@ -94,13 +72,7 @@ function Location({ user, match }) {
         </div>
         <h4>Publicaciones destacadas</h4>
 
-        <Grid
-          user={user}
-          isLoggedUser={true}
-          posts={posts}
-          // options={options}
-          // type={activeOptionGrid}
-        />
+        <Grid user={user} isLoggedUser={true} posts={posts} />
       </div>
     </div>
   );
