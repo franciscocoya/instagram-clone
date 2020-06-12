@@ -46,17 +46,36 @@ export async function unfollow(postId, currentUserId) {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     };
-    return await axios
+    await axios
       .delete(
         "http://localhost:4000/follow/unfollow",
         { data: unFollowData },
         config
       )
-      .then((res) => {
-        const data = res.data;
-      })
       .catch((err) => console.log(err));
   } catch (err) {
-    console.log(`Se ha producido un error al enviar el follow. ${err}`);
+    console.log(`An error occurred while deleting the follow. ${err}`);
+  }
+}
+
+/**
+ * Create the follow between the user in session and the user of the post.
+ *
+ * @param {*} userId User post id.
+ * @param {*} currentUserId Current user id.
+ */
+export async function follow(userId, currentUserId) {
+  try {
+    const followData = new FormData();
+    followData.append("follow_by", currentUserId);
+    followData.append("follow_to", userId);
+
+    await axios
+      .post("http://localhost:4000/follow/add", followData)
+      .catch((err1) =>
+        console.log(`An error ocurred while creating the follow... ${err1}`)
+      );
+  } catch (err) {
+    console.log(`An error occurred while creating the follow. ${err}`);
   }
 }

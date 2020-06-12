@@ -14,6 +14,12 @@ import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import $ from "jquery";
 
+import {
+  checkIsFollowing,
+  unfollow,
+  follow,
+} from "../../queries/follow_queries";
+
 //Queries
 import { loadPost } from "../../queries/posts_queries";
 
@@ -46,6 +52,7 @@ function Post({ onClose, user, match }) {
   const [loadingPost, setLoadingPost] = useState(true);
   const [currentPost, setCurrentPost] = useState({
     id: "",
+    user_id: "",
     thumbnail: "",
     description: "",
     place: "",
@@ -362,78 +369,17 @@ function Post({ onClose, user, match }) {
   /**
    * Check that the current user follows the post user.
    */
-  const checkIsFollowing = async () => {
-    try {
-      let ptId = await decodeUrl();
-      let resPost = await axios.get(`http://localhost:4000/p/${ptId}`);
-      let userIdR = resPost.data.postRet.user_id;
-      const data = new FormData();
-      data.append("follow_to", userIdR);
-      data.append("follow_by", user._id);
-      const config = {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
-      await axios
-        .post("http://localhost:4000/follow/isFollowing", data, config)
-        .then((res) => {
-          const follow = res.data.isFollowing;
-          follow ? setIsFollowing(true) : setIsFollowing(false);
-        })
-        .catch((err) =>
-          console.log(`Se ha producido un error al comprobar el follow. ${err}`)
-        );
-    } catch (err) {
-      console.log(`Se ha producido un error al comprobar el follow. ${err}`);
-    }
+  const handleCheckIsFollowing = async () => {
+    const userPostId = await loadPost(id);
+    const result = await checkIsFollowing(userPostId.user_id, user._id);
+    setIsFollowing(result);
   };
-
-  /**
-   * TODO: Load the post.
-   */
-  // const loadPost = async () => {
-  //   try {
-  //     let ptId = await decodeUrl();
-  //     await axios
-  //       .get(`http://localhost:4000/p/${ptId}`)
-  //       .then((res) => {
-  //         if (res.status === 201) {
-  //           let postRes = res.data.postRet;
-  //           setCurrentPost({
-  //             id: postRes._id,
-  //             thumbnail: postRes.thumbnail,
-  //             description: postRes.description,
-  //             place: postRes.place.name,
-  //             createdAt: postRes.createdAt,
-  //             filter: postRes.imgFilter,
-  //           });
-  //           setPostClicked({
-  //             postId: postRes._id,
-  //             userPostId: postRes.user_id,
-  //           });
-  //         }
-  //       })
-  //       .catch((err1) =>
-  //         console.log(`Se ha producido un error al obtener el post. ${err1}`)
-  //       );
-  //   } catch (err) {
-  //     if (
-  //       err.response &&
-  //       (err.response.status === 404 || err.response.status === 400)
-  //     ) {
-  //       console.log("El post no existe");
-  //     } else {
-  //       console.log("Hubo un problema cargando el post.");
-  //     }
-  //     history.push("/error/404");
-  //   }
-  // };
 
   const handleLoadPost = async () => {
     const result = await loadPost(id);
     setCurrentPost({
       id: result._id,
+      user_id: result.user_id,
       thumbnail: result.thumbnail,
       description: result.description,
       place: result.place.name,
@@ -453,36 +399,15 @@ function Post({ onClose, user, match }) {
     return isUserMention;
   };
 
-  /**
-   * Create a new follow between the current user and the user of the post
-   * @see checkIsFollowing
-   */
-  const follow = async () => {
-    try {
+  const handleFollow = async (e) => {
+    e.preventDefault();
+    setSendFollow(true);
+    await follow(pUser.id, user._id);
+
+    setTimeout(() => {
       setSendFollow(false);
-      let resPost = await axios.get(`http://localhost:4000/p/${id}`);
-      let userIdR = resPost.data.postRet.user_id;
-      const followData = new FormData();
-      followData.append("follow_by", user._id);
-      followData.append("follow_to", userIdR);
-      const config = {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
-      await axios
-        .post("http://localhost:4000/follow/add", followData, config)
-        .then((res) => {
-          const data = res.data;
-          console.log(data);
-          setIsFollowing(true);
-          setSendFollow(true);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(`Se ha producido un error al enviar el follow. ${err}`);
-      setSendFollow(true);
-    }
+      setIsFollowing(true);
+    }, 500);
   };
 
   /**
@@ -498,16 +423,15 @@ function Post({ onClose, user, match }) {
 
   useEffect(() => {
     setLoadingPost(true);
-    //loadPost();
     handleLoadPost();
     getUserById();
     getComments();
     listLikes();
     listComments();
-    checkIsFollowing();
+    handleCheckIsFollowing();
     replyComment();
     setLoadingPost(false);
-  }, [commentHasBeenSent, sendFollow, replyOutputData]);
+  }, [commentHasBeenSent, sendFollow, replyOutputData, isFollowing]);
 
   return (
     <div className="w-post">
@@ -663,7 +587,7 @@ function Post({ onClose, user, match }) {
                                   <button
                                     className="bt-small-link"
                                     id="bt-follow"
-                                    onClick={follow}
+                                    onClick={handleFollow}
                                   >
                                     Seguir
                                   </button>

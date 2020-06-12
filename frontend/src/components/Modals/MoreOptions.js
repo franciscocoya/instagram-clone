@@ -22,7 +22,6 @@ function MoreOptions({
 
   const handleCheckFollowing = async () => {
     const result = await checkIsFollowing(ids.userPostId, user._id);
-    console.log(result);
     setIsFollowing(result);
   };
 
