@@ -1,6 +1,16 @@
+/**
+ * @description Suggested component. Show the suggested users to the current user.
+ *
+ * @author Francisco Coya
+ * @version v1.01
+ * @see https://github.com/FranciscoCoya
+ * @copyright © 2020 Francisco Coya
+ */
+
 import React, { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import axios from "axios";
+import { getSuggestedUsers } from "../../queries/posts_queries";
 
 //Static files
 import "../../public/css/Suggested/suggested.css";
@@ -10,29 +20,17 @@ function Suggested({ user, isClosable }) {
   const [suggestedUsers, setSuggestedUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const getSuggestedUsers = async () => {
-    try {
-      setLoading(true);
-      await axios
-        .get(`http://localhost:4000/follow/listUsersNotFollow/${user._id}`)
-        .then((res) => {
-          const users = res.data.usersNotFollowing;
-          setSuggestedUsers(users);
-          setLoading(false);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al cargar los usuarios recomendados. ${err}`
-      );
-      setLoading(false);
-    }
+  const handleSuggestedUsers = async () => {
+    setLoading(true);
+    const result = await getSuggestedUsers(user._id);
+    setSuggestedUsers(result);
+    setLoading(false);
   };
 
   const handleFollow = async () => {};
 
   useEffect(() => {
-    getSuggestedUsers();
+    handleSuggestedUsers();
   }, []);
 
   return (
