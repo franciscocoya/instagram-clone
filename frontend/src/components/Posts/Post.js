@@ -14,6 +14,9 @@ import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import $ from "jquery";
 
+//Queries
+import { loadPost } from "../../queries/posts_queries";
+
 //Components
 import { AdvanceComment } from "../Comment/Comment";
 import Grid from "../Grid/Grid";
@@ -389,42 +392,54 @@ function Post({ onClose, user, match }) {
   /**
    * TODO: Load the post.
    */
-  const loadPost = async () => {
-    try {
-      let ptId = await decodeUrl();
-      await axios
-        .get(`http://localhost:4000/p/${ptId}`)
-        .then((res) => {
-          if (res.status === 201) {
-            let postRes = res.data.postRet;
-            setCurrentPost({
-              id: postRes._id,
-              thumbnail: postRes.thumbnail,
-              description: postRes.description,
-              place: postRes.place.name,
-              createdAt: postRes.createdAt,
-              filter: postRes.imgFilter,
-            });
-            setPostClicked({
-              postId: postRes._id,
-              userPostId: postRes.user_id,
-            });
-          }
-        })
-        .catch((err1) =>
-          console.log(`Se ha producido un error al obtener el post. ${err1}`)
-        );
-    } catch (err) {
-      if (
-        err.response &&
-        (err.response.status === 404 || err.response.status === 400)
-      ) {
-        console.log("El post no existe");
-      } else {
-        console.log("Hubo un problema cargando el post.");
-      }
-      history.push("/error/404");
-    }
+  // const loadPost = async () => {
+  //   try {
+  //     let ptId = await decodeUrl();
+  //     await axios
+  //       .get(`http://localhost:4000/p/${ptId}`)
+  //       .then((res) => {
+  //         if (res.status === 201) {
+  //           let postRes = res.data.postRet;
+  //           setCurrentPost({
+  //             id: postRes._id,
+  //             thumbnail: postRes.thumbnail,
+  //             description: postRes.description,
+  //             place: postRes.place.name,
+  //             createdAt: postRes.createdAt,
+  //             filter: postRes.imgFilter,
+  //           });
+  //           setPostClicked({
+  //             postId: postRes._id,
+  //             userPostId: postRes.user_id,
+  //           });
+  //         }
+  //       })
+  //       .catch((err1) =>
+  //         console.log(`Se ha producido un error al obtener el post. ${err1}`)
+  //       );
+  //   } catch (err) {
+  //     if (
+  //       err.response &&
+  //       (err.response.status === 404 || err.response.status === 400)
+  //     ) {
+  //       console.log("El post no existe");
+  //     } else {
+  //       console.log("Hubo un problema cargando el post.");
+  //     }
+  //     history.push("/error/404");
+  //   }
+  // };
+
+  const handleLoadPost = async () => {
+    const result = await loadPost(id);
+    setCurrentPost({
+      id: result._id,
+      thumbnail: result.thumbnail,
+      description: result.description,
+      place: result.place.name,
+      createdAt: result.createdAt,
+      filter: result.imgFilter,
+    });
   };
 
   /**
@@ -483,7 +498,8 @@ function Post({ onClose, user, match }) {
 
   useEffect(() => {
     setLoadingPost(true);
-    loadPost();
+    //loadPost();
+    handleLoadPost();
     getUserById();
     getComments();
     listLikes();
