@@ -9,7 +9,13 @@
 
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import axios from "axios";
+
+//Queries
+import {
+  addPostLike,
+  removePostLike,
+  checkIsLike,
+} from "../../queries/likes_queries";
 
 //Static files
 import "../../public/css/Post/verticalPost.css";
@@ -17,10 +23,9 @@ import "../../public/css/Post/verticalPost.css";
 function Like({ userId, postId, refreshCount }) {
   const [isLike, setIsLike] = useState(false);
   const [currentLike, setCurrentLike] = useState(null);
-  const [userLikes, setUserLikes] = useState([]);
 
-  const handleClickLike = () => {
-    !isLike ? addLike() : removeLike();
+  const handleClickLike = async () => {
+    !isLike ? await handleAddLike() : await handleRemoveLike();
     setIsLike(!isLike);
   };
 
@@ -29,77 +34,25 @@ function Like({ userId, postId, refreshCount }) {
     handleClickLike();
   };
 
-  /**
-   * Add a like to post.
-   */
-  const addLike = async () => {
-    try {
-      const data = new FormData();
-      data.append("postId", postId);
-      data.append("userId", userId);
-      await axios
-        .post("http://localhost:4000/p/like/add", data)
-        .then((res) => {
-          setCurrentLike(res.data.like);
-          refreshCount();
-        })
-        .catch((err1) => console.log(`Error al añadir el like. ${err1}`));
-    } catch (err) {
-      console.log(`Se ha producido un error al añadir el like. ${err}`);
-    }
+  const handleAddLike = async () => {
+    const result = await addPostLike(userId, postId);
+    setCurrentLike(result);
+    refreshCount();
   };
 
-  /**
-   * Remove the post like.
-   */
-  const removeLike = async () => {
-    const data = new FormData();
-    data.append("id", currentLike._id);
-    try {
-      await axios
-        .delete(`http://localhost:4000/p/like/remove/${currentLike._id}`)
-        .then((res) => {
-          setCurrentLike(null);
-          refreshCount();
-        })
-        .catch((err1) => console.log(`Error al eliminar el like. ${err1}`));
-    } catch (err) {
-      console.log(`Se ha producido un error al eliminar el like. ${err}`);
-    }
+  const handleRemoveLike = async () => {
+    await removePostLike(currentLike._id);
+    setCurrentLike(null);
+    refreshCount();
   };
 
   /**
    * Check if the current user has liked the post.
    */
   const checkLike = async () => {
-    try {
-      axios
-        .get(`http://localhost:4000/user/p/likes/${userId}`)
-        .then((res) => {
-          let likesArr = res.data.list;
-          setUserLikes(likesArr);
-
-          let filtered = likesArr
-            .slice()
-            .filter(
-              (like) => like.userId === userId && like.postId === postId
-            )[0];
-          setCurrentLike(filtered);
-
-          let reduced = likesArr.reduce((acc, like) => {
-            return [...acc, like.postId];
-          }, []);
-
-          setIsLike(reduced.includes(postId));
-        })
-        .catch((err1) =>
-          console.log(
-            `Se ha producido un error al obtener los likes del usuario. ${err1}`
-          )
-        );
-    } catch (err) {
-      console.log(`Se ha producido un error al comprobar el like. ${err}`);
-    }
+    const result = await checkIsLike(userId, postId);
+    setCurrentLike(result.currentLike);
+    setIsLike(result.isLike);
   };
 
   useEffect(() => {
