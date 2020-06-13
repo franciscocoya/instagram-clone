@@ -6,7 +6,10 @@ import axios from "axios";
  * @param {*} userId  Post user id.
  * @param {*} currentUserId Current user id.
  */
-export async function checkIsFollowing(userId, currentUserId) {
+export async function checkIsFollowing(
+  userId: string,
+  currentUserId: string
+): Promise<any> {
   try {
     const data = new FormData();
     data.append("follow_to", userId);
@@ -33,26 +36,27 @@ export async function checkIsFollowing(userId, currentUserId) {
  * @param {*} postId Post id.
  * @param {*} currentUserId Current user id.
  */
-export async function unfollow(postId, currentUserId) {
+export async function unfollow(
+  postId: string,
+  currentUserId: string
+): Promise<void> {
   try {
     let resPost = await axios.get(`http://localhost:4000/p/${postId}`);
     let userIdR = resPost.data.postRet.user_id;
     const unFollowData = new FormData();
     unFollowData.append("follow_by", currentUserId);
     unFollowData.append("follow_to", userIdR);
-    const config = {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    };
+    // const dataConfig = {
+    //   method: "DELETE",
+    //   headers: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //   },
+    // };
     await axios
-      .delete(
-        "http://localhost:4000/follow/unfollow",
-        { data: unFollowData },
-        config
-      )
-      .catch((err) => console.log(err));
+      .delete("http://localhost:4000/follow/unfollow", { data: unFollowData })
+      .catch((err1) =>
+        console.log(`An error occurred while deleting the follow. ${err1}`)
+      );
   } catch (err) {
     console.log(`An error occurred while deleting the follow. ${err}`);
   }
@@ -64,7 +68,10 @@ export async function unfollow(postId, currentUserId) {
  * @param {*} userId User post id.
  * @param {*} currentUserId Current user id.
  */
-export async function follow(userId, currentUserId) {
+export async function follow(
+  userId: string,
+  currentUserId: string
+): Promise<void> {
   try {
     const followData = new FormData();
     followData.append("follow_by", currentUserId);

@@ -5,7 +5,7 @@ import axios from "axios";
  *
  * @param {*} postId Post id.
  */
-export async function decodeUrl(postId) {
+export async function decodeUrl(postId: string): Promise<any> {
   try {
     return await axios
       .get(`http://localhost:4000/shorten/${postId}`)
@@ -24,7 +24,7 @@ export async function decodeUrl(postId) {
   }
 }
 
-export async function shortUrl(postId) {
+export async function shortUrl(postId: string): Promise<any> {
   try {
     const longUrl = `http://localhost:4000/p/${postId}`;
     let data = new FormData();

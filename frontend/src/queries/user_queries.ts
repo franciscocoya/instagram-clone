@@ -7,7 +7,7 @@ import { decodeUrl } from "./url_queries";
  *
  * @param {*} postId Post id.
  */
-export async function getUserByPostId(postId) {
+export async function getUserByPostId(postId: string): Promise<any> {
   try {
     let ptId = await decodeUrl(postId);
     let resPost = await axios.get(

@@ -7,7 +7,10 @@ import { decodeUrl } from "./url_queries";
  *
  * @param {*} postId Post id.
  */
-export async function getTotalLikes(postId, isPost) {
+export async function getTotalLikes(
+  postId: string,
+  isPost: boolean
+): Promise<any> {
   try {
     let ptId, param;
     if (isPost) {

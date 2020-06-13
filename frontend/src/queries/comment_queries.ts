@@ -8,7 +8,7 @@ import { decodeUrl } from "./url_queries";
  *
  * @param {*} postId Post id.
  */
-export async function getComments(postId) {
+export async function getComments(postId: string): Promise<any> {
   try {
     let ptUrl = await decodeUrl(postId);
     return await axios
@@ -31,7 +31,10 @@ export async function getComments(postId) {
  *
  * @param {*} postId Post id.
  */
-export async function getTotalComments(postId, isPost) {
+export async function getTotalComments(
+  postId: string,
+  isPost: string
+): Promise<any> {
   try {
     let ptUrl, param;
     if (isPost) {
@@ -69,12 +72,16 @@ export async function getTotalComments(postId, isPost) {
  * @param {*} commentId Id of comment to reply.
  * @param {*} currentUserId Current user id.
  */
-export async function replyComment(comment, commentId, currentUserId) {
+export async function replyComment(
+  comment: string,
+  commentId: string,
+  currentUserId: string
+): Promise<void> {
   try {
-    let splittedComment = comment.split(" ").slice(1);
+    let splittedComment: Array<string> = comment.split(" ").slice(1);
 
     let data = new FormData();
-    data.append("text", splittedComment);
+    data.append("text", splittedComment.toString());
     data.append("user_id", currentUserId);
     data.append("comment_id", commentId);
 
@@ -90,7 +97,11 @@ export async function replyComment(comment, commentId, currentUserId) {
   }
 }
 
-export async function commentPost(comment, currentUserId, postId) {
+export async function commentPost(
+  comment: string,
+  currentUserId: string,
+  postId: string
+): Promise<void> {
   try {
     let data = new FormData();
     data.append("user_id", currentUserId);
