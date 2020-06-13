@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 function Hashtag({ hashtagName }) {
   const handleClick = (e) => {
     e.preventDefault();
-    console.log(hashtagName);
   };
 
   return (

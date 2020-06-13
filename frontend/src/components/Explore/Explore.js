@@ -21,21 +21,15 @@ function Explore({ user }) {
   const [searchResults, setSearchResults] = useState([]);
 
   const loadAllPosts = async () => {
+    setLoading(true);
     const result = await getNotFollowingPosts(user._id);
     setPosts(result);
+    setLoading(false);
   };
 
   useEffect(() => {
-    try {
-      setLoading(true);
-      loadAllPosts();
-      setLoading(false);
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al cargar la vista Explore. ${err}`
-      );
-      setLoading(false);
-    }
+    loadAllPosts();
+    setLoading(false);
   }, [user]);
 
   return (
@@ -44,7 +38,6 @@ function Explore({ user }) {
         <Loader />
       ) : (
         <div className="body-explore">
-          {/* <UserNavigation user={user} /> */}
           <UserNavigation
             user={user}
             fillExplore={true}

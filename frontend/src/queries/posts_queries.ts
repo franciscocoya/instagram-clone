@@ -71,6 +71,25 @@ export async function getNotFollowingPosts(userId: string): Promise<any> {
   }
 }
 
+export async function getFollowingPosts(userId: string): Promise<any> {
+  try {
+    const data = new FormData();
+    data.append("userId", userId);
+    return await axios
+      .post("http://localhost:4000/p/list/followingPosts", data)
+      .then((res) => {
+        return res.data.followingPosts.sort(
+          (a: any, b: any): any => b.createdAt - a.createdAt
+        );
+      })
+      .catch((err) => console.log(err));
+  } catch (err) {
+    console.log(
+      `Se ha producido un error al listar los posts de los usuarios seguidos por el usuario. ${err}`
+    );
+  }
+}
+
 /**
  * LOCATION
  */

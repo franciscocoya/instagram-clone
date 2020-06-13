@@ -1,6 +1,21 @@
+/**
+ * @description Home component.
+ *  · Shows the posts of the users that the current user follows.
+ *  · It also shows the suggested users for the current user.
+ *
+ * @author Francisco Coya
+ * @version v1.02
+ * @see https://github.com/FranciscoCoya
+ * @copyright © 2020 Francisco Coya
+ */
+
 import React, { useState, useEffect, Suspense } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+
+//Queries
+import { getFollowingPosts } from "../../queries/posts_queries";
+import { getSuggestedUsers } from "../../queries/user_queries";
 
 //Components
 import UserNavigation from "../Navigations/UserNavigation";
@@ -45,54 +60,20 @@ function Home({ user, match }) {
   }
 
   const loadFollowingPosts = async () => {
-    try {
-      const data = new FormData();
-      data.append("userId", user._id);
-      const config = {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
-      await axios
-        .post("http://localhost:4000/p/list/followingPosts", data, config)
-        .then((res) => {
-          const result = res.data.followingPosts;
-          const orderedData = result.sort(
-            (p1, p2) => new Date(p2.createdAt) - new Date(p1.createdAt)
-          );
-          setPosts(orderedData);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al listar los posts de los usuarios seguidos por el usuario. ${err}`
-      );
-    }
+    const result = await getFollowingPosts(user._id);
+    setPosts(result);
   };
 
-  const getSuggestedUsers = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/follow/listUsersNotFollow/${user._id}`)
-        .then((res) => {
-          const users = res.data.usersNotFollowing;
-          //suggest five users
-          const firstFiveUsers = users.slice(0, Math.min(5, users.length));
-          setSuggestedUsers(firstFiveUsers);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al cargar los usuarios recomendados. ${err}`
-      );
-    }
+  const handleGetSuggestedUsers = async () => {
+    const result = await getSuggestedUsers(user._id);
+    setSuggestedUsers(result);
   };
 
   useEffect(() => {
     try {
       setLoading(true);
       loadFollowingPosts();
-      getSuggestedUsers();
+      handleGetSuggestedUsers();
       setLoading(false);
     } catch (err) {
       console.log(`Se ha producido un error al cargar la vista Home. ${err}`);

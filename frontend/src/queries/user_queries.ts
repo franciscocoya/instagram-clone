@@ -26,3 +26,26 @@ export async function getUserByPostId(postId: string): Promise<any> {
     console.log(`An error occurred while loading the post user. ${err}`);
   }
 }
+
+/**
+ * Returns the suggested users for the current user.
+ *
+ * @param userId User id.
+ */
+export async function getSuggestedUsers(userId: string): Promise<any> {
+  try {
+    return await axios
+      .get(`http://localhost:4000/follow/listUsersNotFollow/${userId}`)
+      .then((res) => {
+        const users = res.data.usersNotFollowing;
+        return users.slice(0, Math.min(5, users.length)); //suggest five users
+      })
+      .catch((err1) =>
+        console.log(
+          `An error ocurred while loading the suggested users... ${err1}`
+        )
+      );
+  } catch (err) {
+    console.log(`An error ocurred while loading the suggested users. ${err}`);
+  }
+}
