@@ -46,6 +46,26 @@ export async function getSuggestedUsers(userId: string): Promise<any> {
 }
 
 /**
+ * Return the posts uploaded by the user in session.
+ *
+ * @param userId user id.
+ */
+export async function getPostsByUserId(userId: string): Promise<any> {
+  try {
+    return await axios
+      .get(`http://localhost:4000/posts/${userId}`)
+      .then((res) => {
+        return res.data.posts;
+      })
+      .catch((err1) =>
+        console.log(`An error ocurrer while loading the user posts... ${err1}`)
+      );
+  } catch (err) {
+    console.log(`An error ocurrer while loading the user posts. ${err}`);
+  }
+}
+
+/**
  * Returns all user posts followed by the user, that is, with follow.
  *
  * @param userId User id.
@@ -231,4 +251,30 @@ export async function checkPostIsSaved(postId: string): Promise<any> {
   } catch (err) {
     console.log(`An error ocurred while checking the post. ${err}`);
   }
+}
+
+export async function getSavedPosts(userId: string): Promise<any> {
+  try {
+    return await axios
+      .get(`http://localhost:4000/p/savedPost/get/list/${userId}`)
+      .then((res) => {
+        let arr = res.data.savedPosts;
+        return reduceSavedPosts(arr);
+      })
+      .catch((err1) =>
+        console.log(
+          `Se ha producido un error al cargar los posts favoritos. ${err1}`
+        )
+      );
+  } catch (err) {
+    console.log(
+      `Se ha producido un error al cargar los posts guardados por el usuario. ${err}`
+    );
+  }
+}
+
+function reduceSavedPosts(arr: Array<any>) {
+  return arr.slice().reduce((acc: any, save: any): any => {
+    return [...acc, save.postId];
+  }, []);
 }

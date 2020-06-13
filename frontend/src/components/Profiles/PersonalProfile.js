@@ -1,9 +1,26 @@
+/**
+ * @description Personal Profile component.
+ *
+ *      · Posts uploaded by the user.
+ *      · Posts saved by the user.
+ *      · User profile information.
+ *      · User profile picture.
+ *      · Access to edit user profile.
+ *
+ * @author Francisco Coya
+ * @version v1.02
+ * @see https://github.com/FranciscoCoya
+ * @copyright © 2020 Francisco Coya
+ */
+
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { withRouter, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import $ from "jquery";
-import * as firebase from "firebase";
+
+//Queries
+import { getPostsByUserId, getSavedPosts } from "../../queries/posts_queries";
+import { uploadPostImage } from "../../queries/image_queries";
 
 //Components
 import UserNavigation from "../Navigations/UserNavigation";
@@ -23,7 +40,6 @@ import "../../public/css/Profile/PersonalProfile/optionsBar.css";
 
 function PersonalProfile({ user, logout, match }) {
   let history = useHistory();
-  //--
   const { username } = match.params;
 
   const [showSettings, setShowSettings] = useState(false);
@@ -68,7 +84,7 @@ function PersonalProfile({ user, logout, match }) {
 
   /**
    * Change profile picture.
-   * TODO: Cambiar CLoudinary por firebase.
+   *
    * @param {*} e
    */
   const changeProfilePic = (e) => {
@@ -87,41 +103,11 @@ function PersonalProfile({ user, logout, match }) {
    * Upload the user's profile image to firebase.
    */
   const uploadProfileImage = async (img) => {
-    try {
-      setShowCircleProgress(true);
-      const storageRef = firebase.storage().ref(`profiles/${img.name}`);
-      const task = storageRef.put(img);
-      task.on(
-        "state_changed",
-        (snapshot) => {
-          let percentage =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(percentage);
-          setPicLoadingPercentage(percentage);
-        },
-        (err) => {
-          console.log(err.message);
-        },
-        () => {
-          storageRef.getDownloadURL().then(async (url) => {
-            let newUrlPic = new FormData();
-            newUrlPic.append("profile_picture", url);
-
-            await axios.put(
-              `http://localhost:4000/accounts/user/${user._id}`,
-              newUrlPic
-            );
-          });
-        }
-      );
-      setTimeout(() => {
-        setShowCircleProgress(false);
-      }, 100);
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al subir la imagen de perfil. ${err}`
-      );
-    }
+    setShowCircleProgress(true);
+    await uploadPostImage(img.name, img, user._id);
+    setTimeout(() => {
+      setShowCircleProgress(false);
+    }, 100);
   };
 
   /**
@@ -137,46 +123,17 @@ function PersonalProfile({ user, logout, match }) {
    * Load the current user's posts.
    */
   const loadUserPosts = async () => {
-    const res = await axios.get(`http://localhost:4000/posts/${user._id}`);
-    let postsResult = res.data.posts;
-    postsResult.length > 0
-      ? setShowUploadButon(true)
-      : setShowUploadButon(false);
-    setPosts(postsResult);
+    const result = await getPostsByUserId(user._id);
+    result.length > 0 ? setShowUploadButon(true) : setShowUploadButon(false);
+    setPosts(result);
   };
 
   /**
    * Load user saved posts (favorites).
    */
   const loadSavedPosts = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/p/savedPost/get/list/${user._id}`)
-        .then(async (res) => {
-          let arr = res.data.savedPosts;
-          let reduced = await reduceSavedPosts(arr);
-          setSaves(reduced);
-        })
-        .catch((err1) =>
-          console.log(
-            `Se ha producido un error al cargar los posts favoritos. ${err1}`
-          )
-        );
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al cargar los posts guardados por el usuario. ${err}`
-      );
-    }
-  };
-
-  /**
-   * Reduce an array of saves to an array of posts.
-   * @param {*} arr Savedposts array.
-   */
-  const reduceSavedPosts = (arr) => {
-    return arr.slice().reduce((acc, save) => {
-      return [...acc, save.postId];
-    }, []);
+    const result = await getSavedPosts(user._id);
+    setSaves(result);
   };
 
   useEffect(() => {
