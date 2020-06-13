@@ -168,3 +168,67 @@ export async function searchMention(
     console.log(`An error ocurred while searching < ${textSearch} >. ${err}`);
   }
 }
+
+/**
+ *** SAVE POST ***
+ */
+
+/**
+ * Save the post, whose id is passed as a parameter, in the user's favorite
+ * post list in session.
+ *
+ * @param userId user id.
+ * @param postId post id.
+ */
+export async function savePost(userId: string, postId: string): Promise<any> {
+  try {
+    let data = new FormData();
+    data.append("postId", postId);
+    data.append("userId", userId);
+
+    return await axios
+      .post(`http://localhost:4000/p/savedPost/add`, data)
+      .then((res) => {
+        return res.data.savedPost;
+      })
+      .catch((err1) =>
+        console.log(`An error ocurred while saving the post. ${err1}`)
+      );
+  } catch (err) {
+    console.log(`An error ocurred while saving the post in bookmarks. ${err}`);
+  }
+}
+
+/**
+ *  Delete the saved post whose id is passed as parameter.
+ *
+ * @param saveId Saved post id.
+ */
+export async function removePost(saveId: string): Promise<void> {
+  try {
+    await axios
+      .delete(`http://localhost:4000/p/savedPost/delete/${saveId}`)
+      .catch((err1) =>
+        console.log(`An error ocurred while deleting the saved post... ${err1}`)
+      );
+  } catch (err) {
+    console.log(
+      `An error ocurred while deleting the saved post in bookmarks. ${err}`
+    );
+  }
+}
+
+export async function checkPostIsSaved(postId: string): Promise<any> {
+  try {
+    return await axios
+      .get(`http://localhost:4000/p/savedPost/get/${postId}`)
+      .then((res) => {
+        return res.data.savedPost;
+      })
+      .catch((err1) =>
+        console.log(`An error ocurred while checking the post. ${err1}`)
+      );
+  } catch (err) {
+    console.log(`An error ocurred while checking the post. ${err}`);
+  }
+}

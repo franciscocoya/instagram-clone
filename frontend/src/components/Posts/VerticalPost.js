@@ -56,19 +56,19 @@ function VerticalPost({
   setCurrent,
 }) {
   let history = useHistory();
-  const [isLike, setIsLike] = useState(false); //Has the Current User liked the post ?
+  const [isLike, setIsLike] = useState(false);
   const [comment, setComment] = useState("");
-  const [commentsArr, setCommentsArr] = useState([]); //Comments list
-  const [likesCount, setLikesCount] = useState(1); //Total number of post likes
-  const [commentsCount, setCommentsCount] = useState(0); //Total number of post comments
+  const [commentsArr, setCommentsArr] = useState([]);
+  const [likesCount, setLikesCount] = useState(1);
+  const [commentsCount, setCommentsCount] = useState(0);
   const [, setTime] = useState(null);
   const [pUser, setPUser] = useState({
     id: "",
     profile_picture: "",
     username: "",
   });
-  const [loadingVertPost, setLoadingVertPost] = useState(true); //loading post
-  const [commentHasBeenSent, setCommentHasBeenSent] = useState(false); //The comment has been sent ?
+  const [loadingVertPost, setLoadingVertPost] = useState(true);
+  const [commentHasBeenSent, setCommentHasBeenSent] = useState(false);
   const [descriptionWordsCount, setDescriptionWordsCount] = useState(0);
 
   const [breakLongDescriptionArr, setBreakLongDescriptionArr] = useState([]);
@@ -77,10 +77,10 @@ function VerticalPost({
   const [refreshLikesCount, setRefreshLikesCount] = useState(false);
 
   //Search results (user mention search)
-  const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchMentionResults, setSearchMentionResults] = useState([]);
   const [suggestedMention, setSuggestedMention] = useState(null);
   const [commentHasBeenChanged, setCommentHasBeenChanged] = useState(false);
+
   const [urlCode, setUrlCode] = useState("");
 
   const handleShortUrl = async () => {
@@ -120,7 +120,7 @@ function VerticalPost({
   };
 
   /**
-   * TODO: Enable the send comment button if the comment field is not empty.
+   * Enable the send comment button if the comment field is not empty.
    * @param {*} e
    */
   const enadleAddComentButton = (e) => {
