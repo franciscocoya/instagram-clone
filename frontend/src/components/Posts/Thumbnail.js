@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import axios from "axios";
-import ColorThief from "colorthief";
-import $ from "jquery";
+
+//Queries
+import { getTotalLikes } from "../../queries/likes_queries";
+import { getTotalComments } from "../../queries/comment_queries";
+import { shortUrl } from "../../queries/url_queries";
 
 //static files
 import "../../public/css/Post/thumbnail.css";
@@ -16,59 +19,25 @@ function Thumbnail({ thumb, thumbAlt, postId, filter }) {
   /**
    * Total number of likes of the post.
    */
-  const listLikes = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/p/likes/${postId}`)
-        .then((count) => {
-          setLikesCount(count.data.likes);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(`Se ha producido un error al listar los likes. ${err}`);
-    }
+  const handleGetLikes = async () => {
+    const result = await getTotalLikes(postId, false);
+    setLikesCount(result);
   };
 
-  /**
-   * Total number of comments of the post.
-   */
-  const listComments = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/comments/c/${postId}`)
-        .then((count) => {
-          setCommentsCount(count.data.commentsCount);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(`Se ha producido un error al listar los comentarios. ${err}`);
-    }
+  const handleGetTotalComments = async () => {
+    const result = await getTotalComments(postId, false);
+    setCommentsCount(result);
   };
 
-  const shortURL = async () => {
-    try {
-      const longUrl = `http://localhost:4000/p/${postId}`;
-      let data = new FormData();
-      data.append("longUrl", longUrl);
-      await axios
-        .post(`http://localhost:4000/shorten`, data)
-        .then((res) => {
-          setUrlCode(res.data.url.urlCode);
-        })
-        .catch((err1) =>
-          console.log(`Se ha producido un error al acortar la URL... ${err1}`)
-        );
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al acortar la URL del post. ${err}`
-      );
-    }
+  const handleShortUrl = async () => {
+    const result = await shortUrl(postId);
+    setUrlCode(result);
   };
 
   useEffect(() => {
-    shortURL();
-    listComments();
-    listLikes();
+    handleShortUrl();
+    handleGetTotalComments();
+    handleGetLikes();
   }, []);
 
   return (

@@ -49,9 +49,8 @@ function Post({ onClose, user, match }) {
   const [isLike, setIsLike] = useState(false);
   const [comment, setComment] = useState("");
   const [commentsArr, setCommentsArr] = useState([]);
-  //const [currentUser, setCurrentUser] = useState(user);
-  const [likesCount, setLikesCount] = useState(0); //Total of likes
-  const [, setCommentsCount] = useState(0); //Total of comments
+  const [likesCount, setLikesCount] = useState(0);
+  const [, setCommentsCount] = useState(0);
   const [loadingPost, setLoadingPost] = useState(true);
   const [currentPost, setCurrentPost] = useState({
     id: "",
@@ -222,7 +221,7 @@ function Post({ onClose, user, match }) {
    * Count the post likes.
    */
   const listLikes = async () => {
-    const result = await getTotalLikes(id);
+    const result = await getTotalLikes(id, true);
     setLikesCount(result);
   };
 
@@ -230,7 +229,7 @@ function Post({ onClose, user, match }) {
    * Count the post comments.
    */
   const listComments = async () => {
-    const result = await getTotalComments(id);
+    const result = await getTotalComments(id, true);
     setCommentsCount(result);
   };
 

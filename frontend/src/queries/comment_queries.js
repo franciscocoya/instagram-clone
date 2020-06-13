@@ -31,13 +31,18 @@ export async function getComments(postId) {
  *
  * @param {*} postId Post id.
  */
-export async function getTotalComments(postId) {
+export async function getTotalComments(postId, isPost) {
   try {
-    let ptUrl = await decodeUrl(postId);
+    let ptUrl, param;
+    if (isPost) {
+      ptUrl = await decodeUrl(postId);
+      param = ptUrl.split("/").slice(-1).pop();
+    } else {
+      param = postId;
+    }
+
     return await axios
-      .get(
-        `http://localhost:4000/comments/c/${ptUrl.split("/").slice(-1).pop()}`
-      )
+      .get(`http://localhost:4000/comments/c/${param}`)
       .then((res) => {
         return res.data.commentsCount;
       })

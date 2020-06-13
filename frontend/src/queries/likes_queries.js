@@ -7,20 +7,28 @@ import { decodeUrl } from "./url_queries";
  *
  * @param {*} postId Post id.
  */
-export async function getTotalLikes(postId) {
+export async function getTotalLikes(postId, isPost) {
   try {
-    let ptId = await decodeUrl(postId);
+    let ptId, param;
+    if (isPost) {
+      ptId = await decodeUrl(postId);
+      param = ptId.split("/").slice(-1).pop();
+    } else {
+      param = postId;
+    }
     return await axios
-      .get(`http://localhost:4000/p/likes/${ptId.split("/").slice(-1).pop()}`)
+      .get(`http://localhost:4000/p/likes/${param}`)
       .then((res) => {
         return res.data.likes;
       })
       .catch((err1) =>
         console.log(
-          `Se ha producido un error al contar los likes del post. ${err1}`
+          `An error occurred when counting the likes of the post... ${err1}`
         )
       );
   } catch (err) {
-    console.log(`Se ha producido un error al listar los likes.${err}`);
+    console.log(
+      `An error occurred when counting the likes of the post. ${err}`
+    );
   }
 }
