@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+//Queries
+import { getNotFollowingPosts } from "../../queries/posts_queries";
+
 //Components
 import UserNavigation from "../Navigations/UserNavigation";
 import Loader from "../Loader/Loader";
@@ -14,36 +17,14 @@ import "../../public/css/Explore/explore.css";
 function Explore({ user }) {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
-  //const [loadingUnfollow, setLoadingUnfollow] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
   const loadAllPosts = async () => {
-    try {
-      const data = new FormData();
-      data.append("userId", user._id);
-      console.log(user);
-      const config = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
-      await axios
-        .post("http://localhost:4000/follow/notFollowingPosts", data, config)
-        .then((res) => {
-          const result = res.data.notFollowingPosts;
-          setPosts(result);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al listar los posts de los usuarios seguidos por el usuario. ${err}`
-      );
-    }
+    const result = await getNotFollowingPosts(user._id);
+    setPosts(result);
   };
 
-  //--
   useEffect(() => {
     try {
       setLoading(true);

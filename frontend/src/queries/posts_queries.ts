@@ -7,7 +7,7 @@ import { decodeUrl } from "./url_queries";
  *
  * @param {*} postId Post id.
  */
-export async function loadPost(postId) {
+export async function loadPost(postId: string): Promise<any> {
   try {
     let ptId = await decodeUrl(postId);
     return await axios
@@ -28,7 +28,7 @@ export async function loadPost(postId) {
  *
  * @param {*} userId Current user id.
  */
-export async function getSuggestedUsers(userId) {
+export async function getSuggestedUsers(userId: string): Promise<any> {
   try {
     return await axios
       .get(`http://localhost:4000/follow/listUsersNotFollow/${userId}`)
@@ -46,6 +46,32 @@ export async function getSuggestedUsers(userId) {
 }
 
 /**
+ * Returns all user posts followed by the user, that is, with follow.
+ *
+ * @param userId User id.
+ */
+export async function getNotFollowingPosts(userId: string): Promise<any> {
+  try {
+    const data = new FormData();
+    data.append("userId", userId);
+    return await axios
+      .post("http://localhost:4000/follow/notFollowingPosts", data)
+      .then((res) => {
+        return res.data.notFollowingPosts;
+      })
+      .catch((err1) =>
+        console.log(
+          `An error occurred listing user posts followed by user... ${err1}`
+        )
+      );
+  } catch (err) {
+    console.log(
+      `An error occurred listing user posts followed by user. ${err}`
+    );
+  }
+}
+
+/**
  * LOCATION
  */
 
@@ -54,7 +80,7 @@ export async function getSuggestedUsers(userId) {
  *
  * @param {*} place The place to get the feature post.
  */
-export async function getFeaturePost(place) {
+export async function getFeaturePost(place: string): Promise<any> {
   try {
     return await axios
       .get(`http://localhost:4000/posts/feature/${place}`)
@@ -74,7 +100,7 @@ export async function getFeaturePost(place) {
  *
  * @param {*} place Place where the posts are located
  */
-export async function getPostsByLocation(place) {
+export async function getPostsByLocation(place: string): Promise<any> {
   try {
     return await axios
       .get(`http://localhost:4000/posts/place/${place}`)

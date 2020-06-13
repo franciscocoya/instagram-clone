@@ -217,17 +217,11 @@ function Post({ onClose, user, match }) {
     setPUser(result);
   };
 
-  /**
-   * Count the post likes.
-   */
   const listLikes = async () => {
     const result = await getTotalLikes(id, true);
     setLikesCount(result);
   };
 
-  /**
-   * Count the post comments.
-   */
   const listComments = async () => {
     const result = await getTotalComments(id, true);
     setCommentsCount(result);
