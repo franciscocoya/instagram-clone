@@ -5,7 +5,9 @@ import $ from "jquery";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.min.css";
 import { storage } from "../../firebase";
-//import EXIF from "exif-js";
+
+//Queries
+import { uploadPostImage } from "../../queries/image_queries";
 
 //Components
 import PlacesAutocomplete, {
@@ -24,8 +26,6 @@ import OwlCarrouselDemo from "./OwlCarrousel";
 import "../../public/css/partials/cssgram.min.css";
 import dragIcon from "../../public/assets/img/drag-icon.png";
 
-//TODO: Refactorizar a fichero unico
-
 function UploadPost({ user }) {
   const history = useHistory();
   const [image, setImage] = useState({
@@ -39,7 +39,6 @@ function UploadPost({ user }) {
   const [imgURL, setImgURL] = useState("");
 
   const [description, setDescription] = useState("");
-  //const [tags, setTags] = useState([]);
   const [tagCad, setTagCad] = useState([]);
   //Location
   const [address, setAddress] = useState("");
@@ -114,8 +113,6 @@ function UploadPost({ user }) {
           setCountry(countryCode);
         });
     }
-
-    //setSecondaryText();
   }
 
   /**
@@ -143,12 +140,12 @@ function UploadPost({ user }) {
   }
 
   /**
-   * TODO: Upload temporary image preview to firebase
+   * Upload temporary image preview to firebase
    * @param {*} img Image to get temporal url
    */
   const createTempImage = (img) => {
     setImgRAW(img);
-    uploadToFirebase(img, "posts");
+    handleUploadImage("posts", img.name, img);
   };
 
   function handleDescription(e) {
@@ -159,32 +156,36 @@ function UploadPost({ user }) {
     setTagCad(e.target.value);
   }
 
-  const uploadToFirebase = async (img, folder) => {
-    try {
-      const storageRef = storage.ref(`${folder}/${img.name}`);
-      const task = storageRef.put(img);
-      task.on(
-        "state_changed",
-        (snapshot) => {
-          let percentage =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(percentage);
-        },
-        (err) => {
-          console.log(err.message);
-        },
-        () => {
-          storageRef.getDownloadURL().then((url) => {
-            setImgURL(url);
-          });
-        }
-      );
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al subir la imagen temporal. ${err}`
-      );
-    }
+  const handleUploadImage = async (img, folder) => {
+    const result = await uploadPostImage(folder, img.name, img);
+    setImgURL(result);
   };
+
+  // const uploadToFirebase = async (img, folder) => {
+  //   try {
+  //     const storageRef = storage.ref(`${folder}/${img.name}`);
+  //     const task = storageRef.put(img);
+  //     task.on(
+  //       "state_changed",
+  //       (snapshot) => {
+  //         let percentage =
+  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //       },
+  //       (err) => {
+  //         console.log(err.message);
+  //       },
+  //       () => {
+  //         storageRef.getDownloadURL().then((url) => {
+  //           setImgURL(url);
+  //         });
+  //       }
+  //     );
+  //   } catch (err) {
+  //     console.log(
+  //       `Se ha producido un error al subir la imagen temporal. ${err}`
+  //     );
+  //   }
+  // };
 
   // *** UPLOAD POST ***
   /**

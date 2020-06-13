@@ -1,13 +1,23 @@
 import axios from "axios";
 import { storage } from "../firebase";
 
-export async function uploadPostImage(
+/**
+ * Upload the selected profile image to the firebase storage
+ * whose raw and name are passed as parameter.
+ *
+ * @param folder Destination folder.
+ * @param imgName Name of the image to upload.
+ * @param img Image to upload.
+ * @param userId User id.
+ */
+export async function uploadProfileImage(
+  folder: string,
   imgName: string,
   img: Blob,
   userId: string
 ): Promise<any> {
   try {
-    const storageRef = storage.ref(`profiles/${imgName}`);
+    const storageRef = storage.ref(`${folder}/${imgName}`);
     const task = storageRef.put(img);
     task.on(
       "state_changed",
@@ -38,4 +48,30 @@ export async function uploadPostImage(
   }
 }
 
-export async function uploadProfileImage(): Promise<any> {}
+export async function uploadPostImage(
+  folder: string,
+  imgName: string,
+  img: any
+): Promise<any> {
+  try {
+    const storageRef = storage.ref(`${folder}/${imgName}`);
+    const task = storageRef.put(img);
+    task.on(
+      "state_changed",
+      (snapshot) => {
+        let percentage =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      },
+      (err) => {
+        console.log(err.message);
+      },
+      () => {
+        storageRef.getDownloadURL().then((url) => {
+          return url;
+        });
+      }
+    );
+  } catch (err) {
+    console.log(`Se ha producido un error al subir la imagen temporal. ${err}`);
+  }
+}

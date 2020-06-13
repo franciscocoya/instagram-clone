@@ -20,7 +20,7 @@ import $ from "jquery";
 
 //Queries
 import { getPostsByUserId, getSavedPosts } from "../../queries/posts_queries";
-import { uploadPostImage } from "../../queries/image_queries";
+import { uploadProfileImage } from "../../queries/image_queries";
 
 //Components
 import UserNavigation from "../Navigations/UserNavigation";
@@ -104,7 +104,7 @@ function PersonalProfile({ user, logout, match }) {
    */
   const uploadProfileImage = async (img) => {
     setShowCircleProgress(true);
-    await uploadPostImage(img.name, img, user._id);
+    await uploadProfileImage("profiles", img.name, img, user._id);
     setTimeout(() => {
       setShowCircleProgress(false);
     }, 100);
