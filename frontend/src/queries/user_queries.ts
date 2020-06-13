@@ -2,6 +2,21 @@ import axios from "axios";
 
 import { decodeUrl } from "./url_queries";
 
+export async function getUserById(userId: string): Promise<any> {
+  try {
+    return await axios
+      .get(`http://localhost:4000/accounts/user/${userId}`)
+      .then((res) => {
+        return res.data.user;
+      })
+      .catch((err1) =>
+        console.log(`An error ocurred while getting the user... ${err1}`)
+      );
+  } catch (err) {
+    console.log("An error ocurred while getting the user. " + err);
+  }
+}
+
 /**
  * Get the user from the post id.
  *

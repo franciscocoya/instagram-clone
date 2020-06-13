@@ -66,7 +66,6 @@ function Save({ postId, user }) {
   const deleteSavePost = async (e) => {
     e.preventDefault();
     try {
-      console.log(postSaved);
       await axios
         .delete(`http://localhost:4000/p/savedPost/delete/${postSaved._id}`)
         .then((res) => {

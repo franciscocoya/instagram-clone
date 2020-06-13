@@ -27,6 +27,30 @@ export async function getComments(postId: string): Promise<any> {
 }
 
 /**
+ * Returns an array with the two most recent post comments.
+ *
+ * @param postId Post id.
+ */
+export async function getLastComments(postId: string): Promise<any> {
+  try {
+    return await axios
+      .get(`http://localhost:4000/p/comments/last/${postId}`)
+      .then((res) => {
+        return res.data.comments;
+      })
+      .catch((err1) =>
+        console.log(
+          `An error ocurred while getting the most recent post comments... ${err1}`
+        )
+      );
+  } catch (err) {
+    console.log(
+      `An error ocurred while getting the most recent post comments. ${err}`
+    );
+  }
+}
+
+/**
  * Return the total number of likes for the post.
  *
  * @param {*} postId Post id.
@@ -97,6 +121,14 @@ export async function replyComment(
   }
 }
 
+/**
+ * Create a new comment of the current user in the post whose id is passed as parameter.
+ *
+ *
+ * @param comment Content of the comment.
+ * @param currentUserId Current user id.
+ * @param postId Post id.
+ */
 export async function commentPost(
   comment: string,
   currentUserId: string,

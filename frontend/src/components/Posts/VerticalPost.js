@@ -15,6 +15,18 @@ import axios from "axios";
 import $ from "jquery";
 import Skeleton from "react-loading-skeleton";
 
+//Queries
+import { shortUrl } from "../../queries/url_queries";
+import {
+  commentPost,
+  getLastComments,
+  getTotalComments,
+} from "../../queries/comment_queries";
+import { getTotalLikes } from "../../queries/likes_queries";
+import { getUserById } from "../../queries/user_queries";
+import { checkIsFollowing } from "../../queries/follow_queries";
+import { searchMention } from "../../queries/posts_queries";
+
 //Components
 import Comment from "../Comment/Comment";
 import Like from "../Like/Like";
@@ -44,8 +56,6 @@ function VerticalPost({
   setCurrent,
 }) {
   let history = useHistory();
-  //--
-  //--
   const [isLike, setIsLike] = useState(false); //Has the Current User liked the post ?
   const [comment, setComment] = useState("");
   const [commentsArr, setCommentsArr] = useState([]); //Comments list
@@ -73,27 +83,9 @@ function VerticalPost({
   const [commentHasBeenChanged, setCommentHasBeenChanged] = useState(false);
   const [urlCode, setUrlCode] = useState("");
 
-  /**
-   * Short the post URL.
-   */
-  const shortURL = async () => {
-    try {
-      const longUrl = `http://localhost:4000/p/${postId}`;
-      let data = new FormData();
-      data.append("longUrl", longUrl);
-      await axios
-        .post(`http://localhost:4000/shorten`, data)
-        .then((res) => {
-          setUrlCode(res.data.url.urlCode);
-        })
-        .catch((err1) =>
-          console.log(`Se ha producido un error al acortar la URL... ${err1}`)
-        );
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al acortar la URL del post. ${err}`
-      );
-    }
+  const handleShortUrl = async () => {
+    const result = await shortUrl(postId);
+    setUrlCode(result);
   };
 
   /**
@@ -116,8 +108,6 @@ function VerticalPost({
     setTimeout(() => {
       $(".coreSpriteLikeAnimationHeart").fadeOut();
     }, 1000);
-
-    console.log(isLike);
   };
 
   /**
@@ -141,7 +131,7 @@ function VerticalPost({
     if (value.length > 0) {
       //Check if a user mention
       if (checkIsUserMention(value)) {
-        searchMention(value);
+        handleSearchMention(value);
         replaceMention();
       }
 
@@ -159,79 +149,30 @@ function VerticalPost({
     }
   };
 
-  /**
-   * Send the comment to backend.
-   * @param {*} e
-   */
-  const commentPost = async (e) => {
+  const handleCommentPost = async (e) => {
     e.preventDefault();
     setCommentHasBeenSent(false);
-    let data = new FormData();
-    data.append("user_id", user._id);
-    data.append("post_id", postId);
-    data.append("text", comment);
-    try {
-      await axios
-        .post("http://localhost:4000/p/comment/add", data)
-        .then((res) => {
-          console.log(res.data.comment);
-          setCommentHasBeenSent(true);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log("Se ha producido un error al enviar el comentario. " + err);
-    }
+    await commentPost(comment, user._id, postId);
+    setCommentHasBeenSent(true);
   };
 
-  /**
-   * Get a user from their id.
-   */
-  async function getUserById() {
-    try {
-      await axios
-        .get(`http://localhost:4000/accounts/user/${postUser}`)
-        .then((res) => {
-          setPUser({
-            profile_picture: res.data.user.profile_picture,
-            username: res.data.user.username,
-            id: res.data.user._id,
-          });
-        });
-    } catch (err) {
-      console.log("Se ha producido un error(115)... " + err);
-    }
-  }
+  const handleGetUserById = async () => {
+    const result = await getUserById(postUser);
+    setPUser({
+      profile_picture: result.profile_picture,
+      username: result.username,
+      id: result._id,
+    });
+  };
 
-  /**
-   * Get likes count.
-   */
   const listLikes = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/p/likes/${postId}`)
-        .then((res) => {
-          setLikesCount(res.data.likes);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log("Se ha producido un error al listar los likes " + err);
-    }
+    const result = await getTotalLikes(postId);
+    setLikesCount(result);
   };
 
-  /**
-   * Get comments count.
-   */
   const listComments = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/comments/c/${postId}`)
-        .then((res) => {
-          setCommentsCount(res.data.commentsCount);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log("Se ha producido un error al listar los comentarios " + err);
-    }
+    const result = await getTotalComments(postId);
+    setCommentsCount(result);
   };
 
   /**
@@ -253,44 +194,13 @@ function VerticalPost({
    *
    */
   const loadComments = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/p/comments/last/${postId}`)
-        .then((res) => {
-          setCommentsArr(res.data.comments);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(
-        "Se ha producido un error al cargar los comentarios más recientes"
-      );
-    }
+    const result = await getLastComments(postId);
+    setCommentsArr(result);
   };
 
-  /**
-   * Check that the current user follows the post user.
-   */
-  const checkIsFollowing = async () => {
-    try {
-      const data = new FormData();
-      data.append("follow_to", postUser);
-      data.append("follow_by", user._id);
-      const config = {
-        headers: {
-          method: "POST",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
-      await axios
-        .post("http://localhost:4000/follow/isFollowing", data, config)
-        .then((res) => {
-          const follow = res.data.isFollowing;
-          follow ? following() : notFollowing();
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(`Se ha producido un error al comprobar el follow. ${err}`);
-    }
+  const handleCheckIsFollowing = async () => {
+    const result = checkIsFollowing(postUser, user._id);
+    result ? following() : notFollowing();
   };
 
   /**
@@ -354,13 +264,12 @@ function VerticalPost({
   };
 
   /**
-   * TODO:  Check that the text passed as a parameter is a mention to a user.
+   * Check that the text passed as a parameter is a mention to a user.
    */
   const checkIsUserMention = (inputText) => {
     try {
       if (inputText !== null && inputText !== undefined) {
         let regExp = new RegExp("[@]{1}[a-zA-Z0-9]+");
-        //Remove return, whites.
         let withoutSpaces = inputText.replace(/(\r\n|\n|\r)/gm, "*");
         let arrAux = withoutSpaces.split("*");
         let resultMent = arrAux.filter((tx) => tx.includes("@"));
@@ -368,53 +277,20 @@ function VerticalPost({
       }
     } catch (err) {
       console.log(
-        `Se ha producido un error al comprobar el input como mención de usuario. ${err}`
+        `An error occurred while checking the input as user mention. ${err}`
       );
     }
   };
 
-  /**
-   * TODO: Search the suggested users for the mention.
-   * @param {*} textSearch
-   */
-  const searchMention = async (textSearch) => {
-    try {
-      if (textSearch !== null && textSearch !== undefined) {
-        let textFilt = textSearch.split("@")[1];
-        console.log(textFilt);
-        await axios
-          .get(`http://localhost:4000/user/search/${textFilt}`)
-          .then((res) => {
-            if (res.status === 200 || res.status === 201) {
-              const results = res.data.users;
-              const resultsFilt = results.filter((u) => u._id !== user._id);
-              console.log(resultsFilt);
-              setSearchMentionResults(resultsFilt);
-            }
-          })
-          .catch((err1) =>
-            console.log(
-              `Se ha producido un error al realizar la consulta. ${err1}`
-            )
-          );
-      } else {
-        console.log(`La entrada no es válida. Undefined o null`);
-      }
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al buscar < ${textSearch} >. ${err}`
-      );
-    }
+  const handleSearchMention = async (textSearch) => {
+    const result = await searchMention(textSearch, user._id);
+    setSearchMentionResults(result);
   };
 
-  /**
-   * TODO: Acabar
-   */
   const replaceMention = () => {
     setCommentHasBeenChanged(false);
     if (suggestedMention !== null && suggestedMention !== undefined) {
       let allComment = comment.split("@");
-      let incompleteMention = allComment[1];
       let aux = allComment[0];
       let result = aux + "@" + suggestedMention + " ";
       setComment({
@@ -425,7 +301,9 @@ function VerticalPost({
   };
 
   /**
-   * TODO: Check if there are mentions to users in the description. Create a Mention component in that case
+   * Check if there are mentions to users in the description.
+   * Create a Mention component in that case.
+   *
    * @param {*} text Content of the text of the post description
    */
   const checkMentionComponent = (text) => {
@@ -452,11 +330,11 @@ function VerticalPost({
 
   useEffect(() => {
     try {
-      checkIsFollowing();
-      shortURL();
+      handleCheckIsFollowing();
+      handleShortUrl();
       setLoadingVertPost(true);
       loadComments();
-      getUserById();
+      handleGetUserById();
       listLikes();
       listComments();
       convertDate();
@@ -468,7 +346,7 @@ function VerticalPost({
         setRefreshLikesCount(false);
       };
     } catch (err) {
-      console.log("Error al cargar el post");
+      console.log(`An error ocurred while loading the post... ${err}`);
       setLoadingVertPost(false);
     }
   }, [commentHasBeenSent, suggestedMention, refreshLikesCount]);
@@ -519,7 +397,6 @@ function VerticalPost({
               {loadingVertPost ? (
                 <Skeleton width={`30%`} />
               ) : (
-                //TODO:
                 <Link
                   to={`/explore/locations/${countryId}/${place}`}
                   className="location-text"
@@ -572,7 +449,6 @@ function VerticalPost({
               ) : (
                 <>
                   <div className="wrapper-media__col1">
-                    {/* TODO: Like button */}
                     <Like
                       userId={user._id}
                       postId={postId}
@@ -607,7 +483,7 @@ function VerticalPost({
                       </svg>
                     </button>
                   </div>
-                  {/* TODO: */}
+
                   <div className="save-container-v-post">
                     {postUser.id !== user._id && (
                       <Save postId={postId} user={user} />
@@ -772,7 +648,7 @@ function VerticalPost({
             <button
               className="bt-small-link mp-0"
               id={`bt-post-comment-${btKey}`}
-              onClick={commentPost}
+              onClick={handleCommentPost}
             >
               Publicar
             </button>

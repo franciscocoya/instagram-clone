@@ -71,6 +71,11 @@ export async function getNotFollowingPosts(userId: string): Promise<any> {
   }
 }
 
+/**
+ * Get posts from users followed by the user in session.
+ *
+ * @param userId User id.
+ */
 export async function getFollowingPosts(userId: string): Promise<any> {
   try {
     const data = new FormData();
@@ -91,7 +96,7 @@ export async function getFollowingPosts(userId: string): Promise<any> {
 }
 
 /**
- * LOCATION
+ *** LOCATION ***
  */
 
 /**
@@ -131,5 +136,35 @@ export async function getPostsByLocation(place: string): Promise<any> {
       );
   } catch (err) {
     console.log(`An error ocurred while getting the location posts. ${err}`);
+  }
+}
+
+/**
+ *** MENTION & HASHTAG***
+ */
+
+export async function searchMention(
+  textSearch: string,
+  userId: string
+): Promise<any> {
+  try {
+    if (textSearch !== null && textSearch !== undefined) {
+      let textFilt = textSearch.split("@")[1];
+      return await axios
+        .get(`http://localhost:4000/user/search/${textFilt}`)
+        .then((res) => {
+          if (res.status === 200 || res.status === 201) {
+            const results = res.data.users;
+            return results.filter((u: any): any => u._id !== userId);
+          }
+        })
+        .catch((err1) =>
+          console.log(`An ocurred ocurred while getting the results... ${err1}`)
+        );
+    } else {
+      console.log(`Invalid, undefined or null input...`);
+    }
+  } catch (err) {
+    console.log(`An error ocurred while searching < ${textSearch} >. ${err}`);
   }
 }

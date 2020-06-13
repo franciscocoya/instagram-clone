@@ -80,29 +80,6 @@ function Post({ onClose, user, match }) {
   const [replyOutputData, setReplyOutputData] = useState(null);
 
   /**
-   *
-   * @param {*} e
-   */
-  // const decodeUrl = async () => {
-  //   try {
-  //     let p = await axios
-  //       .get(`http://localhost:4000/shorten/${id}`)
-  //       .then((res) => {
-  //         let pId = res.data.shortenedURL.longUrl.split("/").slice(-1).pop();
-  //         return pId;
-  //       })
-  //       .catch((err1) =>
-  //         console.log(`Error al obtener el post mediante urlCode. ${err1}`)
-  //       );
-  //     return p;
-  //   } catch (err) {
-  //     console.log(
-  //       `Se ha producido un error al decodificar la URL asociada al post. ${err}`
-  //     );
-  //   }
-  // };
-
-  /**
    * Fill heart when user click like.
    * @param {*} e
    */
@@ -229,7 +206,6 @@ function Post({ onClose, user, match }) {
 
   const handleGetComments = async () => {
     const result = await getComments(id);
-    console.log(result);
     setCommentsArr(result);
   };
 
