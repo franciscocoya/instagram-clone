@@ -30,7 +30,6 @@ function Save({ postId, user }) {
   };
 
   const handleCheckPostIsSaved = async () => {
-    console.log("p: " + postId, "u: " + user._id);
     const result = await checkPostIsSaved(postId, user._id);
     if (result) {
       setPostSaved(result);

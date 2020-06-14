@@ -3,6 +3,14 @@ import { withRouter, useHistory, Redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 
+//Queries
+import { getUserByUsername, checkUserType } from "../../queries/user_queries";
+import { getPostsByUsername } from "../../queries/posts_queries";
+import {
+  getFollowsCount,
+  getFollowersCount,
+} from "../../queries/follow_queries";
+
 //Components
 import UserNavigation from "../Navigations/UserNavigation";
 import Grid from "../Grid/Grid";
@@ -17,8 +25,8 @@ import SearchResults from "../Modals/SearchResults";
 import "../../public/css/Profile/userProfile.css";
 
 function UserProfile({ match, user }) {
-  let history = useHistory();
   const { otherUsername } = match.params;
+
   const [loading, setLoading] = useState(true);
   const [otherUser, setOtherUser] = useState(null);
   const [posts, setPosts] = useState([]);
@@ -31,120 +39,31 @@ function UserProfile({ match, user }) {
   const [searchResults, setSearchResults] = useState([]);
 
   const loadUserPosts = async () => {
-    await axios
-      .get(`http://localhost:4000/accounts/user/username/${otherUsername}`)
-      .then(async (userR) => {
-        await axios
-          .get(`http://localhost:4000/posts/${userR.data.user._id}`)
-          .then((res) => {
-            let postsResult = res.data.posts;
-            setPosts(postsResult);
-          })
-          .catch((err1) => console.log(err1));
-      })
-      .catch((err) => console.log(err));
+    const result = await getPostsByUsername(otherUsername);
+    setPosts(result);
   };
 
   const loadUser = async () => {
-    try {
-      setLoading(true);
-      await axios
-        .get(`http://localhost:4000/accounts/user/username/${otherUsername}`)
-        .then((res) => {
-          const otherUserRet = res.data.user;
-          setOtherUser(otherUserRet);
-          setLoading(false);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(`Hubo un problema cargando el perfil. ${err}`);
-      setLoading(false);
-    }
+    setLoading(true);
+    const result = await getUserByUsername(otherUsername);
+    setOtherUser(result);
+    setLoading(false);
   };
 
   const loadFollows = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/accounts/user/username/${otherUsername}`)
-        .then(async (aux) => {
-          const userAux = aux.data.user;
-          await axios
-            .get(`http://localhost:4000/follow/listFollows/${userAux._id}`)
-            .then((res) => {
-              const follows = res.data.followsCount;
-              setFollowsCount(follows);
-            })
-            .catch((err) =>
-              console.log(
-                `Se ha producido un error al listar los follows. ${err}`
-              )
-            );
-        })
-        .catch((err) =>
-          console.log(`Se ha producido un error al cargar el usuario. ${err}`)
-        );
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al cargas los usuarios seguidos por el usuario del perfil. ${err}`
-      );
-    }
+    const result = await getFollowsCount(otherUsername);
+    setFollowsCount(result);
   };
 
   const loadFollowers = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/accounts/user/username/${otherUsername}`)
-        .then(async (aux) => {
-          const userAux = aux.data.user;
-          await axios
-            .get(`http://localhost:4000/follow/listFollowedBy/${userAux._id}`)
-            .then((res) => {
-              const followers = res.data.followersCount;
-              setFollowersCount(followers);
-            })
-            .catch((err2) => console.log(err2));
-        })
-        .catch((err1) => console.log(err1));
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al cargas los usuarios seguidos por el usuario del perfil. ${err}`
-      );
-    }
+    const result = await getFollowersCount(otherUsername);
+    setFollowersCount(result);
   };
 
-  const checkUserType = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/accounts/user/username/${otherUsername}`)
-        .then(async (res) => {
-          if (res.status === 200 || res.status === 201) {
-            const userAux = res.data.user;
-            const data = new FormData();
-            data.append("follow_by", user._id);
-            data.append("follow_to", userAux._id);
-            const config = {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-              },
-            };
-            await axios
-              .post("http://localhost:4000/follow/isFollowing", data, config)
-              .then((res1) => {
-                if (res1.status === 200 || res1.status === 201) {
-                  const isFl = res1.data.isFollowing;
-                  isFl ? setIsFollowing(true) : setIsFollowing(false);
-                }
-              })
-              .catch((err1) => console.log(err1));
-          }
-        })
-        .catch((err2) => console.log(err2));
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al comprobar el tipo de usuario. ${err}`
-      );
-    }
+  const handleCheckUserType = async () => {
+    const result = await checkUserType(user._id, otherUsername);
+    console.log(result);
+    setIsFollowing(result);
   };
 
   const toogleSuggestions = (e) => {
@@ -152,14 +71,13 @@ function UserProfile({ match, user }) {
     setShowSuggestions(!showSuggestions);
   };
 
-  //Effects
   useEffect(() => {
     loadUser();
     loadUserPosts();
     loadFollows();
     loadFollowers();
-    checkUserType();
-  }, []);
+    handleCheckUserType();
+  }, [otherUsername]);
 
   return (
     <div className="w-userProfile h-100">
