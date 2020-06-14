@@ -2,6 +2,11 @@ import axios from "axios";
 
 import { decodeUrl } from "./url_queries";
 
+/**
+ * Returns a user by passing their id as a parameter.
+ *
+ * @param userId User id.
+ */
 export async function getUserById(userId: string): Promise<any> {
   try {
     return await axios
@@ -14,6 +19,43 @@ export async function getUserById(userId: string): Promise<any> {
       );
   } catch (err) {
     console.log("An error ocurred while getting the user. " + err);
+  }
+}
+
+/**
+ *
+ *
+ * @param username Username.
+ * @param email Email.
+ * @param fullname Fullname.
+ * @param bio Biography.
+ * @param website Website.
+ * @param userId User id.
+ */
+export async function updateUser(
+  username: string = "",
+  email: string = "",
+  fullname: string = "",
+  bio: string = "",
+  website: string = "",
+  userId: string
+): Promise<any> {
+  try {
+    const data = new FormData();
+
+    data.append("username", username);
+    data.append("email", email);
+    data.append("fullname", fullname);
+    data.append("bio", bio);
+    data.append("website", website);
+
+    await axios
+      .put(`http://localhost:4000/accounts/user/${userId}`, data)
+      .catch((err1) =>
+        console.log(`An error ocurred while updating the user... ${err1}`)
+      );
+  } catch (err) {
+    console.log(`An error ocurred while updating the user data. ${err}`);
   }
 }
 
