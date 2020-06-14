@@ -28,6 +28,7 @@ import Grid from "../Grid/Grid";
 import SettingsMain from "../Settings/SettingsMain";
 import Loader from "../Loader/Loader";
 import CircleProgressBar from "../Loader/CircleProgressBar";
+import ProfilePicture from "./ProfilePicture";
 
 //Modals
 import SettingsModal from "../Modals/Settings";
@@ -40,7 +41,8 @@ import "../../public/css/Profile/PersonalProfile/optionsBar.css";
 
 function PersonalProfile({ user, logout, match }) {
   let history = useHistory();
-
+  const defaultPicURL = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
+  const [hasProfilePicture, setHasProfilePicture] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showEditProfile] = useState(false);
   const [showModalChangePic, setShowModalChangePic] = useState(false);
@@ -63,50 +65,30 @@ function PersonalProfile({ user, logout, match }) {
   const [activeOptionGrid, setActiveOptionGrid] = useState(options.POSTS);
 
   /**
-   * Show dialog to change profile picture.
-   */
-  const showModalChangPic = () => {
-    const isProfPic = user.profile_picture;
-    const defaultPicURL = process.env.FB_DEFAULT_PROF_PIC;
-    return isProfPic !== defaultPicURL && isProfPic !== undefined
-      ? disableInput()
-      : false;
-  };
-
-  /**
-   *Disable the input that displays the window to select a file.
+   * Disable the input that displays the window to select a file.
    */
   const disableInput = () => {
+    setShowModalChangePic(true);
     $(".activate-input").prop("disabled", true);
-    return true;
   };
 
-  /**
-   * Change profile picture.
-   *
-   * @param {*} e
-   */
-  const changeProfilePic = (e) => {
-    if (!showModalChangPic()) {
-      let imgFile = e.target.files[0];
-
-      if (imgFile !== undefined && imgFile !== null) {
-        uploadProfileImage(imgFile);
-      }
-    } else {
-      setShowModalChangePic(true);
-    }
-  };
+  const handleClickImageInput = (e) => {};
 
   /**
    * Upload the user's profile image to firebase.
    */
   const uploadProfileImage = async (img) => {
-    setShowCircleProgress(true);
-    await uploadProfileImage("profiles", img.name, img, user._id);
-    setTimeout(() => {
-      setShowCircleProgress(false);
-    }, 100);
+    //setShowCircleProgress(true);
+    const result = await uploadProfileImage(
+      "profiles",
+      img.name,
+      img,
+      user._id
+    );
+    console.log(result);
+    // setTimeout(() => {
+    //   setShowCircleProgress(false);
+    // }, 100);
   };
 
   /**
@@ -127,6 +109,12 @@ function PersonalProfile({ user, logout, match }) {
     setPosts(result);
   };
 
+  const checkProfilePicture = () => {
+    const result =
+      user.profile_picture === "undefined" || user.profile_picture === null;
+    result ? setHasProfilePicture(false) : setHasProfilePicture(true);
+  };
+
   /**
    * Load user saved posts (favorites).
    */
@@ -139,6 +127,7 @@ function PersonalProfile({ user, logout, match }) {
     setLoading(true);
     loadUserPosts();
     loadSavedPosts();
+    checkProfilePicture();
     setTimeout(() => {
       setLoading(false);
     }, 500);
@@ -155,11 +144,7 @@ function PersonalProfile({ user, logout, match }) {
       ) : (
         <div className="body personal-profile-body">
           {showModalChangePic && (
-            <ChangeProfilePicture
-              user={user}
-              close={closeChangeModPic}
-              changePicture={changeProfilePic}
-            />
+            <ChangeProfilePicture user={user} close={closeChangeModPic} />
           )}
           <Helmet>
             <meta charSet="utf-8" />
@@ -194,22 +179,12 @@ function PersonalProfile({ user, logout, match }) {
 
           <div className="header-profile">
             <div className="wrapper-profile_pict_progress">
-              <CircleProgressBar percentage={picLoadingPercentage} />
-              <button className="profile-picture">
-                <label htmlFor="input-file">
-                  <img
-                    src={user.profile_picture}
-                    alt="Añade una foto de perfil"
-                  />
-                </label>
-                <input
-                  type="file"
-                  id="input-file"
-                  className="input-img-profile w-100 activate-input"
-                  accept="image/jpeg, image/png"
-                  onChange={changeProfilePic}
-                />
-              </button>
+              {/* {showCircleProgress && (
+                <CircleProgressBar percentage={picLoadingPercentage} />
+              )} */}
+
+              {/* Profile picture */}
+              <ProfilePicture user={user} />
             </div>
 
             {/* User info */}

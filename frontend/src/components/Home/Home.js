@@ -32,7 +32,9 @@ import "../../public/css/Home/home.css";
 import instIcon from "../../public/assets/img/instagram-icon.svg";
 
 function Home({ user, match }) {
+  const defaultPicURL = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
   let history = useHistory();
+
   const [loading, setLoading] = useState(true);
   const [openSettings, setOpenSettings] = useState(false);
   const [openShare, setOpenShare] = useState(false);
@@ -170,9 +172,6 @@ function Home({ user, match }) {
                         />
                       )
                   )}
-                  {/* <VerticalPost setOpenMoreSettings={() => setOpenSettings(true)} />
-            <VerticalPost setOpenMoreSettings={() => setOpenSettings(true)} />
-            <VerticalPost setOpenMoreSettings={() => setOpenSettings(true)} /> */}
                 </div>
                 {/* SIDEBAR */}
                 <div className="sidebar">
@@ -180,7 +179,11 @@ function Home({ user, match }) {
                     <div className="sidebar__username-container">
                       <div className="cont-img-suggested-profile">
                         <img
-                          src={user.profile_picture}
+                          src={
+                            user.profile_picture === "undefined"
+                              ? defaultPicURL
+                              : user.profile_picture
+                          }
                           alt={user.username}
                           width="56"
                           height="56"

@@ -6,6 +6,8 @@ import { Link, withRouter } from "react-router-dom";
 import "../../public/css/settings/changePassword.css";
 
 function ChangePassword({ user }) {
+  const defaultPicURL = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
+
   const handleChange = (e) => {
     e.target.name = e.target.value;
   };
@@ -14,7 +16,11 @@ function ChangePassword({ user }) {
       {/* Edit header */}
       <div className="edit-header">
         <img
-          src={user.profile_picture}
+          src={
+            user.profile_picture === "undefined"
+              ? defaultPicURL
+              : user.profile_picture
+          }
           alt={user.username}
           title={user.username}
         />

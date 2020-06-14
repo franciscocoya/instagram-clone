@@ -1,5 +1,6 @@
 import axios from "axios";
 import { storage } from "../firebase";
+import { FunctionComponent } from "react";
 
 /**
  * Upload the selected profile image to the firebase storage
@@ -13,11 +14,11 @@ import { storage } from "../firebase";
 export async function uploadProfileImage(
   folder: string,
   imgName: string,
-  img: Blob,
+  img: any,
   userId: string
 ): Promise<any> {
   try {
-    const storageRef = storage.ref(`${folder}/${imgName}`);
+    const storageRef = await storage.ref(`${folder}/${imgName}`);
     const task = storageRef.put(img);
     task.on(
       "state_changed",
@@ -28,13 +29,19 @@ export async function uploadProfileImage(
       (err) => {
         console.log(err.message);
       },
-      () => {
-        storageRef.getDownloadURL().then(async (url) => {
-          let newUrlPic = new FormData();
-          newUrlPic.append("profile_picture", url);
+      async () => {
+        await storageRef.getDownloadURL().then(async (url) => {
+          let data = new FormData();
+          data.append("imgUrl", url);
+          data.append("userId", userId);
 
           await axios
-            .put(`http://localhost:4000/accounts/user/${userId}`, newUrlPic)
+            .patch(`http://localhost:4000/accounts/user/updateProfilePic`, data)
+            .then((res) => {
+              if (res.status === 201) {
+                window.location.reload();
+              }
+            })
             .catch((err1) =>
               console.log(
                 `An error ocurred while updating the image... ${err1}`

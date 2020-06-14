@@ -62,10 +62,9 @@ userCtrl.listUsers = async (req, res) => {
 
 userCtrl.updateUser = async (req, res) => {
   const id = req.params.userId;
-  console.log(id);
   const update = req.body;
 
-  await User.findByIdAndUpdate(id, update, (err, userUpdated) => {
+  await User.findOneAndUpdate(id, update, (err, userUpdated) => {
     if (err) {
       res.status(500).json({
         msg: `Error al actualizar el usuario: ${err}`,
@@ -77,6 +76,33 @@ userCtrl.updateUser = async (req, res) => {
       msg: "Usuario actualizado correctamente",
     });
   });
+};
+
+userCtrl.updateProfilePicture = async (req, res) => {
+  const { userId, imgUrl } = req.body;
+  console.log(userId, imgUrl);
+  try {
+    await User.findByIdAndUpdate(
+      userId,
+      { profile_picture: imgUrl },
+      (err1, result) => {
+        if (err1) {
+          res.status(500).json({
+            msg: `A server error ocurred while updating the user profile picture.`,
+          });
+        }
+
+        res.status(201).json({
+          url: result.profile_picture,
+          msg: "The user's profile picture has been updated.",
+        });
+      }
+    );
+  } catch (err) {
+    console.log(
+      `An error ocurred while updating the user profile picture. ${err}`
+    );
+  }
 };
 
 userCtrl.deleteUser = async (req, res) => {

@@ -4,6 +4,7 @@ const router = Router();
 //Users
 const {
   updateUser,
+  updateProfilePicture,
   getUser,
   deleteUser,
   listUsers,
@@ -109,6 +110,7 @@ router.get("/accounts/user/profile/init", isAuth, initUser);
 router.get("/accounts/user/:userId", isAuth, getUser);
 router.get("/accounts/user/username/:otherUsername", isAuth, getUserByUsername);
 router.put("/accounts/user/:userId", isAuth, updateUser);
+router.patch("/accounts/user/updateProfilePic", isAuth, updateProfilePicture);
 router.delete("/accounts/user/:userId", isAuth, deleteUser);
 router.get("/users", isAuth, listUsers);
 router.get("/user/search/:textToSearch", isAuth, searchByPartialText);

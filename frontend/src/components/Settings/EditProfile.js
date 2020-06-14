@@ -7,6 +7,7 @@ import "../../public/css/settings/editProfile.css";
 
 function EditProfile({ user, showChangePicModal }) {
   let history = useHistory();
+  const defaultPicURL = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
 
   const [username, setUsername] = useState(user.username ? user.username : "");
   const [fullname, setFullname] = useState(
@@ -54,7 +55,11 @@ function EditProfile({ user, showChangePicModal }) {
       {/* Edit header */}
       <div className="edit-header">
         <img
-          src={user.profile_picture}
+          src={
+            user.profile_picture === "undefined"
+              ? defaultPicURL
+              : user.profile_picture
+          }
           alt={user.username}
           title={user.username}
         />

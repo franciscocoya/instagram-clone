@@ -18,6 +18,8 @@ function UserNavigation({
   closeSuggestions,
   resultsArr,
 }) {
+  const defaultPicURL = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
+
   const [, setEnableHome] = useState(false);
   const [, setEnableExplore] = useState(false);
   const [, setEnableActivity] = useState(false);
@@ -90,7 +92,6 @@ function UserNavigation({
   };
 
   useEffect(() => {
-    //navFixed();
     styleSearch();
     fillIcon();
   }, [user]);
@@ -256,14 +257,22 @@ function UserNavigation({
           {fillProfile ? (
             <img
               className="img-profile-nav-border"
-              src={user.profile_picture}
+              src={
+                user.profile_picture === "undefined"
+                  ? defaultPicURL
+                  : user.profile_picture
+              }
               alt={user.username}
               title={user.username}
             />
           ) : (
             <img
               className="img-profile-nav"
-              src={user.profile_picture}
+              src={
+                user.profile_picture === "undefined"
+                  ? defaultPicURL
+                  : user.profile_picture
+              }
               alt={user.username}
               title={user.username}
             />

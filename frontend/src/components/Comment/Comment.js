@@ -51,6 +51,7 @@ export function AdvanceComment({
   commentId,
   setReplyOutputData,
 }) {
+  const defaultPicURL = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
   let history = useHistory();
   //--
   const [commentUser, setCommentUser] = useState({
@@ -128,7 +129,11 @@ export function AdvanceComment({
             className={`profile-img mp-0 ${
               commentUser.id !== currentUser._id ? "cursor-pointer" : ""
             }`}
-            src={commentUser.profile_picture}
+            src={
+              commentUser.profile_picture === "undefined"
+                ? defaultPicURL
+                : commentUser.profile_picture
+            }
             alt={commentUser.username}
             title={
               commentUser.id === currentUser._id
@@ -211,6 +216,7 @@ export function AdvanceCommentReply({
   commentReplyId,
   setReplyOutputData,
 }) {
+  const defaultPicURL = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
   let history = useHistory();
   //--
   const [commentUser, setCommentUser] = useState({
@@ -287,7 +293,11 @@ export function AdvanceCommentReply({
             className={`profile-img profile-img-reply mp-0 ${
               commentUser.id !== currentUser._id ? "cursor-pointer" : ""
             }`}
-            src={commentUser.profile_picture}
+            src={
+              commentUser.profile_picture === "undefined"
+                ? defaultPicURL
+                : commentUser.profile_picture
+            }
             alt={commentUser.username}
             title={
               commentUser.id === currentUser._id

@@ -8,7 +8,7 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { withRouter, useHistory } from "react-router-dom";
+import { withRouter, useHistory, Link } from "react-router-dom";
 import Moment from "react-moment";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
@@ -44,6 +44,7 @@ import { preventSelection } from "../../public/js/main";
 import LoadingUnfollow from "../../public/assets/img/loading_spinner.gif";
 
 function Post({ onClose, user, match }) {
+  const defaultPic = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
   let history = useHistory();
   let { id } = match.params;
 
@@ -59,6 +60,7 @@ function Post({ onClose, user, match }) {
     thumbnail: "",
     description: "",
     place: "",
+    countryCode: "",
     createdAt: "",
     filter: "",
   });
@@ -237,6 +239,7 @@ function Post({ onClose, user, match }) {
       thumbnail: result.thumbnail,
       description: result.description,
       place: result.place.name,
+      countryCode: result.place.countryCode,
       createdAt: result.createdAt,
       filter: result.imgFilter,
     });
@@ -390,7 +393,11 @@ function Post({ onClose, user, match }) {
                           className={`profile-img ${
                             user._id !== pUser._id ? "cursor-pointer" : ""
                           }`}
-                          src={pUser.profile_picture}
+                          src={
+                            pUser.profile_picture === "undefined"
+                              ? defaultPic
+                              : pUser.profile_picture
+                          }
                           alt={pUser.username}
                           onClick={() => {
                             if (user._id !== pUser._id) {
@@ -461,13 +468,17 @@ function Post({ onClose, user, match }) {
                         )}
                       </div>
                       <div className="post-location">
-                        <span className="mp-0 bold-black">
+                        {/* TODO: */}
+                        <Link
+                          to={`/explore/locations/${currentPost.countryCode}/${currentPost.place}`}
+                          className="link-post-location mp-0 bold-black decoration-none"
+                        >
                           {loadingPost ? (
                             <Skeleton width={`30%`} />
                           ) : (
                             <>{currentPost.place}</>
                           )}
-                        </span>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -496,7 +507,11 @@ function Post({ onClose, user, match }) {
                             className={`profile-img mp-0 ${
                               user._id !== pUser._id ? "cursor-pointer" : ""
                             }`}
-                            src={pUser.profile_picture}
+                            src={
+                              pUser.profile_picture === "undefined"
+                                ? defaultPic
+                                : pUser.profile_picture
+                            }
                             alt={pUser.username}
                             onClick={() => {
                               if (user._id !== pUser._id) {
@@ -585,7 +600,6 @@ function Post({ onClose, user, match }) {
                         </button>
                       </div>
 
-                      {/* TODO: */}
                       {currentPost.user_id !== user._id && (
                         <Save postId={currentPost._id} user={user} />
                       )}

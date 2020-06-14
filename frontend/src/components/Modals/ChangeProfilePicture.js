@@ -2,17 +2,21 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 
+//Queries
+import { uploadProfileImage } from "../../queries/image_queries";
+
 //Static files
 import "../../public/css/modals/changeProfilePicture.css";
 
-function ModalChangePicture({ user, close, setLoadingPicture, changePicture }) {
-  const [currentUser, setCurrentUser] = useState(null);
-
+function ModalChangePicture({ user, close, setLoadingPicture }) {
+  const defaultPicURL = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
   /**
    * Change profile picture.
    */
+
   const changeImage = async (e) => {
-    changePicture(e);
+    const img = e.target.files[0];
+    await uploadProfileImage("profiles", img.name, img, user._id);
   };
 
   /**
@@ -22,12 +26,13 @@ function ModalChangePicture({ user, close, setLoadingPicture, changePicture }) {
    */
   const removeProfPic = async (e) => {
     e.preventDefault();
-    const defaultPic = process.env.FB_DEFAULT_PROF_PIC;
+    const defaultPic = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
+    console.log(defaultPic);
     let newUrlPic = new FormData();
     newUrlPic.append("profile_picture", defaultPic);
 
     await axios.put(
-      `http://localhost:4000/accounts/user/${currentUser._id}`,
+      `http://localhost:4000/accounts/user/${user._id}`,
       newUrlPic
     );
 
@@ -37,25 +42,7 @@ function ModalChangePicture({ user, close, setLoadingPicture, changePicture }) {
   };
 
   //Effects
-  useEffect(() => {
-    async function loadUser() {
-      try {
-        const res = await axios.get(`http://localhost:4000/accounts/user/init`);
-        console.log(res.data);
-        setCurrentUser(res.data.user);
-      } catch (err) {
-        if (
-          err.response &&
-          (err.response.status === 404 || err.response.status === 400)
-        ) {
-          console.log("El perfil no existe");
-        } else {
-          console.log("Hubo un problema cargando este perfil.");
-        }
-      }
-    }
-    loadUser();
-  }, []);
+  //useEffect(() => {}, []);
 
   return (
     <div className="w-changePic h-100">

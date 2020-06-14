@@ -1,111 +1,110 @@
 @import "../partials/generales";
-//@import "../partials/glyphs";
 @use "generales/flex";
 @use "generales/grid";
 
 .w-userProfile {
-    & > .user-profile-body {
-        & > .header-profile {
-            position: relative;
-            & > .profile-picture {
-                margin: 0;
-                padding: 0;
-                width: 35%;
-                height: 100%;
-                background-color: transparent;
-                @include flex(row, center, center);
+  & > .user-profile-body {
+    & > .header-profile {
+      position: relative;
+      & > .profile-picture {
+        margin: 0;
+        padding: 0;
+        width: 35%;
+        height: 100%;
+        background-color: transparent;
+        @include flex(row, center, center);
 
-                & > img {
-                    width: 150px;
-                    height: 150px;
-                    object-fit: cover;
-                    border-radius: 50%;
-                    padding: 0.1em;
-                    border: 1px solid map-get($colors, bc-gris);
-                }
-            } //fin profile-picture
-            & > .profile-info {
-                margin: 2em 0.5em;
-                & > .c-username {
-                    @include flex(row, flex-start, center);
-                    & > .username {
-                        margin: 0;
-                        & > h2 {
-                            margin: 0 auto;
-                        }
-                    }
-                    & > p {
-                        margin: 0;
-                    }
-                    & > button {
-                        width: 100px;
-                        margin: 0 1.5em 0;
-                    } //fin button
+        & > img {
+          width: 150px;
+          height: 150px;
+          object-fit: cover;
+          border-radius: 50%;
+          padding: 0.1em;
+          border: 1px solid map-get($colors, bc-gris);
+        }
+      } //fin profile-picture
+      & > .profile-info {
+        margin: 2em 0.5em;
+        & > .c-username {
+          @include flex(row, flex-start, center);
+          & > .username {
+            margin: 0;
+            & > h2 {
+              margin: 0 auto;
+            }
+          }
+          & > p {
+            margin: 0;
+          }
+          & > button {
+            width: 100px;
+            margin: 0 1.5em 0;
+          } //fin button
 
-                    & > .bt-follow {
-                        margin: 0 0.6em 0 1.2em;
-                    }
+          & > .bt-follow {
+            margin: 0 0.6em 0 1.2em;
+          }
 
-                    & > .bt-showSuggestions {
-                        width: 35px;
-                        margin: 0;
-                        padding: 0;
-                        @include flex(row, center, center);
-                        & > .coreSpriteDropdownArrowWhite {
-                            margin: 0;
-                            background-image: url("../../assets/sprites.png");
-                            background-repeat: no-repeat;
-                            background-position: -187px -306px;
-                            height: 6px;
-                            width: 9px;
-                        }
-                    } //fin bt.showSuggestions
-
-                    & > .bt-unfollow {
-                        background-color: transparent;
-                        padding: 0;
-                        & > .glyphsSpriteFriend_Follow {
-                            background-color: transparent;
-                            background-image: url("../../assets/glyphs.png");
-                            background-repeat: no-repeat;
-                            background-position: -286px -336px;
-                            height: 24px;
-                            width: 24px;
-                        } //fin glyhp sprite
-                    } //fin bt-unfollow
-
-                    & > .bt-block-user {
-                        margin: 0 auto;
-                        @include flex(row, center, center);
-                    }
-
-                    @include flex(row, flex-start, center);
-                    & > div,
-                    & > .link-editarPerfil {
-                        margin: 0 0.9em;
-                    }
-                } //fin c-username
-
-                & > .c-media {
-                    @include grid(1, repeat(3, 1fr), 1.5em);
-                    & > div {
-                        @include flex(row, center, center);
-                    }
-                }
-
-                & > .bio {
-                    & > pre {
-                        word-wrap: break-word;
-                        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-                    }
-                }
-            } //fin profile-info
-        } //fin header-profile
-
-        & > .suggested-container {
+          & > .bt-showSuggestions {
+            width: 35px;
             margin: 0;
             padding: 0;
             @include flex(row, center, center);
+            & > .coreSpriteDropdownArrowWhite {
+              margin: 0;
+              background-image: url("../../assets/sprites.png");
+              background-repeat: no-repeat;
+              background-position: -187px -306px;
+              height: 6px;
+              width: 9px;
+            }
+          } //fin bt.showSuggestions
+
+          & > .bt-unfollow {
+            background-color: transparent;
+            padding: 0;
+            & > .glyphsSpriteFriend_Follow {
+              background-color: transparent;
+              background-image: url("../../assets/glyphs.png");
+              background-repeat: no-repeat;
+              background-position: -286px -336px;
+              height: 24px;
+              width: 24px;
+            } //fin glyhp sprite
+          } //fin bt-unfollow
+
+          & > .bt-block-user {
+            margin: 0 auto;
+            @include flex(row, center, center);
+          }
+
+          @include flex(row, flex-start, center);
+          & > div,
+          & > .link-editarPerfil {
+            margin: 0 0.9em;
+          }
+        } //fin c-username
+
+        & > .c-media {
+          @include grid(1, repeat(3, 1fr), 1.5em);
+          & > div {
+            @include flex(row, center, center);
+          }
         }
+
+        & > .bio {
+          & > pre {
+            word-wrap: break-word;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+          }
+        }
+      } //fin profile-info
+    } //fin header-profile
+
+    & > .suggested-container {
+      margin: 0;
+      padding: 0;
+      @include flex(row, center, center);
     }
+  }
 } //fin w-userProfile
