@@ -147,7 +147,7 @@ function Home({ user, match }) {
                     (p, index) =>
                       p.user_id !== user._id && (
                         <VerticalPost
-                          key={p._id}
+                          key={index}
                           setOpenMoreSettings={() => setOpenSettings(true)}
                           text={p.description}
                           imgPost={p.thumbnail}

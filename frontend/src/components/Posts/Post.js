@@ -46,6 +46,7 @@ import LoadingUnfollow from "../../public/assets/img/loading_spinner.gif";
 function Post({ onClose, user, match }) {
   let history = useHistory();
   let { id } = match.params;
+
   const [isLike, setIsLike] = useState(false);
   const [comment, setComment] = useState("");
   const [commentsArr, setCommentsArr] = useState([]);
@@ -53,7 +54,7 @@ function Post({ onClose, user, match }) {
   const [, setCommentsCount] = useState(0);
   const [loadingPost, setLoadingPost] = useState(true);
   const [currentPost, setCurrentPost] = useState({
-    id: "",
+    _id: "",
     user_id: "",
     thumbnail: "",
     description: "",
@@ -181,12 +182,12 @@ function Post({ onClose, user, match }) {
   };
 
   const handleCommentPost = async () => {
-    await commentPost(comment, user._id, currentPost.id);
+    await commentPost(comment, user._id, currentPost._id);
   };
 
   const handleReplyComment = async () => {
     await replyComment(comment, replyOutputData.commentToReply, user._id);
-    window.location.reload(); //TODO: Refresh component
+    window.location.reload();
   };
 
   const handleGetUserByPostId = async () => {
@@ -223,15 +224,15 @@ function Post({ onClose, user, match }) {
    * Check that the current user follows the post user.
    */
   const handleCheckIsFollowing = async () => {
-    const userPostId = await loadPost(id);
-    const result = await checkIsFollowing(userPostId.user_id, user._id);
+    const postToCheck = await loadPost(id);
+    const result = await checkIsFollowing(postToCheck.user_id, user._id);
     setIsFollowing(result);
   };
 
   const handleLoadPost = async () => {
     const result = await loadPost(id);
     setCurrentPost({
-      id: result._id,
+      _id: result._id,
       user_id: result.user_id,
       thumbnail: result.thumbnail,
       description: result.description,
@@ -255,7 +256,7 @@ function Post({ onClose, user, match }) {
   const handleFollow = async (e) => {
     e.preventDefault();
     setSendFollow(true);
-    await follow(pUser._id, user._id);
+    await follow(currentPost.user_id, user._id);
 
     setTimeout(() => {
       setSendFollow(false);
@@ -272,6 +273,15 @@ function Post({ onClose, user, match }) {
       setComment(text);
       $("#input-comment").focus();
     }
+  };
+
+  const handleShowMoreOptions = (e) => {
+    e.preventDefault();
+    setPostClicked({
+      postId: currentPost._id,
+      userPostId: currentPost.user_id,
+    });
+    setShowMoreOptions(true);
   };
 
   useEffect(() => {
@@ -293,7 +303,7 @@ function Post({ onClose, user, match }) {
           <UnfollowModal
             postUser={pUser}
             currentUser={user}
-            postId={currentPost.id}
+            postId={currentPost._id}
             close={() => setShowUnfollowModal(false)}
             initRefreshPost={() => setSendFollow(true)}
             endRefreshPost={() => setSendFollow(false)}
@@ -303,7 +313,7 @@ function Post({ onClose, user, match }) {
           <MoreOptions
             close={() => setShowMoreOptions(false)}
             openShare={() => setOpenShare(true)}
-            data={postClicked}
+            ids={postClicked}
             user={user}
             initRefreshPost={() => setSendFollow(true)}
             endRefreshPost={() => setSendFollow(false)}
@@ -355,7 +365,7 @@ function Post({ onClose, user, match }) {
                     <img
                       src={currentPost.thumbnail}
                       alt={currentPost.description}
-                      className={currentPost.filter}
+                      className={currentPost.imgFilter}
                     />
                   </>
                 )}
@@ -468,7 +478,7 @@ function Post({ onClose, user, match }) {
                       height="16"
                       viewBox="0 0 48 48"
                       width="16"
-                      onClick={() => setShowMoreOptions(true)}
+                      onClick={handleShowMoreOptions}
                     >
                       <circle cx="8" cy="24" r="4.5"></circle>
                       <circle cx="24" cy="24" r="4.5"></circle>
@@ -542,7 +552,7 @@ function Post({ onClose, user, match }) {
                       <div className="wrapper-media__col1">
                         <Like
                           userId={user._id}
-                          postId={currentPost.id}
+                          postId={currentPost._id}
                           refreshCount={() => setRefreshCount(true)}
                         />
                         {/* Comment button */}
@@ -575,8 +585,9 @@ function Post({ onClose, user, match }) {
                         </button>
                       </div>
 
-                      {pUser._id !== user._id && (
-                        <Save postId={currentPost.id} user={user} />
+                      {/* TODO: */}
+                      {currentPost.user_id !== user._id && (
+                        <Save postId={currentPost._id} user={user} />
                       )}
                     </div>
                   )}

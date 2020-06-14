@@ -114,7 +114,6 @@ export function MasonryThumbnail({ thumb, thumbAlt, postId, filter }) {
         className={`img-thumb-masonry ${filter}`}
         src={thumb}
         alt={thumbAlt}
-        //onLoad={extractDominantColor}
       />
       <div className="masonry-thumb-overlay w-100 h-100 decoration-none">
         <ul className="w-100 mp-0">

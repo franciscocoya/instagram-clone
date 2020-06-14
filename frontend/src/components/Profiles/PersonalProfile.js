@@ -40,7 +40,6 @@ import "../../public/css/Profile/PersonalProfile/optionsBar.css";
 
 function PersonalProfile({ user, logout, match }) {
   let history = useHistory();
-  const { username } = match.params;
 
   const [showSettings, setShowSettings] = useState(false);
   const [showEditProfile] = useState(false);
@@ -147,7 +146,7 @@ function PersonalProfile({ user, logout, match }) {
     return () => {
       setActiveOptionGrid(options.POSTS);
     };
-  }, [user.profile_picture]);
+  }, [user]);
 
   return (
     <div className="w-personalProfile h-100">
@@ -251,26 +250,17 @@ function PersonalProfile({ user, logout, match }) {
               {/* media, followed_by, follows */}
               <div className="c-media">
                 <div className="media">
-                  <p
-                    className="decoration-none l-media"
-                    //to="/:username/publicaciones"
-                  >
+                  <p className="decoration-none l-media">
                     <span>{posts.length}</span> publicaciones
                   </p>
                 </div>
                 <div className="follows">
-                  <p
-                    className="decoration-none l-media"
-                    //to="/:username/followed_by"
-                  >
+                  <p className="decoration-none l-media">
                     <span>{user.count.followed_by}</span> seguidores
                   </p>
                 </div>
                 <div className="followed_by">
-                  <p
-                    className="decoration-none l-media"
-                    //to="/:username/follows"
-                  >
+                  <p className="decoration-none l-media">
                     <span>{user.count.follows}</span> seguidos
                   </p>
                 </div>

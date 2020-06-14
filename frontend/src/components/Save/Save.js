@@ -14,7 +14,7 @@ import "../../public/css/SavePost/savePost.css";
 
 function Save({ postId, user }) {
   const [isSaved, setIsSaved] = useState(false);
-  const [postSaved, setPostSaved] = useState(null);
+  const [postSaved, setPostSaved] = useState({});
 
   const handleSavePost = async (e) => {
     e.preventDefault();
@@ -30,14 +30,19 @@ function Save({ postId, user }) {
   };
 
   const handleCheckPostIsSaved = async () => {
-    const result = await checkPostIsSaved(postId);
-    setIsSaved(result !== null ? true : false);
-    setPostSaved(result);
+    console.log("p: " + postId, "u: " + user._id);
+    const result = await checkPostIsSaved(postId, user._id);
+    if (result) {
+      setPostSaved(result);
+      setIsSaved(true);
+    } else {
+      setIsSaved(false);
+    }
   };
 
   useEffect(() => {
     handleCheckPostIsSaved();
-  }, [isSaved]);
+  }, [isSaved, postId]);
 
   return (
     <div className="save-post">

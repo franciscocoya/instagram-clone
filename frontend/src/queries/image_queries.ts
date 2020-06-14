@@ -56,7 +56,7 @@ export async function uploadPostImage(
   try {
     const storageRef = storage.ref(`${folder}/${imgName}`);
     const task = storageRef.put(img);
-    task.on(
+    return task.on(
       "state_changed",
       (snapshot) => {
         let percentage =
@@ -72,6 +72,6 @@ export async function uploadPostImage(
       }
     );
   } catch (err) {
-    console.log(`Se ha producido un error al subir la imagen temporal. ${err}`);
+    console.log(`An error ocurred while uploading the temporal image. ${err}`);
   }
 }

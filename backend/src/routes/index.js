@@ -183,8 +183,8 @@ router.post("/direct/msg/getUsers", isAuth, getConversationUsers);
  */
 router.post("/p/savedPost/add", isAuth, addSavedPost);
 router.delete("/p/savedPost/delete/:postSavedId", isAuth, deleteSavedPost);
-router.get("/p/savedPost/get/:postId", isAuth, getSavedPost);
-router.get("/p/savedPost/get/list/:userId", isAuth, listSavedPost);
+router.get("/p/savedPost/get/:postId/:userId", isAuth, getSavedPost);
+router.get("/p/savedPost/get/list/p/:userId", isAuth, listSavedPost);
 
 /**
  * OTHER ROUTES

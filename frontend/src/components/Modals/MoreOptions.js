@@ -21,7 +21,7 @@ function MoreOptions({
 
   const handleCheckFollowing = async () => {
     const result = await checkIsFollowing(ids.userPostId, user._id);
-    setIsFollowing(result);
+    setIsFollowing(result ? true : false);
   };
 
   const handleUnfollow = async (e) => {
@@ -40,7 +40,7 @@ function MoreOptions({
   useEffect(() => {
     handleShortUrl();
     handleCheckFollowing();
-  });
+  }, []);
 
   return (
     <div className="w-moreOptions">

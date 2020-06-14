@@ -238,12 +238,15 @@ export async function removePost(saveId: string): Promise<void> {
   }
 }
 
-export async function checkPostIsSaved(postId: string): Promise<any> {
+export async function checkPostIsSaved(
+  postId: string,
+  userId: string
+): Promise<any> {
   try {
     return await axios
-      .get(`http://localhost:4000/p/savedPost/get/${postId}`)
+      .get(`http://localhost:4000/p/savedPost/get/${postId}/${userId}`)
       .then((res) => {
-        return res.data.savedPost;
+        return res.data.savedPost ? true : false;
       })
       .catch((err1) =>
         console.log(`An error ocurred while checking the post. ${err1}`)
@@ -256,24 +259,20 @@ export async function checkPostIsSaved(postId: string): Promise<any> {
 export async function getSavedPosts(userId: string): Promise<any> {
   try {
     return await axios
-      .get(`http://localhost:4000/p/savedPost/get/list/${userId}`)
+      .get(`http://localhost:4000/p/savedPost/get/list/p/${userId}`)
       .then((res) => {
         let arr = res.data.savedPosts;
         return reduceSavedPosts(arr);
       })
       .catch((err1) =>
-        console.log(
-          `Se ha producido un error al cargar los posts favoritos. ${err1}`
-        )
+        console.log(`An error ocurred while loading the saved posts... ${err1}`)
       );
   } catch (err) {
-    console.log(
-      `Se ha producido un error al cargar los posts guardados por el usuario. ${err}`
-    );
+    console.log(`An error occurred while loading user saved messages. ${err}`);
   }
 }
 
-function reduceSavedPosts(arr: Array<any>) {
+function reduceSavedPosts(arr: Array<any>): any {
   return arr.slice().reduce((acc: any, save: any): any => {
     return [...acc, save.postId];
   }, []);

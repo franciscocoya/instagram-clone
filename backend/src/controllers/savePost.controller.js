@@ -61,8 +61,8 @@ savePostCtrl.deleteSavedPost = async (req, res) => {
 
 savePostCtrl.getSavedPost = async (req, res) => {
   try {
-    const { postId } = req.params;
-    await SavedPost.findOne({ postId }, (err1, savedPost) => {
+    const { postId, userId } = req.params;
+    await SavedPost.findOne({ postId, userId }, (err1, savedPost) => {
       if (err1) {
         res.status(500).json({
           msg: `Error en el servidor al obtener el post de favoritos. ${err1}`,
