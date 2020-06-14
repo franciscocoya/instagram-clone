@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
+import $ from "jquery";
 
 //Queries
 import { uploadProfileImage } from "../../queries/image_queries";
@@ -7,33 +8,58 @@ import { uploadProfileImage } from "../../queries/image_queries";
 //Static files
 import "../../public/css/Profile/ProfilePicture/profilePicture.css";
 
-function ProfilePicture({ user }) {
+function ProfilePicture({ user, showPictureModal }) {
   const DEFAULT_PIC = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
   const DEFAULT_PROFILES_FOLDER = "profiles";
 
   const [hasProfilePicture, setHasProfilePicture] = useState(false);
   const [profilePicture, setProfilePicture] = useState("");
-  const [refresh, setRefresh] = useState(false);
 
   const handleClickImageInput = async (e) => {
-    setRefresh(false);
-    let raw = e.target.files[0];
-    const result = await uploadProfileImage(
-      DEFAULT_PROFILES_FOLDER,
-      raw.name,
-      raw,
-      user._id
+    if (hasProfilePicture) {
+      e.preventDefault();
+      disableInput(true);
+      showPictureModal();
+    } else {
+      disableInput(false);
+      let raw = e.target.files[0];
+      await uploadProfileImage(
+        DEFAULT_PROFILES_FOLDER,
+        raw.name,
+        raw,
+        user._id
+      );
+    }
+  };
+
+  const disableInput = (enabled) => {
+    $("#input-file").prop("disabled", enabled);
+    enabled ? setHasProfilePicture(true) : setHasProfilePicture(false);
+  };
+
+  /**
+   *  Check if the current user has a profile picture.
+   *
+   */
+  const checkIsProfilePicture = () => {
+    let img = user.profile_picture;
+    img !== "undefined" && img !== DEFAULT_PIC
+      ? disableInput(true)
+      : disableInput(false);
+    setProfilePicture(
+      user.profile_picture === "undefined" ? DEFAULT_PIC : user.profile_picture
     );
   };
 
   useEffect(() => {
-    setProfilePicture(
-      user.profile_picture === "undefined" ? DEFAULT_PIC : user.profile_picture
-    );
-  }, [refresh]);
+    checkIsProfilePicture();
+  }, [profilePicture]);
 
   return (
-    <button className="profile-picture">
+    <button
+      className="profile-picture"
+      onClick={hasProfilePicture ? handleClickImageInput : null}
+    >
       <label htmlFor="input-file">
         <img
           src={profilePicture}

@@ -98,6 +98,7 @@ function PersonalProfile({ user, logout, match }) {
   const closeChangeModPic = async () => {
     setShowModalChangePic(false);
     $(".activate-input").prop("disabled", false);
+    window.location.reload();
   };
 
   /**
@@ -184,7 +185,10 @@ function PersonalProfile({ user, logout, match }) {
               )} */}
 
               {/* Profile picture */}
-              <ProfilePicture user={user} />
+              <ProfilePicture
+                user={user}
+                showPictureModal={() => setShowModalChangePic(true)}
+              />
             </div>
 
             {/* User info */}
