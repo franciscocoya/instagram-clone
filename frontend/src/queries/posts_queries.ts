@@ -66,6 +66,33 @@ export async function getPostsByUserId(userId: string): Promise<any> {
 }
 
 /**
+ * Returns the posts of the user whose username is passed as a parameter.
+ *
+ * @param username Other username.
+ */
+export async function getPostsByUsername(username: string): Promise<any> {
+  try {
+    return await axios
+      .get(`http://localhost:4000/accounts/user/username/${username}`)
+      .then(async (userR) => {
+        return await axios
+          .get(`http://localhost:4000/posts/${userR.data.user._id}`)
+          .then((res) => {
+            return res.data.posts;
+          })
+          .catch((err1) =>
+            console.log(`An error ocurred while loading the posts... ${err1}`)
+          );
+      })
+      .catch((err) => console.log(err));
+  } catch (err) {
+    console.log(
+      `An error occurred while loading user posts followed by the current user. ${err}`
+    );
+  }
+}
+
+/**
  * Returns all user posts followed by the user, that is, with follow.
  *
  * @param userId User id.

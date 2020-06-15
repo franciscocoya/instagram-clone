@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
-//import axios from "axios";
 
 //static files
 import "../../public/css/settings/changePassword.css";
@@ -11,6 +10,7 @@ function ChangePassword({ user }) {
   const handleChange = (e) => {
     e.target.name = e.target.value;
   };
+
   return (
     <div className="editProfile">
       {/* Edit header */}

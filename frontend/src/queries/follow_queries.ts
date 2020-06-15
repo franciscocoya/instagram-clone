@@ -86,3 +86,69 @@ export async function follow(
     console.log(`An error occurred while creating the follow. ${err}`);
   }
 }
+
+/**
+ * Returns the total number of users followed by the user whose username
+ * is passed as a parameter.
+ *
+ * @param username Other username.
+ */
+export async function getFollowsCount(username: string = ""): Promise<any> {
+  try {
+    return await axios
+      .get(`http://localhost:4000/accounts/user/username/${username}`)
+      .then(async (aux) => {
+        const userAux = aux.data.user;
+        return await axios
+          .get(`http://localhost:4000/follow/listFollows/${userAux._id}`)
+          .then((res) => {
+            return res.data.followsCount;
+          })
+          .catch((err2) =>
+            console.log(
+              `An error ocurred while gettings follows count... ${err2}`
+            )
+          );
+      })
+      .catch((err1) =>
+        console.log(`An ocurred while gettings follows count. ${err1}`)
+      );
+  } catch (err) {
+    console.log(
+      `An error occurred while loading users followed by the profile user. ${err}`
+    );
+  }
+}
+
+/**
+ * Returns the total number of users followers by the user whose username
+ * is passed as a parameter.
+ *
+ * @param username Other username.
+ */
+export async function getFollowersCount(username: string = ""): Promise<any> {
+  try {
+    return await axios
+      .get(`http://localhost:4000/accounts/user/username/${username}`)
+      .then(async (aux) => {
+        const userAux = aux.data.user;
+        return await axios
+          .get(`http://localhost:4000/follow/listFollowedBy/${userAux._id}`)
+          .then((res) => {
+            return res.data.followersCount;
+          })
+          .catch((err2) =>
+            console.log(
+              `An error ocurred while getting the followers count... ${err2}`
+            )
+          );
+      })
+      .catch((err1) =>
+        console.log(`An error ocurred while loading the count... ${err1}`)
+      );
+  } catch (err) {
+    console.log(
+      `An error occurred while loading users followed by the profile user. ${err}`
+    );
+  }
+}
