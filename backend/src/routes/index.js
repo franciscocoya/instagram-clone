@@ -154,7 +154,7 @@ router.get("/p/commentReply/list/:comment_id", isAuth, listCommentReplies);
  */
 router.post("/p/like/add", isAuth, addLike);
 router.delete("/p/like/remove/:likeId", isAuth, deleteLike);
-router.get("/p/likes/get", isAuth, getLike);
+router.get("/p/likes/get/:userId/:postId", isAuth, getLike);
 router.get("/p/likes/:postId", isAuth, listLikes);
 
 /**

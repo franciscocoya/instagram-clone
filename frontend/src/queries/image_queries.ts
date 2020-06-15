@@ -51,12 +51,13 @@ export async function uploadProfileImage(
 export async function uploadPostImage(
   folder: string,
   imgName: string,
-  img: any
+  img: any,
+  callback: any
 ): Promise<any> {
   try {
     const storageRef = storage.ref(`${folder}/${imgName}`);
     const task = storageRef.put(img);
-    return task.on(
+    task.on(
       "state_changed",
       (snapshot) => {
         let percentage =
@@ -67,7 +68,7 @@ export async function uploadPostImage(
       },
       () => {
         storageRef.getDownloadURL().then((url) => {
-          return url;
+          callback(url);
         });
       }
     );

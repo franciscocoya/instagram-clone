@@ -62,19 +62,23 @@ likeCtrl.deleteLike = async (req, res) => {
 };
 
 likeCtrl.getLike = async (req, res) => {
-  const { postId, userId } = req.body;
+  const { postId, userId } = req.params;
   try {
-    await Like.findOne({ postId, userId }, (err, likeRet) => {
-      if (err) {
+    await PostLike.findOne({ postId, userId }, (err1, likeRet) => {
+      if (err1) {
         res.status(500).json({
-          msg: `Error al obtener el like:  ${err}`,
+          msg: `Error al obtener el like:  ${err1}`,
         });
       }
 
-      console.log(likeRet ? true : false);
+      if (!likeRet) {
+        res.status(404).json({
+          msg: "No hay like",
+        });
+      }
 
       res.status(201).json({
-        like: likeRet ? true : false,
+        like: likeRet,
         msg: "Like mostrado correctamente",
       });
     });

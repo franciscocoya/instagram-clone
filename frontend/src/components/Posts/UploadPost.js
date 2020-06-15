@@ -145,7 +145,7 @@ function UploadPost({ user }) {
    */
   const createTempImage = (img) => {
     setImgRAW(img);
-    handleUploadImage("posts", img.name, img);
+    handleUploadImage(img, "posts");
   };
 
   function handleDescription(e) {
@@ -157,8 +157,7 @@ function UploadPost({ user }) {
   }
 
   const handleUploadImage = async (img, folder) => {
-    const result = await uploadPostImage(folder, img.name, img);
-    setImgURL(result);
+    const result = await uploadPostImage(folder, img.name, img, setImgURL);
   };
 
   // const uploadToFirebase = async (img, folder) => {
@@ -233,14 +232,13 @@ function UploadPost({ user }) {
         .post("http://localhost:4000/p/uploadPost", data, config)
         .then((res) => {
           console.log(res.data);
+          history.push(`/${user.username}`);
         })
         .catch((err2) =>
           console.log(
             `Se ha producido un error al subir el post al servidor. ${err2} `
           )
         );
-
-      history.push(`/${user.username}`);
     } catch (err) {
       removeTempFromFirebase();
       console.log(`Se ha producido un error al subir el post. ${err}`);

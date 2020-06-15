@@ -275,8 +275,9 @@ export async function checkPostIsSaved(
       .then((res) => {
         return res.data.savedPost ? true : false;
       })
-      .catch((err1) =>
-        console.log(`An error ocurred while checking the post. ${err1}`)
+      .catch(
+        (err1) => {}
+        //console.log(`An error ocurred while checking the post. ${err1}`)
       );
   } catch (err) {
     console.log(`An error ocurred while checking the post. ${err}`);

@@ -450,7 +450,7 @@ function VerticalPost({
                 <>
                   <div className="wrapper-media__col1">
                     <Like
-                      userId={user._id}
+                      user={user}
                       postId={postId}
                       refreshCount={() => setRefreshLikesCount(true)}
                     />
