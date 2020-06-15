@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
-import axios from "axios";
 
 //Queries
 import { updateUser } from "../../queries/user_queries";
@@ -39,7 +38,7 @@ function EditProfile({ user, showChangePicModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await updateUser(username, email, fullname, bio, website, user._id);
-    history.push(`/${user.username}`);
+    //history.push(`/${user.username}`);
     // const data = new FormData();
     // data.append("username", username);
     // data.append("email", email);

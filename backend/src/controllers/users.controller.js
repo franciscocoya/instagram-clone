@@ -62,7 +62,6 @@ userCtrl.listUsers = async (req, res) => {
 
 userCtrl.updateUser = async (req, res) => {
   const id = req.params.userId;
-  console.log(id);
   const update = req.body;
 
   await User.findByIdAndUpdate(id, update, (err, userUpdated) => {

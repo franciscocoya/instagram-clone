@@ -143,9 +143,10 @@ function UploadPost({ user }) {
    * Upload temporary image preview to firebase
    * @param {*} img Image to get temporal url
    */
-  const createTempImage = (img) => {
+  const createTempImage = async (img) => {
     setImgRAW(img);
-    handleUploadImage("posts", img.name, img);
+    //handleUploadImage("posts", img.name, img);
+    await uploadToFirebase(img, "posts");
   };
 
   function handleDescription(e) {
@@ -156,36 +157,37 @@ function UploadPost({ user }) {
     setTagCad(e.target.value);
   }
 
-  const handleUploadImage = async (img, folder) => {
-    const result = await uploadPostImage(folder, img.name, img);
-    setImgURL(result);
+  const handleUploadImage = async () => {
+    //const result = await uploadPostImage(folder, img.name, img);
+    //setImgURL(result);
+    //await uploadToFirebase();
   };
 
-  // const uploadToFirebase = async (img, folder) => {
-  //   try {
-  //     const storageRef = storage.ref(`${folder}/${img.name}`);
-  //     const task = storageRef.put(img);
-  //     task.on(
-  //       "state_changed",
-  //       (snapshot) => {
-  //         let percentage =
-  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //       },
-  //       (err) => {
-  //         console.log(err.message);
-  //       },
-  //       () => {
-  //         storageRef.getDownloadURL().then((url) => {
-  //           setImgURL(url);
-  //         });
-  //       }
-  //     );
-  //   } catch (err) {
-  //     console.log(
-  //       `Se ha producido un error al subir la imagen temporal. ${err}`
-  //     );
-  //   }
-  // };
+  const uploadToFirebase = async (img, folder) => {
+    try {
+      const storageRef = storage.ref(`${folder}/${img.name}`);
+      const task = storageRef.put(img);
+      task.on(
+        "state_changed",
+        (snapshot) => {
+          let percentage =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        (err) => {
+          console.log(err.message);
+        },
+        () => {
+          storageRef.getDownloadURL().then((url) => {
+            setImgURL(url);
+          });
+        }
+      );
+    } catch (err) {
+      console.log(
+        `Se ha producido un error al subir la imagen temporal. ${err}`
+      );
+    }
+  };
 
   // *** UPLOAD POST ***
   /**

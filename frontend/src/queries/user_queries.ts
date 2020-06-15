@@ -23,7 +23,7 @@ export async function getUserById(userId: string): Promise<any> {
 }
 
 /**
- *
+ * Update user's data.
  *
  * @param username Username.
  * @param email Email.
@@ -48,6 +48,8 @@ export async function updateUser(
     data.append("fullname", fullname);
     data.append("bio", bio);
     data.append("website", website);
+
+    console.log(username, email, fullname, bio, website, userId);
 
     await axios
       .put(`http://localhost:4000/accounts/user/${userId}`, data)
