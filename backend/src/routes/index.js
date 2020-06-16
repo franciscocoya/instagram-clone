@@ -12,6 +12,7 @@ const {
   initUser,
   getUserByUsername,
   searchByPartialText,
+  checkValidPass,
 } = require("../controllers/users.controller");
 
 const { signIn, signUp, isAuth } = require("../controllers/auth");
@@ -107,6 +108,7 @@ router.get("/accounts/user/init/:username", isAuth, getUserJWT);
 router.get("/accounts/user/init", isAuth, getUserInitialization);
 router.get("/accounts/user/profile/init", isAuth, initUser);
 router.get("/accounts/user/:userId", isAuth, getUser);
+router.get("/accounts/user/checkP/:userId/:pass", isAuth, checkValidPass);
 router.get("/accounts/user/username/:otherUsername", isAuth, getUserByUsername);
 router.put("/accounts/user/:userId", isAuth, updateUser);
 router.delete("/accounts/user/:userId", isAuth, deleteUser);

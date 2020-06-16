@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
-import axios from "axios";
 
 //Queries
 import { updateUser } from "../../queries/user_queries";

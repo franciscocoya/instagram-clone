@@ -66,7 +66,7 @@ async function signUp(req, res) {
 
 async function signIn(req, res) {
   const { email, password } = req.body;
-  await User.findOne({ email }, (err, user) => {
+  await User.findOne({ email }, async (err, user) => {
     if (err) {
       return res.status(500).json({ msg: err });
     }
@@ -76,7 +76,7 @@ async function signIn(req, res) {
 
     req.user = user;
 
-    bcrypt.compare(password, user.password, async (err, valid) => {
+    await bcrypt.compare(password, user.password, async (err, valid) => {
       if (!valid) {
         return res.status(404).json({
           msg: "El usuario con email < " + user.email + " > no existe ",

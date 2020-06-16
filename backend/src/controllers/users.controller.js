@@ -40,6 +40,40 @@ userCtrl.getUserByUsername = async (req, res) => {
   });
 };
 
+userCtrl.checkValidPass = async (req, res) => {
+  const { userId, pass } = req.params;
+
+  try {
+    await User.findOne({ _id: userId }, async (err1, result) => {
+      if (err1) {
+        res.status(500).json({
+          msg: `A server error ocurred while checking the pass. ${err1}`,
+        });
+      }
+      //return result;
+      const originalPass = result.password;
+      await bcrypt.compare(pass, originalPass, (err2, valid) => {
+        if (err2) {
+          res.status(500).json({
+            msg: `Server error while checking the pass. ${err2}`,
+          });
+        }
+        if (!valid) {
+          res.status(404).json({
+            isValid: false,
+          });
+        } else {
+          res.status(201).json({
+            isValid: true,
+          });
+        }
+      });
+    }).select("+password");
+  } catch (err) {
+    console.log(`An error ocurred while checking the password... ${err}`);
+  }
+};
+
 userCtrl.listUsers = async (req, res) => {
   await User.find((err, users) => {
     if (err) {

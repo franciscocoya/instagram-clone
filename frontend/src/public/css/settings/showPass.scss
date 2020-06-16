@@ -1,0 +1,15 @@
+@import "../partials/generales";
+@use "generales/flex";
+
+.show-pass {
+  position: absolute;
+  right: 5%;
+  bottom: 0;
+  z-index: 20;
+  & > img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    cursor: pointer;
+  }
+} //fin show-pass

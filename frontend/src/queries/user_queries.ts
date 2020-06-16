@@ -23,6 +23,25 @@ export async function getUserById(userId: string): Promise<any> {
 }
 
 /**
+ * 
+ *
+ * @param userId User id.
+ * @param oldPass Old password.
+ */
+export async function checkOldPasswordValid(
+  userId: string,
+  oldPass: string
+): Promise<any> {
+  //let validPass = await getUserPassByUserId(userId);
+  return await axios
+    .get(`http://localhost:4000/accounts/user/checkP/${userId}/${oldPass}`)
+    .then((res) => {
+      return res.data.isValid;
+    })
+    .catch((err1) => {});
+}
+
+/**
  *
  *
  * @param username Username.
@@ -56,6 +75,18 @@ export async function updateUser(
       );
   } catch (err) {
     console.log(`An error ocurred while updating the user data. ${err}`);
+  }
+}
+
+export async function changeUserPass(
+  oldPass: string,
+  newPass: string,
+  userId: string,
+  callback?: any
+): Promise<any> {
+  try {
+  } catch (err) {
+    console.log(`An error ocurred while updating the user password. ${err}`);
   }
 }
 
