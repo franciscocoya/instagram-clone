@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import $ from "jquery";
 
 //Queries
@@ -16,6 +17,14 @@ import ShowPassword from "./ShowPassword";
 import "../../public/css/settings/changePassword.css";
 
 function ChangePassword({ user }) {
+  const { register, handleSubmit, watch, errors } = useForm();
+  const onSubmit = async (data) => {
+    console.log(data);
+    if (checkPasswords()) {
+      await changeUserPass(newPass, user._id, console.log("FIN"));
+    }
+  };
+
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [repeatedNewPass, setRepeatedNewPass] = useState("");
@@ -42,9 +51,13 @@ function ChangePassword({ user }) {
     );
   };
 
-  const handleSubmit = () => {
-    console.log(oldPass, newPass, repeatedNewPass);
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   //if (checkPasswords()) {
+  //   //console.log.bind(this, "FIN")
+  //   //await changeUserPass(newPass, user._id, console.log("FIN"));
+  //   //}
+  // };
 
   const handleCheckOldPass = async (value) => {
     const result = await checkOldPasswordValid(user._id, value);
@@ -91,7 +104,7 @@ function ChangePassword({ user }) {
         </div>
       </div>
       {/* Edit body */}
-      <form className="editBody" onSubmit={handleSubmit}>
+      <form className="editBody" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-control p-relative">
           <label htmlFor="oldPassword" className="bold-black">
             Contraseña antigua
@@ -103,6 +116,7 @@ function ChangePassword({ user }) {
             autoFocus
             value={oldPass}
             onChange={handleChangeOldPassword}
+            ref={register({ required: true })}
           />
           <ShowPassword
             showPassword={true}
@@ -110,7 +124,7 @@ function ChangePassword({ user }) {
             hide={handleShowPassword.bind(this, "oldPassword", false)}
           />
         </div>
-        <div className="form-control">
+        <div className="form-control p-relative">
           <label htmlFor="newPassword" className="bold-black">
             Contraseña nueva
           </label>
@@ -121,9 +135,15 @@ function ChangePassword({ user }) {
             value={newPass}
             onChange={handleChangeNewPassword}
             disabled={true}
+            ref={register({ required: true })}
+          />
+          <ShowPassword
+            showPassword={true}
+            show={handleShowPassword.bind(this, "newPassword", true)}
+            hide={handleShowPassword.bind(this, "newPassword", false)}
           />
         </div>
-        <div className="form-control">
+        <div className="form-control p-relative">
           <label htmlFor="confirmNewPassword" className="bold-black">
             Confirmar nueva contraseña
           </label>
@@ -134,6 +154,12 @@ function ChangePassword({ user }) {
             value={repeatedNewPass}
             onChange={handleChangeRepeatedNewPassword}
             disabled={true}
+            ref={register({ required: true })}
+          />
+          <ShowPassword
+            showPassword={true}
+            show={handleShowPassword.bind(this, "confirmNewPassword", true)}
+            hide={handleShowPassword.bind(this, "confirmNewPassword", false)}
           />
         </div>
         <button type="submit">Cambiar contraseña</button>

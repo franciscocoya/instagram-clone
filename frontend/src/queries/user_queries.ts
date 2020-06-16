@@ -23,7 +23,7 @@ export async function getUserById(userId: string): Promise<any> {
 }
 
 /**
- * 
+ * Check if the password passed as parameter is valid.
  *
  * @param userId User id.
  * @param oldPass Old password.
@@ -78,13 +78,29 @@ export async function updateUser(
   }
 }
 
+/**
+ * Change the password of the user, whose id is passed as parameter,
+ * with the new password passed as parameter.
+ *
+ * @param newPass new Password.
+ * @param userId User id.
+ * @param callback Callback to executes after update.
+ */
 export async function changeUserPass(
-  oldPass: string,
   newPass: string,
   userId: string,
   callback?: any
 ): Promise<any> {
   try {
+    await axios
+      .patch(`/accounts/user/changePass/${newPass}/${userId}`)
+      .then((res) => {
+        //   //console.log(res.data);
+        callback();
+      })
+      .catch((err1) =>
+        console.log(`An error ocurred while updating the pass... ${err1}`)
+      );
   } catch (err) {
     console.log(`An error ocurred while updating the user password. ${err}`);
   }

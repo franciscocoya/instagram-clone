@@ -132,19 +132,37 @@ userCtrl.deleteUser = async (req, res) => {
 };
 
 userCtrl.changePass = async (req, res) => {
-  const { oldPassword, newPassword, user } = req.body;
-  console.log(req.body);
+  try {
+    const { newPass, userId } = req.params;
+    console.log(req.params);
 
-  const salt = await bcrypt.genSalt(10);
-  const hashNewPassword = await bcrypt.hash(oldPassword, salt);
-
-  await User.findByIdAndUpdate(
-    { _id: req.params.id },
-    { $set: { password: hashNewPassword } }
-  );
+    const salt = await bcrypt.genSalt(10);
+    await bcrypt.hash(newPass, salt, async (err1, hash) => {
+      if (err1) {
+        res.status(500).json({
+          msg: `An error ocurred while hashing the password... ${err1}`,
+        });
+      }
+      await User.findOneAndUpdate(
+        userId,
+        { password: hash },
+        (err2, updated) => {
+          if (err2) {
+            res.status(500).json({
+              msg: `A server error ocurred while updating the password... ${err2}`,
+            });
+          }
+          res.status(201).json({
+            updated,
+            msg: `Password successfully updated`,
+          });
+        }
+      );
+    });
+  } catch (err) {
+    console.log(`An error ocurred while updating the password. ${err}`);
+  }
 };
-
-//--
 
 userCtrl.getUserJWT = async (req, res) => {
   console.log("loading getUserJWT...");
