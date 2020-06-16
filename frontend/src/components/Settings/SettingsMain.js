@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import axios from "axios";
-import $ from "jquery";
-//import * as firebase from "firebase";
 import { storage } from "../../firebase";
+
+//Queries
+import { uploadProfileImage } from "../../queries/image_queries";
 
 //Components
 import UserNavigation from "../Navigations/UserNavigation";
@@ -29,11 +30,10 @@ var firebaseConfig = {
 
 function SettingsMain({ user, setModalPicture, enablePass, enableEdit }) {
   let history = useHistory();
-  //--
+
   const [showMessage] = useState(false);
   const [showChangePass, setShowChangePass] = useState(false);
   const [showEdit, setShowEdit] = useState(true);
-  const [currentUser, setCurrentUser] = useState(user);
   const [showModalChangePic, setShowModalChangePic] = useState(false);
 
   const setEditView = (e) => {
@@ -66,101 +66,31 @@ function SettingsMain({ user, setModalPicture, enablePass, enableEdit }) {
     history.push("/accounts/password/change");
   };
 
-  const setEnableEdit = () => {
-    setShowEdit(true);
-    setShowChangePass(false);
-    setBorder(true);
-  };
-
-  const setEnablePass = () => {
-    setShowChangePass(true);
-    setShowEdit(false);
-    setBorder(false);
-  };
-
   /**
    * Change profile picture.
-   * TODO: Cambiar CLoudinary por firebase.
    * @param {*} e
    */
-  const changeProfilePic = (e) => {
+  const changeProfilePic = async (e) => {
     let imgFile = e.target.files[0];
 
     if (imgFile !== undefined && imgFile !== null) {
-      uploadProfileImage(imgFile);
-    }
-  };
-
-  /**
-   * Upload the user's profile image to firebase.
-   */
-  const uploadProfileImage = async (img) => {
-    try {
-      const storageRef = storage.ref(`profiles/${img.name}`);
-      const task = storageRef.put(img);
-      task.on(
-        "state_changed",
-        (snapshot) => {
-          let percentage =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(percentage);
-          //setPicLoadingPercentage(percentage);
-        },
-        (err) => {
-          console.log(err.message);
-        },
-        () => {
-          storageRef.getDownloadURL().then(async (url) => {
-            let newUrlPic = new FormData();
-            newUrlPic.append("profile_picture", url);
-
-            await axios.put(
-              `http://localhost:4000/accounts/user/${user._id}`,
-              newUrlPic
-            );
-
-            setShowModalChangePic(false);
-            window.location.reload(true);
-          });
-        }
-      );
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al subir la imagen de perfil. ${err}`
+      //uploadProfileImage(imgFile);
+      await uploadProfileImage(
+        "profiles",
+        imgFile.name,
+        imgFile,
+        user._id,
+        setShowModalChangePic.bind(this, false) //Close the modal
       );
     }
   };
 
-  useEffect(() => {
-    async function loadUser() {
-      try {
-        enableEdit ? setEnableEdit() : setEnablePass();
-        //setLoading(true);
-        await axios
-          .get(`http://localhost:4000/accounts/user/init`)
-          .then((res) => {
-            setCurrentUser(res.data.user);
-          })
-          .catch((err) => console.log(err));
-      } catch (err) {
-        if (
-          err.response &&
-          (err.response.status === 404 || err.response.status === 400)
-        ) {
-          console.log("El perfil no existe");
-        } else {
-          console.log("Hubo un problema cargando este perfil.");
-        }
-        //setLoading(false);
-      }
-    }
-    loadUser();
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   return (
     <div className="body setting-body">
       {showMessage && <Message />}
-      <UserNavigation user={currentUser} />
+      <UserNavigation user={user} />
       {showModalChangePic && (
         <ChangeProfilePicture
           user={user}
@@ -188,13 +118,11 @@ function SettingsMain({ user, setModalPicture, enablePass, enableEdit }) {
           <div className="col-2">
             {showEdit && enableEdit && (
               <EditProfile
-                user={currentUser}
+                user={user}
                 showChangePicModal={() => setShowModalChangePic(true)}
               />
             )}
-            {showChangePass && enablePass && (
-              <ChangePassword user={currentUser} />
-            )}
+            {showChangePass && enablePass && <ChangePassword user={user} />}
           </div>
         </div>
       </div>

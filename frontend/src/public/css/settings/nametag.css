@@ -660,11 +660,12 @@ html {
 @use "../partials/generales/flex";
 @use '../partials/generales/grid';
 .w-nametag > .wrapper-nametag {
-  height: 100%;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .w-nametag > .wrapper-nametag > .nametag {
+  -webkit-transform: translateY(55px);
+          transform: translateY(55px);
   height: 400px;
   background: -webkit-gradient(linear, left bottom, right top, from(#fd8d32), to(#a307ba));
   background: linear-gradient(to right top, #fd8d32, #a307ba);

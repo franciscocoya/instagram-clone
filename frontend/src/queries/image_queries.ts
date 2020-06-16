@@ -14,10 +14,11 @@ export async function uploadProfileImage(
   folder: string,
   imgName: string,
   img: Blob,
-  userId: string
+  userId: string,
+  callback?: any
 ): Promise<any> {
   try {
-    const storageRef = storage.ref(`${folder}/${imgName}`);
+    const storageRef = await storage.ref(`${folder}/${imgName}`);
     const task = storageRef.put(img);
     task.on(
       "state_changed",
@@ -35,6 +36,10 @@ export async function uploadProfileImage(
 
           await axios
             .put(`http://localhost:4000/accounts/user/${userId}`, newUrlPic)
+            .then(async (res) => {
+              await callback();
+              await window.location.reload();
+            })
             .catch((err1) =>
               console.log(
                 `An error ocurred while updating the image... ${err1}`
@@ -48,6 +53,15 @@ export async function uploadProfileImage(
   }
 }
 
+/**
+ * Upload the selected post image to the firebase storage
+ * whose raw and name are passed as parameter.
+ *
+ * @param folder Destination folder --> <posts>
+ * @param imgName Name of the post image.
+ * @param img Image to upload.
+ * @param callback Callback to be executed after uploading the image.
+ */
 export async function uploadPostImage(
   folder: string,
   imgName: string,

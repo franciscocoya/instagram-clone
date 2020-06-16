@@ -47,7 +47,6 @@ export default function OwlCarrouselDemo({ image, setFilt, imgLoaded }) {
   };
 
   useEffect(() => {
-    //Loading...
     setLoading(true);
     checkIsPreview();
     setLoading(false);
