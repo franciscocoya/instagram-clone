@@ -4,40 +4,48 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User/User");
 
 userCtrl.getUser = async (req, res) => {
-  const id = req.params.userId;
+  try {
+    const { userId } = req.params;
 
-  await User.findById(id, (err, user) => {
-    if (err) {
-      return res.status(500).send({
-        msg: `Error en la peticion: ${err}`,
-      });
-    }
-    if (!user) {
-      return res.status(404).send({
-        msg: "El usuario no existe",
-      });
-    }
+    await User.findOne({ _id: userId }, (err1, user) => {
+      if (err1) {
+        return res.status(500).json({
+          msg: `A server-side error ocurred getting the user... ${err1}`,
+        });
+      }
+      if (!user) {
+        return res.status(404).json({
+          msg: "Th user does not exist.",
+        });
+      }
 
-    res.status(201).send({
-      user,
+      res.status(201).json({
+        user,
+      });
     });
-  });
+  } catch (err) {
+    console.log(`An error ocurred while getting the user. ${err}`);
+  }
 };
 
 userCtrl.getUserByUsername = async (req, res) => {
-  const { otherUsername } = req.params;
-  console.log(req.params);
-  await User.findOne({ username: otherUsername }, (err, user) => {
-    if (err) {
-      return res.status(500).send({
-        msg: `Error en la peticion: ${err}`,
+  try {
+    const { otherUsername } = req.params;
+    await User.findOne({ username: otherUsername }, (err1, user) => {
+      if (err1) {
+        res.status(500).send({
+          msg: `Server-side error ocurred getting the user: ${err}`,
+        });
+      }
+      res.status(201).send({
+        user,
       });
-    }
-    res.status(201).send({
-      user,
-      msg: "Usuario obtenido correctamente.",
     });
-  });
+  } catch (err) {
+    console.log(
+      `An error ocurred while getting the user from their username. ${err}`
+    );
+  }
 };
 
 userCtrl.checkValidPass = async (req, res) => {
@@ -50,7 +58,7 @@ userCtrl.checkValidPass = async (req, res) => {
           msg: `A server error ocurred while checking the pass. ${err1}`,
         });
       }
-      //return result;
+
       const originalPass = result.password;
       await bcrypt.compare(pass, originalPass, (err2, valid) => {
         if (err2) {
@@ -75,60 +83,68 @@ userCtrl.checkValidPass = async (req, res) => {
 };
 
 userCtrl.listUsers = async (req, res) => {
-  await User.find((err, users) => {
-    if (err) {
-      res.status(500).json({
-        msg: `Error en la peticion`,
-      });
-    }
+  try {
+    await User.find((err1, users) => {
+      if (err1) {
+        res.status(500).json({
+          msg: `A server-side error occurred listing users`,
+        });
+      }
 
-    if (!users) {
-      res.status(404).json({
-        msg: "No hay usuarios",
-      });
-    }
+      if (!users) {
+        res.status(404).json({
+          msg: "There are no users to list",
+        });
+      }
 
-    res.status(201).send({
-      users,
+      res.status(201).send({
+        users,
+      });
     });
-  });
+  } catch (err) {
+    console.log(`An error ocurred while listing the users. ${err}`);
+  }
 };
 
 userCtrl.updateUser = async (req, res) => {
-  const id = req.params.userId;
-  console.log(id);
-  const update = req.body;
+  try {
+    const { userId } = req.params;
+    const update = req.body;
 
-  await User.findByIdAndUpdate(id, update, (err, userUpdated) => {
-    if (err) {
-      res.status(500).json({
-        msg: `Error al actualizar el usuario: ${err}`,
+    await User.findOneAndUpdate(userId, update, (err1, userUpdated) => {
+      if (err1) {
+        res.status(500).json({
+          msg: `Server-side error ocurred updating the user: ${err1}`,
+        });
+      }
+
+      res.status(201).json({
+        userUpdated,
       });
-    }
-
-    res.status(201).json({
-      userUpdated,
-      msg: "Usuario actualizado correctamente",
     });
-  });
+  } catch (err) {
+    console.log(`An error ocurred updating the user. ${err}`);
+  }
 };
 
 userCtrl.deleteUser = async (req, res) => {
-  const id = req.params.userId;
-  console.log(id);
+  try {
+    const { userId } = req.params;
 
-  await User.findByIdAndDelete(id, (err, userDeleted) => {
-    if (err) {
-      res.status(500).json({
-        msg: `Error al actualizar el usuario: ${err}`,
+    await User.findOneAndDelete(userId, (err1, userDeleted) => {
+      if (err1) {
+        res.status(500).json({
+          msg: `Server-side error ocurred deleting the user. ${err1}`,
+        });
+      }
+
+      res.status(201).json({
+        userDeleted,
       });
-    }
-
-    res.status(201).json({
-      userDeleted,
-      msg: "Usuario eliminado correctamente",
     });
-  });
+  } catch (err) {
+    console.log(`An error ocurred while deleting the user. ${err}`);
+  }
 };
 
 userCtrl.changePass = async (req, res) => {
@@ -165,49 +181,51 @@ userCtrl.changePass = async (req, res) => {
 };
 
 userCtrl.getUserJWT = async (req, res) => {
-  console.log("loading getUserJWT...");
-  let { username } = req.params;
-  console.log("username: " + username);
-  await User.findOne({ username }, (err, user) => {
-    if (err) {
-      return res.status(500).send({
-        msg: `Error en la peticion: ${err}`,
-      });
-    }
-    if (!user) {
-      return res.status(404).send({
-        msg: "El usuario no existe",
-      });
-    }
+  try {
+    const { username } = req.params;
+    await User.findOne({ username }, (err1, user) => {
+      if (err1) {
+        return res.status(500).send({
+          msg: `Server-side error ocurred getting the user: ${err1}`,
+        });
+      }
+      if (!user) {
+        return res.status(404).send({
+          msg: "The user does not exist.",
+        });
+      }
 
-    res.status(201).send({
-      msg: "Datos del usuario correctos !",
-      user,
+      res.status(201).send({
+        user,
+      });
     });
-    console.log(user);
-  });
+  } catch (err) {
+    console.log(`An error ocurred while getting the user by jwt. ${err}`);
+  }
 };
 
 userCtrl.getUserInitialization = async (req, res) => {
-  console.log("Inicializando linea(132) getUserInitialization...");
-  const id = req.user;
-  await User.findById(id, (err, user) => {
-    if (err) {
-      return res.status(500).send({
-        msg: `Error en la peticion: ${err}`,
-      });
-    }
-    if (!user) {
-      return res.status(404).send({
-        msg: "El usuario no existe",
-      });
-    }
+  try {
+    const id = req.user;
+    await User.findById(id, (err1, user) => {
+      if (err1) {
+        return res.status(500).send({
+          msg: `Error en la peticion: ${err1}`,
+        });
+      }
+      if (!user) {
+        return res.status(404).send({
+          msg: "The user does not exist.",
+        });
+      }
 
-    res.status(201).send({
-      msg: "Datos del usuario correctos !",
-      user,
+      res.status(201).send({
+        user,
+      });
     });
-  });
+  } catch (err) {
+    console.log(`An error occurred while initializing the app. ${err}`);
+  }
 };
 
 userCtrl.initUser = async (req, res) => {
@@ -230,22 +248,19 @@ userCtrl.searchByPartialText = async (req, res) => {
         (err, result) => {
           if (err) {
             res.status(500).json({
-              msg: `Se ha producido un error en la búsqueda. ${err}`,
+              msg: `Server-side error ocurred searching the text. ${err}`,
             });
           }
           res.status(201).json({
             users: result,
-            msg: `Búsqueda realizada correctamente !`,
           });
         }
       );
     } catch (err1) {
-      console.log(
-        `Se ha producido un error al realizar la búsqueda de los usuarios. ${err1}`
-      );
+      console.log(`An error occurred while searching for users. ${err1}`);
     }
   } else {
-    console.log("La entrada de texto no es válida.");
+    console.log("Invalid text input.");
   }
 };
 
