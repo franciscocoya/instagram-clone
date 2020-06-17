@@ -237,7 +237,7 @@ userCtrl.getUserInitialization = async (req, res) => {
     await User.findById(id, (err1, user) => {
       if (err1) {
         return res.status(500).send({
-          msg: `Error en la peticion: ${err1}`,
+          msg: `Server-side error ocurred initializing the user: ${err1}`,
         });
       }
       if (!user) {
