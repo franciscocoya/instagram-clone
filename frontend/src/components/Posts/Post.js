@@ -391,24 +391,6 @@ function Post({ onClose, user, match }) {
                           duration={2}
                         />
                       ) : (
-<<<<<<< HEAD
-                        <img
-                          className={`profile-img ${
-                            user._id !== pUser._id ? "cursor-pointer" : ""
-                          }`}
-                          src={
-                            pUser.profile_picture === "undefined"
-                              ? defaultPic
-                              : pUser.profile_picture
-                          }
-                          alt={pUser.username}
-                          onClick={() => {
-                            if (user._id !== pUser._id) {
-                              history.push(`/u/${pUser.username}`);
-                            }
-                          }}
-                        />
-=======
                         <>
                           {user._id !== pUser._id ? (
                             <img
@@ -430,7 +412,6 @@ function Post({ onClose, user, match }) {
                             />
                           )}
                         </>
->>>>>>> improve-login
                       )}
                     </div>
                     <div className="profile-info mp-0 w-100">
@@ -529,27 +510,12 @@ function Post({ onClose, user, match }) {
                     <li className="list-style-none mp-0">
                       <div className="post-description mp-0">
                         <div className="cont-img mp-0">
-<<<<<<< HEAD
-                          <img
-                            className={`profile-img mp-0 ${
-                              user._id !== pUser._id ? "cursor-pointer" : ""
-                            }`}
-                            src={
-                              pUser.profile_picture === "undefined"
-                                ? defaultPic
-                                : pUser.profile_picture
-                            }
-                            alt={pUser.username}
-                            onClick={() => {
-                              if (user._id !== pUser._id) {
-=======
                           {user._id !== pUser._id ? (
                             <img
                               className={`profile-img mp-0 cursor-pointer`}
                               src={pUser.profile_picture}
                               alt={pUser.username}
                               onClick={() => {
->>>>>>> improve-login
                                 history.push(`/u/${pUser.username}`);
                               }}
                             />

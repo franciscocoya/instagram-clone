@@ -17,12 +17,7 @@ import ShowPassword from "./ShowPassword";
 import "../../public/css/settings/changePassword.css";
 
 function ChangePassword({ user }) {
-<<<<<<< HEAD
   const defaultPicURL = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
-
-  const handleChange = (e) => {
-    e.target.name = e.target.value;
-=======
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = async (data) => {
     console.log(data);
@@ -72,7 +67,6 @@ function ChangePassword({ user }) {
         backgroundColor: "#fdece7",
       });
     }
->>>>>>> improve-login
   };
 
   const handleShowPassword = (fieldName, enable) => {

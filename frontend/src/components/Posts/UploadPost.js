@@ -145,12 +145,7 @@ function UploadPost({ user }) {
    */
   const createTempImage = async (img) => {
     setImgRAW(img);
-<<<<<<< HEAD
-    //handleUploadImage("posts", img.name, img);
-    await uploadToFirebase(img, "posts");
-=======
     handleUploadImage(img, "posts");
->>>>>>> improve-login
   };
 
   function handleDescription(e) {
@@ -161,15 +156,8 @@ function UploadPost({ user }) {
     setTagCad(e.target.value);
   }
 
-<<<<<<< HEAD
-  const handleUploadImage = async () => {
-    //const result = await uploadPostImage(folder, img.name, img);
-    //setImgURL(result);
-    //await uploadToFirebase();
-=======
-  const handleUploadImage = async (img, folder) => {
+ const handleUploadImage = async (img, folder) => {
     const result = await uploadPostImage(folder, img.name, img, setImgURL);
->>>>>>> improve-login
   };
 
   const uploadToFirebase = async (img, folder) => {

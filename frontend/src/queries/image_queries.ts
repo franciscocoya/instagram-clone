@@ -14,14 +14,9 @@ import { FunctionComponent } from "react";
 export async function uploadProfileImage(
   folder: string,
   imgName: string,
-<<<<<<< HEAD
   img: any,
-  userId: string
-=======
-  img: Blob,
   userId: string,
   callback?: any
->>>>>>> improve-login
 ): Promise<any> {
   try {
     const storageRef = await storage.ref(`${folder}/${imgName}`);
@@ -42,18 +37,11 @@ export async function uploadProfileImage(
           data.append("userId", userId);
 
           await axios
-<<<<<<< HEAD
             .patch(`http://localhost:4000/accounts/user/updateProfilePic`, data)
             .then((res) => {
               if (res.status === 201) {
                 window.location.reload();
               }
-=======
-            .put(`http://localhost:4000/accounts/user/${userId}`, newUrlPic)
-            .then(async (res) => {
-              await callback();
-              await window.location.reload();
->>>>>>> improve-login
             })
             .catch((err1) =>
               console.log(
