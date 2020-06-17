@@ -65,12 +65,22 @@ function App() {
   }, []);
 
   async function login(email, password) {
-    const { data } = await axios.post("http://localhost:4000/accounts/SignIn", {
-      email,
-      password,
-    });
-    setUser(data.user);
-    setToken(data.token);
+    try {
+      await axios
+        .post("http://localhost:4000/accounts/SignIn", {
+          email,
+          password,
+        })
+        .then((res) => {
+          setUser(res.data.user);
+          setToken(res.data.token);
+        })
+        .catch((err1) =>
+          console.log(`An error ocurred while login the user. ${err1}`)
+        );
+    } catch (err) {
+      console.log(`An error ocurred while loging the user. ${err}`);
+    }
   }
 
   async function signUp(user) {

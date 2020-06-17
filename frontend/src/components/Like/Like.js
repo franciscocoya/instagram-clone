@@ -20,7 +20,7 @@ import {
 //Static files
 import "../../public/css/Post/verticalPost.css";
 
-function Like({ userId, postId, refreshCount }) {
+function Like({ user, postId, refreshCount }) {
   const [isLike, setIsLike] = useState(false);
   const [currentLike, setCurrentLike] = useState(null);
 
@@ -35,7 +35,7 @@ function Like({ userId, postId, refreshCount }) {
   };
 
   const handleAddLike = async () => {
-    const result = await addPostLike(userId, postId);
+    const result = await addPostLike(user._id, postId);
     setCurrentLike(result);
     refreshCount();
   };
@@ -50,9 +50,12 @@ function Like({ userId, postId, refreshCount }) {
    * Check if the current user has liked the post.
    */
   const checkLike = async () => {
-    const result = await checkIsLike(userId, postId);
-    setCurrentLike(result.currentLike);
-    setIsLike(result.isLike);
+    const result = await checkIsLike(user._id, postId);
+    if (result !== null && result !== undefined) {
+      setCurrentLike(result.currentLike);
+    }
+
+    setIsLike(result ? true : false);
   };
 
   useEffect(() => {

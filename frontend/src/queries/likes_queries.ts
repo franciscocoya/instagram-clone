@@ -99,32 +99,14 @@ export async function checkIsLike(
 ): Promise<any> {
   try {
     return await axios
-      .get(`http://localhost:4000/user/p/likes/${userId}`)
+      .get(`http://localhost:4000/p/likes/get/${userId}/${postId}`)
       .then((res) => {
-        let likesArr = res.data.list;
-
-        let filtered = likesArr
-          .slice()
-          .filter(
-            (like: any): boolean =>
-              like.userId === userId && like.postId === postId
-          )[0];
-
-        let reduced = likesArr.reduce((acc: any, like: any) => {
-          return [...acc, like.postId];
-        }, []);
-
-        return {
-          isLike: reduced.includes(postId),
-          currentLike: filtered,
-        };
+        return res.data;
       })
       .catch((err1) =>
-        console.log(
-          `Se ha producido un error al obtener los likes del usuario. ${err1}`
-        )
+        console.log(`An error ocurred while checking the like... ${err1}`)
       );
   } catch (err) {
-    console.log(`Se ha producido un error al comprobar el like. ${err}`);
+    console.log(`An error ocurred while checking the user like. ${err}`);
   }
 }

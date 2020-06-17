@@ -23,7 +23,30 @@ export async function getUserById(userId: string): Promise<any> {
 }
 
 /**
+<<<<<<< HEAD
  * Update user's data.
+=======
+ * Check if the password passed as parameter is valid.
+ *
+ * @param userId User id.
+ * @param oldPass Old password.
+ */
+export async function checkOldPasswordValid(
+  userId: string,
+  oldPass: string
+): Promise<any> {
+  //let validPass = await getUserPassByUserId(userId);
+  return await axios
+    .get(`http://localhost:4000/accounts/user/checkP/${userId}/${oldPass}`)
+    .then((res) => {
+      return res.data.isValid;
+    })
+    .catch((err1) => {});
+}
+
+/**
+ *
+>>>>>>> improve-login
  *
  * @param username Username.
  * @param email Email.
@@ -58,6 +81,34 @@ export async function updateUser(
       );
   } catch (err) {
     console.log(`An error ocurred while updating the user data. ${err}`);
+  }
+}
+
+/**
+ * Change the password of the user, whose id is passed as parameter,
+ * with the new password passed as parameter.
+ *
+ * @param newPass new Password.
+ * @param userId User id.
+ * @param callback Callback to executes after update.
+ */
+export async function changeUserPass(
+  newPass: string,
+  userId: string,
+  callback?: any
+): Promise<any> {
+  try {
+    await axios
+      .patch(`/accounts/user/changePass/${newPass}/${userId}`)
+      .then((res) => {
+        //   //console.log(res.data);
+        callback();
+      })
+      .catch((err1) =>
+        console.log(`An error ocurred while updating the pass... ${err1}`)
+      );
+  } catch (err) {
+    console.log(`An error ocurred while updating the user password. ${err}`);
   }
 }
 
@@ -157,4 +208,8 @@ export async function checkUserType(
   } catch (err) {
     console.log(`An error ocurred while checking the user. ${err}`);
   }
+}
+
+export function closeSession(): void {
+  localStorage.removeItem("INSTAGRAM_TOKEN");
 }

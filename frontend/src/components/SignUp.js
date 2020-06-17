@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { ExternalLink } from "react-external-link";
 import { Helmet } from "react-helmet";
 
+//Queries
+import { closeSession } from "../queries/user_queries";
+
 //Static files
 import "../public/css/signUp.css";
 
@@ -21,19 +24,18 @@ function SignUp({ signUp, showError }) {
     });
   }
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await signUp(user);
     } catch (err) {
-      showError(err.response.data);
-      console.log(err);
+      console.log(`An error ocurred while register the user... ${err}`);
     }
-  }
+  };
 
   useEffect(() => {
-    localStorage.removeItem("INSTAGRAM_TOKEN");
+    closeSession();
   }, []);
 
   return (

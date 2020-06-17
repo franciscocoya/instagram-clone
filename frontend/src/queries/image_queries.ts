@@ -14,8 +14,14 @@ import { FunctionComponent } from "react";
 export async function uploadProfileImage(
   folder: string,
   imgName: string,
+<<<<<<< HEAD
   img: any,
   userId: string
+=======
+  img: Blob,
+  userId: string,
+  callback?: any
+>>>>>>> improve-login
 ): Promise<any> {
   try {
     const storageRef = await storage.ref(`${folder}/${imgName}`);
@@ -36,11 +42,18 @@ export async function uploadProfileImage(
           data.append("userId", userId);
 
           await axios
+<<<<<<< HEAD
             .patch(`http://localhost:4000/accounts/user/updateProfilePic`, data)
             .then((res) => {
               if (res.status === 201) {
                 window.location.reload();
               }
+=======
+            .put(`http://localhost:4000/accounts/user/${userId}`, newUrlPic)
+            .then(async (res) => {
+              await callback();
+              await window.location.reload();
+>>>>>>> improve-login
             })
             .catch((err1) =>
               console.log(
@@ -55,15 +68,25 @@ export async function uploadProfileImage(
   }
 }
 
+/**
+ * Upload the selected post image to the firebase storage
+ * whose raw and name are passed as parameter.
+ *
+ * @param folder Destination folder --> <posts>
+ * @param imgName Name of the post image.
+ * @param img Image to upload.
+ * @param callback Callback to be executed after uploading the image.
+ */
 export async function uploadPostImage(
   folder: string,
   imgName: string,
-  img: any
+  img: any,
+  callback: any
 ): Promise<any> {
   try {
     const storageRef = storage.ref(`${folder}/${imgName}`);
     const task = storageRef.put(img);
-    return task.on(
+    task.on(
       "state_changed",
       (snapshot) => {
         let percentage =
@@ -74,7 +97,7 @@ export async function uploadPostImage(
       },
       () => {
         storageRef.getDownloadURL().then((url) => {
-          return url;
+          callback(url);
         });
       }
     );

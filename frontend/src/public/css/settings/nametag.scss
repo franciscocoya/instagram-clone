@@ -5,170 +5,170 @@
 @use '../partials/generales/grid'; //rows, columns, gap
 
 $gradients: (
-    gradient1: linear-gradient(to right top, #fd8d32, #a307ba),
-    gradient2: linear-gradient(to right top, #fdcb5c, #ed4956),
-    gradient3: linear-gradient(to right top, #27c4f5, #a307ba),
-    gradient4: linear-gradient(to right top, #54d7ff, #1390cc),
-    gradient5: linear-gradient(to right top, #70c050, #27c4f5),
-    gradient6: linear-gradient(to right top, #737373, #262626),
+  gradient1: linear-gradient(to right top, #fd8d32, #a307ba),
+  gradient2: linear-gradient(to right top, #fdcb5c, #ed4956),
+  gradient3: linear-gradient(to right top, #27c4f5, #a307ba),
+  gradient4: linear-gradient(to right top, #54d7ff, #1390cc),
+  gradient5: linear-gradient(to right top, #70c050, #27c4f5),
+  gradient6: linear-gradient(to right top, #737373, #262626),
 );
 
 .w-nametag {
-    & > .wrapper-nametag {
+  & > .wrapper-nametag {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    & > .nametag {
+      transform: translateY(55px);
+      height: 400px;
+      background: map-get($gradients, gradient1);
+
+      & > .create-nametag {
+        color: #fff;
+        padding: 0;
+        @include grid(1, 40% auto, 0.9em);
         height: 100%;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        & > .nametag {
-            height: 400px;
-            background: map-get($gradients, gradient1);
 
-            & > .create-nametag {
-                color: #fff;
+        & > .cont-canvas {
+          @include flex(column, center, center);
+          & > .canvas-nametag {
+            margin: 0;
+            border-radius: 1em;
+            position: relative;
+            & > h2 {
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              left: 0;
+              font-size: 2.5em;
+              font-weight: 400;
+              transform: translate(25%, 43%);
+              color: #000;
+            }
+          } //fin canvas
+        } //fin cont-canvas
+
+        & > .cont-description-canvas {
+          @include flex(column, center, space-between);
+          width: 85%;
+          pointer-events: none;
+          & > h2 {
+            font-size: 1.7em;
+            font-weight: 300;
+            margin: 0;
+            text-align: left;
+          }
+          & > p {
+            font-size: 1em;
+            font-weight: 300;
+            text-align: justify;
+          }
+          & > .cont-gradients {
+            @include flex(row, flex-start, center);
+            & > button {
+              outline: none;
+
+              width: 26px;
+              height: 26px;
+              border-radius: 50%;
+              border: 1px solid #fff;
+              margin: 0 0.9em 0 0;
+              padding: 0;
+              background: transparent;
+              pointer-events: visible;
+              & > div {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
                 padding: 0;
-                @include grid(1, 40% auto, 0.9em);
-                height: 100%;
+                margin: auto;
+              }
+              & > .gradient-active {
+                border: 2px solid #363636;
+                width: 20px;
+                height: 20px;
+              }
+              &:nth-of-type(1) {
+                & > div {
+                  background-image: map-get($gradients, gradient1);
+                }
+              }
+              &:nth-of-type(2) {
+                & > div {
+                  background-image: map-get($gradients, gradient2);
+                }
+              }
+              &:nth-of-type(3) {
+                & > div {
+                  background-image: map-get($gradients, gradient3);
+                }
+              }
+              &:nth-of-type(4) {
+                & > div {
+                  background-image: map-get($gradients, gradient4);
+                }
+              }
+              &:nth-of-type(5) {
+                & > div {
+                  background-image: map-get($gradients, gradient5);
+                }
+              }
+              &:nth-of-type(6) {
+                & > div {
+                  background-image: map-get($gradients, gradient6);
+                }
+              }
+            } //fin span
+          } //fin cont-gradient
 
-                & > .cont-canvas {
-                    @include flex(column, center, center);
-                    & > .canvas-nametag {
-                        margin: 0;
-                        border-radius: 1em;
-                        position: relative;
-                        & > h2 {
-                            width: 100%;
-                            height: 100%;
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            font-size: 2.5em;
-                            font-weight: 400;
-                            transform: translate(25%, 43%);
-                            color: #000;
-                        }
-                    } //fin canvas
-                } //fin cont-canvas
+          & > .cont-bt-download-nametag {
+            @include flex(row, flex-start, center);
+            & > #bt-download-nametag {
+              pointer-events: visible;
+              width: 50%;
+            } //fin bt-download-nametag
+          } //fin cont-bt-download-nametag
+        } //fin cont-description-canvas
+      } //fin create-nametag
+      & > .print-nametag {
+        margin-top: 2em;
+        height: 100%;
+        @include flex(column, flex-start, center);
+        & > h2 {
+          text-align: center;
+          font-weight: 300;
+          font-size: 1.8em;
+          color: map-get($colors, tx-gris-dark);
+        } //fin h2
 
-                & > .cont-description-canvas {
-                    @include flex(column, center, space-between);
-                    width: 85%;
-                    pointer-events: none;
-                    & > h2 {
-                        font-size: 1.7em;
-                        font-weight: 300;
-                        margin: 0;
-                        text-align: left;
-                    }
-                    & > p {
-                        font-size: 1em;
-                        font-weight: 300;
-                        text-align: justify;
-                    }
-                    & > .cont-gradients {
-                        @include flex(row, flex-start, center);
-                        & > button {
-                            outline: none;
+        & > .cont-ideas-nametag {
+          @include grid(1, repeat(3, 1fr), 2em);
+          width: 85%;
+          height: 100%;
+          text-align: center;
 
-                            width: 26px;
-                            height: 26px;
-                            border-radius: 50%;
-                            border: 1px solid #fff;
-                            margin: 0 0.9em 0 0;
-                            padding: 0;
-                            background: transparent;
-                            pointer-events: visible;
-                            & > div {
-                                width: 24px;
-                                height: 24px;
-                                border-radius: 50%;
-                                padding: 0;
-                                margin: auto;
-                            }
-                            & > .gradient-active {
-                                border: 2px solid #363636;
-                                width: 20px;
-                                height: 20px;
-                            }
-                            &:nth-of-type(1) {
-                                & > div {
-                                    background-image: map-get($gradients, gradient1);
-                                }
-                            }
-                            &:nth-of-type(2) {
-                                & > div {
-                                    background-image: map-get($gradients, gradient2);
-                                }
-                            }
-                            &:nth-of-type(3) {
-                                & > div {
-                                    background-image: map-get($gradients, gradient3);
-                                }
-                            }
-                            &:nth-of-type(4) {
-                                & > div {
-                                    background-image: map-get($gradients, gradient4);
-                                }
-                            }
-                            &:nth-of-type(5) {
-                                & > div {
-                                    background-image: map-get($gradients, gradient5);
-                                }
-                            }
-                            &:nth-of-type(6) {
-                                & > div {
-                                    background-image: map-get($gradients, gradient6);
-                                }
-                            }
-                        } //fin span
-                    } //fin cont-gradient
-
-                    & > .cont-bt-download-nametag {
-                        @include flex(row, flex-start, center);
-                        & > #bt-download-nametag {
-                            pointer-events: visible;
-                            width: 50%;
-                        } //fin bt-download-nametag
-                    } //fin cont-bt-download-nametag
-                } //fin cont-description-canvas
-            } //fin create-nametag
-            & > .print-nametag {
-                margin-top: 2em;
-                height: 100%;
-                @include flex(column, flex-start, center);
-                & > h2 {
-                    text-align: center;
-                    font-weight: 300;
-                    font-size: 1.8em;
-                    color: map-get($colors, tx-gris-dark);
-                } //fin h2
-
-                & > .cont-ideas-nametag {
-                    @include grid(1, repeat(3, 1fr), 2em);
-                    width: 85%;
-                    height: 100%;
-                    text-align: center;
-
-                    & > div {
-                        @include grid(125px auto auto, 1, 0.3em);
-                        width: 100%;
-                        height: 100%;
-                        color: map-get($colors, tx-gris-dark);
-                        & > span {
-                            margin: 0 auto;
-                        }
-                        & > h4 {
-                            margin: 0;
-                            font-weight: 500;
-                            font-size: 1.2em;
-                            @include flex(column, center, center);
-                        }
-                        & > p {
-                            @include flex(column, flex-start, center);
-                            font-size: 0.9em;
-                            color: map-get($colors, tx-gris);
-                            margin: 0;
-                        }
-                    } //fin div
-                } //fin cont-ideas-nametag
-            } //fin print-nametag
-        } //fin nametag
-    } //fin w-nametag
+          & > div {
+            @include grid(125px auto auto, 1, 0.3em);
+            width: 100%;
+            height: 100%;
+            color: map-get($colors, tx-gris-dark);
+            & > span {
+              margin: 0 auto;
+            }
+            & > h4 {
+              margin: 0;
+              font-weight: 500;
+              font-size: 1.2em;
+              @include flex(column, center, center);
+            }
+            & > p {
+              @include flex(column, flex-start, center);
+              font-size: 0.9em;
+              color: map-get($colors, tx-gris);
+              margin: 0;
+            }
+          } //fin div
+        } //fin cont-ideas-nametag
+      } //fin print-nametag
+    } //fin nametag
+  } //fin w-nametag
 }

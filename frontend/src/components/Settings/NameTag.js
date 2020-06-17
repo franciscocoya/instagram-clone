@@ -41,8 +41,6 @@ function NameTag({ user }) {
 
     console.log(currentGradientPos);
     console.log(gradientToApply);
-
-    //let seletedGradient = style.backgroundImage;
     $(".nametag").css({
       backgroundImage: gradientToApply,
     });
@@ -93,7 +91,6 @@ function NameTag({ user }) {
   };
 
   useEffect(() => {
-    //Loading...
     setTimeout(() => {
       setLoading(false);
     }, 500);

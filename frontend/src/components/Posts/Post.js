@@ -194,7 +194,9 @@ function Post({ onClose, user, match }) {
 
   const handleGetUserByPostId = async () => {
     const result = await getUserByPostId(id);
-    setPUser(result);
+    if (result !== null && result !== undefined) {
+      setPUser(result);
+    }
   };
 
   const listLikes = async () => {
@@ -389,6 +391,7 @@ function Post({ onClose, user, match }) {
                           duration={2}
                         />
                       ) : (
+<<<<<<< HEAD
                         <img
                           className={`profile-img ${
                             user._id !== pUser._id ? "cursor-pointer" : ""
@@ -405,6 +408,29 @@ function Post({ onClose, user, match }) {
                             }
                           }}
                         />
+=======
+                        <>
+                          {user._id !== pUser._id ? (
+                            <img
+                              className={`profile-img cursor-pointer`}
+                              src={pUser.profile_picture}
+                              alt={pUser.username}
+                              onClick={() =>
+                                history.push(`/u/${pUser.username}`)
+                              }
+                            />
+                          ) : (
+                            <img
+                              className={`profile-img`}
+                              src={user.profile_picture}
+                              alt={user.username}
+                              onClick={() =>
+                                history.push(`/u/${user.username}`)
+                              }
+                            />
+                          )}
+                        </>
+>>>>>>> improve-login
                       )}
                     </div>
                     <div className="profile-info mp-0 w-100">
@@ -503,6 +529,7 @@ function Post({ onClose, user, match }) {
                     <li className="list-style-none mp-0">
                       <div className="post-description mp-0">
                         <div className="cont-img mp-0">
+<<<<<<< HEAD
                           <img
                             className={`profile-img mp-0 ${
                               user._id !== pUser._id ? "cursor-pointer" : ""
@@ -515,10 +542,27 @@ function Post({ onClose, user, match }) {
                             alt={pUser.username}
                             onClick={() => {
                               if (user._id !== pUser._id) {
+=======
+                          {user._id !== pUser._id ? (
+                            <img
+                              className={`profile-img mp-0 cursor-pointer`}
+                              src={pUser.profile_picture}
+                              alt={pUser.username}
+                              onClick={() => {
+>>>>>>> improve-login
                                 history.push(`/u/${pUser.username}`);
-                              }
-                            }}
-                          />
+                              }}
+                            />
+                          ) : (
+                            <img
+                              className={`profile-img mp-0`}
+                              src={user.profile_picture}
+                              alt={user.username}
+                              onClick={() => {
+                                history.push(`/${user.username}`);
+                              }}
+                            />
+                          )}
                         </div>
                         <div className="cont-descripcion mp-0">
                           <div className="c-username mp-0">
@@ -527,9 +571,9 @@ function Post({ onClose, user, match }) {
                                 user._id !== pUser._id ? "cursor-pointer" : ""
                               }`}
                               onClick={() => {
-                                if (user._id !== pUser._id) {
-                                  history.push(`/u/${pUser.username}`);
-                                }
+                                user._id !== pUser._id
+                                  ? history.push(`/u/${pUser.username}`)
+                                  : history.push(`/${user.username}`);
                               }}
                             >
                               {pUser.username}
@@ -566,7 +610,7 @@ function Post({ onClose, user, match }) {
                     <div className="wrapper-media">
                       <div className="wrapper-media__col1">
                         <Like
-                          userId={user._id}
+                          user={user}
                           postId={currentPost._id}
                           refreshCount={() => setRefreshCount(true)}
                         />

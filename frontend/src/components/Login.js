@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { ExternalLink } from "react-external-link";
 import { Helmet } from "react-helmet";
-import { withRouter } from "react-router-dom";
-//import { createBrowserHistory } from "history";
 
 //Components
 
@@ -16,7 +14,6 @@ function Login({ login }) {
     email: "",
     password: "",
   });
-  //const [user, setUser] = useState(null);
 
   function handleInputChange(e) {
     setEmailYPassword({
@@ -25,16 +22,14 @@ function Login({ login }) {
     });
   }
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       await login(emailYPassword.email, emailYPassword.password);
-    } catch (error) {
-      //showError(error.response.data);
-      console.log("Error linea 31 en Login: " + error);
+    } catch (err) {
+      console.log(`An error ocurred while loging... ${err}`);
     }
-  }
+  };
 
   return (
     <div className="body flex-row b-signIn h-100 w-100">

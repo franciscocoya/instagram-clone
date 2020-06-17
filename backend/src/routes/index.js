@@ -4,7 +4,11 @@ const router = Router();
 //Users
 const {
   updateUser,
+<<<<<<< HEAD
   updateProfilePicture,
+=======
+  changePass,
+>>>>>>> improve-login
   getUser,
   deleteUser,
   listUsers,
@@ -13,6 +17,7 @@ const {
   initUser,
   getUserByUsername,
   searchByPartialText,
+  checkValidPass,
 } = require("../controllers/users.controller");
 
 const { signIn, signUp, isAuth } = require("../controllers/auth");
@@ -108,9 +113,14 @@ router.get("/accounts/user/init/:username", isAuth, getUserJWT);
 router.get("/accounts/user/init", isAuth, getUserInitialization);
 router.get("/accounts/user/profile/init", isAuth, initUser);
 router.get("/accounts/user/:userId", isAuth, getUser);
+router.get("/accounts/user/checkP/:userId/:pass", isAuth, checkValidPass);
 router.get("/accounts/user/username/:otherUsername", isAuth, getUserByUsername);
 router.put("/accounts/user/:userId", isAuth, updateUser);
+<<<<<<< HEAD
 router.patch("/accounts/user/updateProfilePic", isAuth, updateProfilePicture);
+=======
+router.patch("/accounts/user/changePass/:newPass/:userId", isAuth, changePass);
+>>>>>>> improve-login
 router.delete("/accounts/user/:userId", isAuth, deleteUser);
 router.get("/users", isAuth, listUsers);
 router.get("/user/search/:textToSearch", isAuth, searchByPartialText);
@@ -156,7 +166,7 @@ router.get("/p/commentReply/list/:comment_id", isAuth, listCommentReplies);
  */
 router.post("/p/like/add", isAuth, addLike);
 router.delete("/p/like/remove/:likeId", isAuth, deleteLike);
-router.get("/p/likes/get", isAuth, getLike);
+router.get("/p/likes/get/:userId/:postId", isAuth, getLike);
 router.get("/p/likes/:postId", isAuth, listLikes);
 
 /**
