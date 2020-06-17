@@ -203,3 +203,7 @@ export async function checkUserType(
     console.log(`An error ocurred while checking the user. ${err}`);
   }
 }
+
+export function closeSession(): void {
+  localStorage.removeItem("INSTAGRAM_TOKEN");
+}

@@ -51,14 +51,6 @@ function ChangePassword({ user }) {
     );
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   //if (checkPasswords()) {
-  //   //console.log.bind(this, "FIN")
-  //   //await changeUserPass(newPass, user._id, console.log("FIN"));
-  //   //}
-  // };
-
   const handleCheckOldPass = async (value) => {
     const result = await checkOldPasswordValid(user._id, value);
     if (result) {
@@ -86,9 +78,13 @@ function ChangePassword({ user }) {
     disableInputField("confirmNewPassword", false);
   };
 
-  // useEffect(()=> {
-
-  // }, [user]);
+  useEffect(() => {
+    return () => {
+      setOldPass("");
+      setNewPass("");
+      setRepeatedNewPass("");
+    };
+  }, [user]);
 
   return (
     <div className="editProfile">
