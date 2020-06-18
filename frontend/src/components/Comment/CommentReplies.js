@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 
+//Queries
+import { loadReplies } from "../../queries/replies_queries";
+
+//Components
 import { AdvanceCommentReply } from "./Comment";
 
 //Static files
 import "../../public/css/Comment/CommentReply/commentReply.css";
 
-function CommentReplies({ commentId, user, commentUser, setReplyOutputData }) {
+function CommentReplies({ commentId, user, setReplyOutputData }) {
   const [replies, setReplies] = useState([]);
   const [hideReplies, setHideReplies] = useState(true);
 
@@ -19,28 +23,13 @@ function CommentReplies({ commentId, user, commentUser, setReplyOutputData }) {
     setHideReplies(!hideReplies);
   };
 
-  /**
-   * List of all replies to the comment.
-   */
-  const loadReplies = async () => {
-    try {
-      axios
-        .get(`http://localhost:4000/p/commentReply/list/${commentId}`)
-        .then((res) => {
-          setReplies(res.data.replies);
-        })
-        .catch((err) =>
-          console.log(`Error al cargar las respuestas al comentario. ${err}`)
-        );
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al listas las respuestas al comentario - Cliente. ${err}`
-      );
-    }
+  const handleLoadReplies = async () => {
+    const result = await loadReplies(commentId);
+    setReplies(result);
   };
 
   useEffect(() => {
-    loadReplies();
+    handleLoadReplies();
   }, []);
 
   return (
@@ -54,7 +43,6 @@ function CommentReplies({ commentId, user, commentUser, setReplyOutputData }) {
                 : `Ver respuestas (${replies.length})`}
             </span>
           </button>
-          {/* TODO: Mostrar respuestas al comentario */}
           {!hideReplies && (
             <div className="replies">
               {replies.map((r, index) => (
