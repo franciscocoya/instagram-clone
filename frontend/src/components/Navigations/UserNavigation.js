@@ -16,8 +16,8 @@
  */
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
+import $ from "jquery";
 
 //Queries
 import { search } from "../../queries/search_queries";
@@ -79,11 +79,14 @@ function UserNavigation({
     await handleSearchChange(e);
   };
 
-  //TODO:
   const handleSearchChange = async (e) => {
     await search(e.target.value, user._id, resultsArr);
-    // setSearchResults(result);
-    // resultsArr(result);
+  };
+
+  const clearSearchInput = (e) => {
+    e.preventDefault();
+    setSearchValue("");
+    closeSuggestions(e);
   };
 
   useEffect(() => {
@@ -93,7 +96,6 @@ function UserNavigation({
 
   return (
     <nav className="navBar mp-0 bg-white w-100">
-      {/* Instagram Nav Logo */}
       <Link to="/" className="nav-logo-link">
         <div className="logo-nav coreSpriteMobileNavTypeLogo"></div>
       </Link>
@@ -101,7 +103,10 @@ function UserNavigation({
         <div className="showCloseSearch"></div>
         <div className="cont-search bg-gris b-1-g">
           <span className="coreSpriteSearchIcon"></span>
-          <span className="coreSpriteSearchClear"></span>
+          <span
+            className="coreSpriteSearchClear"
+            onClick={clearSearchInput}
+          ></span>
           <input
             type="text"
             placeholder="Buscar"

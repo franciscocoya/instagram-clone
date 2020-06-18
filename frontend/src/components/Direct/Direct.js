@@ -4,6 +4,11 @@ import { Helmet } from "react-helmet";
 import axios from "axios";
 //import io from "socket.io-client";
 import { formatDistance, formatDistanceToNowStrict, max, min } from "date-fns";
+
+//Queries
+import { loadChatUsers, getMinDate } from "../../queries/direct_queries";
+import { getUserById } from "../../queries/user_queries";
+
 //Components
 import UserNavigation from "../Navigations/UserNavigation";
 import { UserPlaceholder } from "../Placeholders/Placeholders";
@@ -100,51 +105,16 @@ function Direct({ user }) {
     setShowNewMessageModal(false);
   };
 
-  /**
-   * Load users chatting with the current user.
-   */
-  const loadUsersChat = async () => {
-    try {
-      const data = new FormData();
-      data.append("user_from", user._id);
-      const config = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
-
-      await axios
-        .post("http://localhost:4000/direct/msg/list", data, config)
-        .then(async (res) => {
-          const results = res.data.messages;
-          handleMinDate(results);
-          handleMaxDate(results);
-          setMessages(results);
-          modifyUserToChatText(results);
-        })
-        .catch((err1) =>
-          console.log(
-            `Se ha producido un error al listar los usuarios de las conversaciones del usuario actual. ${err1}`
-          )
-        );
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al cargar los usuarios de los chats del usuario actual. ${err}`
-      );
-    }
+  const handleLoadChatUsers = async () => {
+    const result = await loadChatUsers(user._id);
+    handleMinDate(result);
+    handleMaxDate(result);
+    setMessages(result);
+    modifyUserToChatText(result);
   };
 
-  /**
-   * Get the min date of messages array.
-   * @param {*} arr Array of messages
-   */
-  const getMinDate = (arr) => {
-    const arrCopy = arr.slice();
-    return arrCopy.reduce((min, msg) => {
-      const time = new Date(msg.createdAt);
-      return min < time ? min : time;
-    });
+  const handleGetMinDate = (arr) => {
+    return getMinDate(arr);
   };
 
   /**
@@ -182,7 +152,7 @@ function Direct({ user }) {
    * @param {*} arr Array of messages
    */
   const handleMinDate = (arr) => {
-    const min = getMinDate(arr);
+    const min = handleGetMinDate(arr);
     const minFormated = formatDate(min);
     setChateDate(minFormated);
   };
@@ -299,30 +269,32 @@ function Direct({ user }) {
   };
 
   /**
-   * Load user_to by id.
+   * TODO:Load user_to by id.
    * @param {*} id Id of user to load user instance.
    */
   const loadUserById = async (id) => {
-    let result = null;
-    try {
-      await axios
-        .get(`http://localhost:4000/accounts/user/${id}`)
-        .then((res) => {
-          result = res.data.user;
-        })
-        .catch((err1) =>
-          console.log(
-            `Se ha producido un error en la operacion cargar usuario. ${err1}`
-          )
-        );
-      return result;
-    } catch (err) {
-      console.log(`Se ha producido un error al cargar el usuario. ${err}`);
-    }
+    const result = await getUserById(id);
+    return result;
+    // let result = null;
+    // try {
+    //   await axios
+    //     .get(`http://localhost:4000/accounts/user/${id}`)
+    //     .then((res) => {
+    //       result = res.data.user;
+    //     })
+    //     .catch((err1) =>
+    //       console.log(
+    //         `Se ha producido un error en la operacion cargar usuario. ${err1}`
+    //       )
+    //     );
+    //   return result;
+    // } catch (err) {
+    //   console.log(`Se ha producido un error al cargar el usuario. ${err}`);
+    // }
   };
 
   /**
-   * List of users who chating with current user.
+   * TODO:List of users who chating with current user.
    * @param {*} arr Array of users(username, profile_picture)
    */
   const listUserConversationProfiles = async () => {
@@ -384,7 +356,7 @@ function Direct({ user }) {
   };
 
   useEffect(() => {
-    loadUsersChat();
+    handleLoadChatUsers();
     listUserConversationProfiles();
 
     return () => {

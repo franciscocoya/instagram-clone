@@ -1,5 +1,10 @@
 import axios from "axios";
 
+/**
+ * Loads the responses of the comment whose is is passed as a parameter.
+ *
+ * @param commentId Comment id.
+ */
 export async function loadReplies(commentId: string): Promise<any> {
   try {
     return await axios

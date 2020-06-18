@@ -3822,7 +3822,6 @@ html {
   height: 100%;
   margin: 0;
   padding: 0;
-  z-index: 1;
 }
 
 .navBar .search > .cont-search {
@@ -3846,10 +3845,11 @@ html {
 }
 
 .navBar .search > .cont-search > .coreSpriteSearchClear {
+  cursor: pointer;
   position: absolute;
   top: 0;
   right: 50px;
-  z-index: 3;
+  z-index: 51;
 }
 
 .navBar .search > .cont-search > .coreSpriteSearchIcon {
