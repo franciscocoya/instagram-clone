@@ -1,0 +1,72 @@
+@import "../partials/generales";
+
+@use 'generales/flex';
+@use 'generales/grid';
+
+$strength_types_num: 5;
+$strength_prefix: ".strength_";
+$strength_types: (
+  too_short: "#{$strength_prefix}too-short",
+  weak: "#{$strength_prefix}weak",
+  fair: "#{$strength_prefix}fair",
+  good: "#{$strength_prefix}good",
+  strong: "#{$strength_prefix}strong",
+);
+
+.strength-pass-bars {
+  @include grid(1, 30% auto, 2em);
+  width: 100%;
+  margin: 0 0 0.5em;
+  overflow: hidden;
+  & > .strength-pass-bars__wrapper {
+    @include grid(1, repeat($strength_types_num, 1fr), 0.3em);
+    width: 94%;
+    grid-column: 2;
+    overflow: hidden;
+  } //fin strength-pass-bars__wrapper
+} //fin strength-pass-bars
+
+.strength-bar {
+  height: 5px;
+} //fin strength-bar
+
+//Too short
+#{map-get($strength_types, too_short)} {
+  background: linear-gradient(
+    90deg,
+    rgba(161, 7, 2, 1) 0%,
+    rgba(244, 71, 8, 1) 35%
+  );
+}
+
+//Weak
+#{map-get($strength_types, weak)} {
+  background: linear-gradient(
+    90deg,
+    rgba(244, 71, 8, 1) 0%,
+    rgba(250, 166, 19, 1) 35%
+  );
+}
+
+//fair
+#{map-get($strength_types, fair)} {
+  background: linear-gradient(
+    90deg,
+    rgba(250, 166, 19, 1) 0%,
+    rgba(104, 142, 38, 1) 35%
+  );
+}
+
+//Good
+#{map-get($strength_types, good)} {
+  background: linear-gradient(
+    90deg,
+    rgba(104, 142, 38, 1) 0%,
+    rgba(34, 111, 84, 1) 35%
+  );
+}
+
+//Strong
+#{map-get($strength_types, strong)} {
+  background-color: map-get($strength_colors, strong);
+}

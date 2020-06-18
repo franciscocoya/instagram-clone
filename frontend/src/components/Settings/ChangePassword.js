@@ -9,9 +9,11 @@ import {
   checkOldPasswordValid,
 } from "../../queries/user_queries";
 import { checkValidField, disableInputField } from "../../queries/aux_queries";
+import { checkStrength } from "../../queries/passwordStrengthMeter";
 
 //Components
 import ShowPassword from "./ShowPassword";
+import StrengthPassBars from "./StrengthPassBars";
 
 //static files
 import "../../public/css/settings/changePassword.css";
@@ -29,10 +31,21 @@ function ChangePassword({ user }) {
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [repeatedNewPass, setRepeatedNewPass] = useState("");
+  const [strengthLevel, setStrengthLevel] = useState(-1);
 
-  const handleChangeOldPassword = async (e) => {
+  const handleChangeOldPassword = (e) => {
     setOldPass(e.target.value);
-    await handleCheckOldPass(e.target.value);
+    handleCheckPassStrength(e.target.value);
+    //await handleCheckOldPass(e.target.value);
+  };
+
+  const handleCheckPassStrength = (val) => {
+    if (val.length === 0) {
+      setStrengthLevel(-1);
+    } else {
+      const result = checkStrength(val);
+      setStrengthLevel(result);
+    }
   };
 
   const handleChangeNewPassword = async (e) => {
@@ -125,6 +138,7 @@ function ChangePassword({ user }) {
             hide={handleShowPassword.bind(this, "oldPassword", false)}
           />
         </div>
+        <StrengthPassBars level={strengthLevel} />
         <div className="form-control p-relative">
           <label htmlFor="newPassword" className="bold-black">
             Contraseña nueva
