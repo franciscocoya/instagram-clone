@@ -26,7 +26,7 @@ import UserProfile from "./components/Profiles/UserProfile";
 import PersonalProfile from "./components/Profiles/PersonalProfile";
 import Post from "./components/Posts/Post";
 import UploadPost from "./components/Posts/UploadPost";
-//import ResetPassword from "./components/Modals/ResetPassword";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Home from "./components/Home/Home";
 import Activity from "./components/Activity/Activity";
 import Explore from "./components/Explore/Explore";
@@ -164,6 +164,12 @@ function LoginRoutes({ user, logout }) {
             enableEdit={false}
           />
         )}
+      />
+
+      <Route
+        exact
+        path="/accounts/password/reset"
+        render={(props) => <ResetPassword {...props} user={user} />}
       />
 
       <Route path="/error/404" component={Error404} />
