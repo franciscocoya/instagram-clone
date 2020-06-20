@@ -32,28 +32,29 @@ function ChangePassword({ user }) {
   const [newPass, setNewPass] = useState("");
   const [repeatedNewPass, setRepeatedNewPass] = useState("");
   const [strengthLevel, setStrengthLevel] = useState(-1);
+  const [strengthLevelRep, setStrengthLevelRep] = useState(-1);
 
-  const handleChangeOldPassword = (e) => {
+  const handleChangeOldPassword = async (e) => {
     setOldPass(e.target.value);
-    handleCheckPassStrength(e.target.value);
-    //await handleCheckOldPass(e.target.value);
+    await handleCheckOldPass(e.target.value);
   };
 
-  const handleCheckPassStrength = (val) => {
+  const handleCheckPassStrength = (val, type) => {
     if (val.length === 0) {
-      setStrengthLevel(-1);
+      type === 0 ? setStrengthLevel(-1) : setStrengthLevelRep(-1);
     } else {
-      const result = checkStrength(val);
-      setStrengthLevel(result);
+      return checkStrength(val);
     }
   };
 
-  const handleChangeNewPassword = async (e) => {
+  const handleChangeNewPassword = (e) => {
     setNewPass(e.target.value);
+    setStrengthLevel(handleCheckPassStrength(e.target.value, 0));
   };
 
-  const handleChangeRepeatedNewPassword = async (e) => {
+  const handleChangeRepeatedNewPassword = (e) => {
     setRepeatedNewPass(e.target.value);
+    setStrengthLevelRep(handleCheckPassStrength(e.target.value, 1));
   };
 
   const checkPasswords = () => {
@@ -138,7 +139,7 @@ function ChangePassword({ user }) {
             hide={handleShowPassword.bind(this, "oldPassword", false)}
           />
         </div>
-        <StrengthPassBars level={strengthLevel} />
+
         <div className="form-control p-relative">
           <label htmlFor="newPassword" className="bold-black">
             Contraseña nueva
@@ -158,6 +159,9 @@ function ChangePassword({ user }) {
             hide={handleShowPassword.bind(this, "newPassword", false)}
           />
         </div>
+
+        <StrengthPassBars level={strengthLevel} />
+
         <div className="form-control p-relative">
           <label htmlFor="confirmNewPassword" className="bold-black">
             Confirmar nueva contraseña
@@ -177,6 +181,9 @@ function ChangePassword({ user }) {
             hide={handleShowPassword.bind(this, "confirmNewPassword", false)}
           />
         </div>
+
+        <StrengthPassBars level={strengthLevelRep} />
+
         <button type="submit">Cambiar contraseña</button>
       </form>
       <Link
