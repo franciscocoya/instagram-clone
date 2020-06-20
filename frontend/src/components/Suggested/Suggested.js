@@ -1,5 +1,21 @@
 /**
  * @description Suggested component. Show the suggested users to the current user.
+ *  · UserCard.
+ *    _ User profile picture.
+ *    _ Username.
+ *    _ Follow button.
+ *
+ *  · UserCardRemovable.
+ *    Same components as UserCard plus a button to remove the suggestion.
+ *
+ *  · HorizontalUserSuggest.
+ *    _ User profile picture.
+ *    _ Username.
+ *    _ Fullname.
+ *
+ *  · UserSuggestionWithCheckBox.
+ *    Same components as HorizontalUserSuggest plus a checkbox to see that the
+ *    suggestion has already been selected.
  *
  * @author Francisco Coya
  * @version v1.01
@@ -9,7 +25,6 @@
 
 import React, { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
-import axios from "axios";
 import { getSuggestedUsers } from "../../queries/posts_queries";
 
 //Static files

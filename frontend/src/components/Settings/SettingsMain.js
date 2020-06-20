@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
-import axios from "axios";
-import { storage } from "../../firebase";
 
 //Queries
 import { uploadProfileImage } from "../../queries/image_queries";
@@ -18,17 +16,7 @@ import ChangeProfilePicture from "../Modals/ChangeProfilePicture";
 //static files
 import "../../public/css/settings/settingsMain.css";
 
-var firebaseConfig = {
-  apiKey: process.env.FB_API_KEY,
-  authDomain: process.env.FB_AUTH_DOMAIN,
-  databaseURL: process.env.FB_DB_URL,
-  projectId: process.env.PROYECT_ID,
-  storageBucket: process.env.FB_STORAGE_BUCKET,
-  messagingSenderId: process.env.FB_MESSAGING_SENDER_ID,
-  appId: process.env.FB_APP_ID,
-};
-
-function SettingsMain({ user, setModalPicture, enablePass, enableEdit }) {
+function SettingsMain({ user, enablePass, enableEdit }) {
   let history = useHistory();
 
   const [showMessage] = useState(false);
@@ -74,7 +62,6 @@ function SettingsMain({ user, setModalPicture, enablePass, enableEdit }) {
     let imgFile = e.target.files[0];
 
     if (imgFile !== undefined && imgFile !== null) {
-      //uploadProfileImage(imgFile);
       await uploadProfileImage(
         "profiles",
         imgFile.name,

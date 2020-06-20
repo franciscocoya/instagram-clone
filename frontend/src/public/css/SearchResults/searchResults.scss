@@ -11,6 +11,7 @@
   position: fixed;
   width: 100%;
   height: 100%;
+  transform: translateY(60px);
   top: 0;
 
   & > .close-search-results {
@@ -24,9 +25,9 @@
     width: 241px;
     max-height: 362px;
     z-index: 52;
-    top: 60px;
+    top: 0;
     border: 1px solid map-get($colors, bc-gris);
-    margin-top: 60px;
+
     padding: 0;
     overflow: hidden;
     border-radius: 3px;

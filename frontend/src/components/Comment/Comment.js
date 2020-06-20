@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
-import axios from "axios";
-import * as moment from "moment";
-import shortformat from "moment-shortformat";
+// import * as moment from "moment";
+// import shortformat from "moment-shortformat";
 import Moment from "react-moment";
 import "moment/locale/es";
 import $ from "jquery";
+
+//Queries
+import { loadCommentUser } from "../../queries/comment_queries";
 
 //Components
 import CommentReplies from "./CommentReplies";
@@ -15,22 +17,14 @@ import "../../public/css/Comment/comment.css";
 
 function Comment({ description, userId, sendComment }) {
   const [uName, setUname] = useState("");
+
+  const handleLoadUser = async () => {
+    const result = await loadCommentUser(userId);
+    setUname(result.username);
+  };
+
   useEffect(() => {
-    async function loadComment() {
-      try {
-        const res = await axios.get(
-          `http://localhost:4000/accounts/user/${userId}`
-        );
-        const commentUser = res.data.user;
-        setUname(commentUser.username);
-      } catch (err) {
-        console.log(
-          "Se ha producido un error al obtener el usuario del comentario. " +
-            err
-        );
-      }
-    }
-    loadComment();
+    handleLoadUser();
   }, []);
 
   return (
@@ -59,35 +53,21 @@ export function AdvanceComment({
     profile_picture: "",
     id: "",
   });
-
   const [likesCount, setLikesCount] = useState(0);
-  const [refresh, setRefresh] = useState(false);
 
   const loadComment = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/accounts/user/${userId}`)
-        .then((res) => {
-          const commentUserRet = res.data.user;
-          setCommentUser({
-            username: commentUserRet.username,
-            profile_picture: commentUserRet.profile_picture,
-            id: commentUserRet._id,
-          });
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(
-        "Se ha producido un error al obtener el usuario del comentario. " + err
-      );
-    }
+    const result = await loadCommentUser(userId);
+    setCommentUser({
+      username: result.username,
+      profile_picture: result.profile_picture,
+      id: result._id,
+    });
   };
 
   /**
    * Type '@username' in the comment text field to reply to the specific comment.
    */
   const replyComment = (e) => {
-    setRefresh(false);
     e.preventDefault();
     const commentUsername = commentUser.username;
     const output = {
@@ -96,7 +76,6 @@ export function AdvanceComment({
       userId: userId,
     };
     setReplyOutputData(output);
-    setRefresh(true);
   };
 
   /**
@@ -166,7 +145,6 @@ export function AdvanceComment({
           <pre>{description}</pre>
           {/* TODO: Like container__counts */}
           <div className="container-like">
-            {/* timeAgo ___ x Me gusta ___ Responder */}
             <span className="mspan-0 timeago-comment">
               <Moment fromNow ago>
                 {time}
@@ -196,7 +174,6 @@ export function AdvanceComment({
         </div>
       </div>
 
-      {/* TODO: Replies */}
       <CommentReplies
         user={currentUser}
         commentUser={commentUser.id}
@@ -241,27 +218,12 @@ export function AdvanceCommentReply({
    * Load the comment data.
    */
   const loadComment = async () => {
-    try {
-      await axios
-        .get(`http://localhost:4000/accounts/user/${userId}`)
-        .then((res) => {
-          const commentUserRet = res.data.user;
-          setCommentUser({
-            username: commentUserRet.username,
-            profile_picture: commentUserRet.profile_picture,
-            id: commentUserRet._id,
-          });
-        })
-        .catch((err) =>
-          console.log(
-            `Se ha producido un error al cargar el comentario. ${err}`
-          )
-        );
-    } catch (err) {
-      console.log(
-        `Se ha producido un error al obtener el usuario del comentario. ${err}`
-      );
-    }
+    const result = await loadCommentUser(userId);
+    setCommentUser({
+      username: result.username,
+      profile_picture: result.profile_picture,
+      id: result._id,
+    });
   };
 
   /**
@@ -361,7 +323,7 @@ export function AdvanceCommentReply({
           </div>
         </div>
       </div>
-      {/* TODO: Replies */}
+
       <CommentReplies
         user={currentUser}
         commentUser={commentUser.id}

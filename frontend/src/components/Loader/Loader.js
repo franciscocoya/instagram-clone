@@ -9,13 +9,13 @@ function Loader() {
   return (
     <div className="loading bg-gris">
       <ProgressBar />
-      <div className="cont-loader animated flipInX">
+      {/* <div className="cont-loader animated flipInX">
         <img
           src={instagramIcon}
           alt="Instagram icon"
           className="animated infinite pulse"
         />
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -3,6 +3,26 @@ import axios from "axios";
 import { decodeUrl } from "./url_queries";
 
 /**
+ *
+ *
+ * @param userId User id.
+ */
+export async function loadCommentUser(userId: string): Promise<any> {
+  try {
+    return await axios
+      .get(`http://localhost:4000/accounts/user/${userId}`)
+      .then((res) => {
+        return res.data.user;
+      })
+      .catch((err1) =>
+        console.log(`An error ocurred while loading the comment. ${err1}`)
+      );
+  } catch (err) {
+    console.log(`An error occurred while getting the comment user. ${err}`);
+  }
+}
+
+/**
  * Load all the comments of the post to show.
  * The post id is passed as a parameter.
  *

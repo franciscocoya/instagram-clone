@@ -1,4 +1,4 @@
-const TOKEN_KEY = "jwt";
+const TOKEN_KEY = process.env.REACT_APP_TOKEN_KEY;
 
 export const login = () => {
   localStorage.setItem(TOKEN_KEY, "TestLogin");
