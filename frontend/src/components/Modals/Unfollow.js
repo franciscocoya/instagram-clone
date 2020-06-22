@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import axios from "axios";
 
 //Queries
 import { unfollow } from "../../queries/follow_queries";
@@ -18,10 +17,15 @@ function Unfollow({
   endRefreshPost,
 }) {
   const unfollowPostUser = async (e) => {
-    initRefreshPost();
-    await unfollow(postId, currentUser._id);
-    endRefreshPost();
-    close(); //Close the unfollow modal
+    try {
+      initRefreshPost(e);
+      await unfollow(postId, postUser._id, currentUser._id).then(() => {
+        endRefreshPost(e);
+        close(); //Close the unfollow modal
+      });
+    } catch (err) {
+      console.log(`An error ocurred unfollowing... ${err}`);
+    }
   };
 
   return (

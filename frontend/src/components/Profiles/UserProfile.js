@@ -20,6 +20,7 @@ import Suggested from "../Suggested/Suggested";
 //Modals
 import BlockUser from "../Modals/BlockUser";
 import SearchResults from "../Modals/SearchResults";
+import Unfollow from "../Modals/Unfollow";
 
 //Static files
 import "../../public/css/Profile/userProfile.css";
@@ -27,16 +28,19 @@ import "../../public/css/Profile/userProfile.css";
 function UserProfile({ match, user }) {
   const { otherUsername } = match.params;
 
+  const [showBlockUserModal, setShowBlockUserModal] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showSearchResults, setShowSearchResults] = useState(false);
+  const [showUnfollowModal, setShowUnfollowModal] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [otherUser, setOtherUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
-  const [showBlockUserModal, setShowBlockUserModal] = useState(false);
   const [followsCount, setFollowsCount] = useState(0);
   const [followersCount, setFollowersCount] = useState(0);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
+  const [sendFollow, setSendFollow] = useState(false);
 
   const loadUserPosts = async () => {
     const result = await getPostsByUsername(otherUsername);
@@ -70,13 +74,18 @@ function UserProfile({ match, user }) {
     setShowSuggestions(!showSuggestions);
   };
 
+  const handleClickUnfollow = (e) => {
+    e.preventDefault();
+    setShowUnfollowModal(true);
+  };
+
   useEffect(() => {
     loadUser();
     loadUserPosts();
     loadFollows();
     loadFollowers();
     handleCheckUserType();
-  }, [otherUsername]);
+  }, [otherUsername, sendFollow]);
 
   return (
     <div className="w-userProfile h-100">
@@ -112,6 +121,16 @@ function UserProfile({ match, user }) {
             />
           )}
 
+          {showUnfollowModal && (
+            <Unfollow
+              postUser={otherUser}
+              currentUser={user}
+              close={() => setShowUnfollowModal(false)}
+              initRefreshPost={() => setSendFollow(true)}
+              endRefreshPost={() => setSendFollow(false)}
+            />
+          )}
+
           <div className="header-profile">
             {/* Profile image */}
             <div className="profile-picture">
@@ -134,7 +153,10 @@ function UserProfile({ match, user }) {
                 {/* onClick={showEditProfileModal} */}
                 {isFollowing ? (
                   <>
-                    <button className="bt-unfollow bt-border-gray">
+                    <button
+                      className="wrapper-unfollow-span"
+                      onClick={handleClickUnfollow}
+                    >
                       <span className="glyphsSpriteFriend_Follow"></span>
                     </button>
                   </>
