@@ -1,4 +1,6 @@
 @import "../partials/generales";
+@import "../partials/glyphs";
+
 @use "generales/flex";
 @use "generales/grid";
 
@@ -60,21 +62,22 @@
             }
           } //fin bt.showSuggestions
 
-          & > .bt-unfollow {
+          & > .wrapper-unfollow-span {
+            @include flex(row, center, center);
+            width: 45px;
+            height: 30px;
+            border: 1px solid map-get($colors, bc-gris);
+            padding: 0.1em 0.5em;
+            border-radius: 4px;
             background-color: transparent;
-            padding: 0;
             & > .glyphsSpriteFriend_Follow {
-              background-color: transparent;
-              background-image: url("../../assets/glyphs.png");
-              background-repeat: no-repeat;
-              background-position: -286px -336px;
-              height: 24px;
-              width: 24px;
+              padding: 0;
+              margin: 0;
             } //fin glyhp sprite
-          } //fin bt-unfollow
+          } //fin wrapper-unfollow-span
 
           & > .bt-block-user {
-            margin: 0 auto;
+            margin: 0;
             @include flex(row, center, center);
           }
 

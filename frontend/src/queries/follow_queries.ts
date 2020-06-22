@@ -37,12 +37,18 @@ export async function checkIsFollowing(
  * @param {*} currentUserId Current user id.
  */
 export async function unfollow(
-  postId: string,
+  postId: string = "",
+  postUserId: string = "",
   currentUserId: string
 ): Promise<void> {
   try {
-    let resPost = await axios.get(`http://localhost:4000/p/${postId}`);
-    let userIdR = resPost.data.postRet.user_id;
+    let resPost, userIdR;
+    if (postId !== "") {
+      resPost = await axios.get(`http://localhost:4000/p/${postId}`);
+      userIdR = resPost.data.postRet.user_id;
+    } else {
+      userIdR = postUserId;
+    }
     const unFollowData = new FormData();
     unFollowData.append("follow_by", currentUserId);
     unFollowData.append("follow_to", userIdR);

@@ -23,9 +23,6 @@ export async function getUserById(userId: string): Promise<any> {
 }
 
 /**
-<<<<<<< HEAD
- * Update user's data.
-=======
  * Check if the password passed as parameter is valid.
  *
  * @param userId User id.
@@ -36,17 +33,20 @@ export async function checkOldPasswordValid(
   oldPass: string
 ): Promise<any> {
   //let validPass = await getUserPassByUserId(userId);
-  return await axios
-    .get(`http://localhost:4000/accounts/user/checkP/${userId}/${oldPass}`)
-    .then((res) => {
-      return res.data.isValid;
-    })
-    .catch((err1) => {});
+  try {
+    return await axios
+      .get(`http://localhost:4000/accounts/user/checkP/${userId}/${oldPass}`)
+      .then((res) => {
+        return res.data.isValid;
+      })
+      .catch((err1) => {});
+  } catch (err) {
+    console.log(`An error ocurred checking the user's password. ${err}`);
+  }
 }
 
 /**
- *
->>>>>>> improve-login
+ * Update the user data passed as a parameter.
  *
  * @param username Username.
  * @param email Email.
@@ -94,15 +94,14 @@ export async function updateUser(
  */
 export async function changeUserPass(
   newPass: string,
-  userId: string,
-  callback?: any
+  userId: string
+  //callback?: any
 ): Promise<any> {
   try {
     await axios
       .patch(`/accounts/user/changePass/${newPass}/${userId}`)
       .then((res) => {
-        //   //console.log(res.data);
-        callback();
+        console.log(res.data);
       })
       .catch((err1) =>
         console.log(`An error ocurred while updating the pass... ${err1}`)

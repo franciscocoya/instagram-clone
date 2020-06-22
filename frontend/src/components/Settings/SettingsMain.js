@@ -12,12 +12,15 @@ import Message from "../Messages/Message";
 
 //Modals
 import ChangeProfilePicture from "../Modals/ChangeProfilePicture";
+import SearchResults from "../Modals/SearchResults";
 
 //static files
 import "../../public/css/settings/settingsMain.css";
 
 function SettingsMain({ user, enablePass, enableEdit }) {
   let history = useHistory();
+  const [showSearchResults, setShowSearchResults] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
   const [showMessage] = useState(false);
   const [showChangePass, setShowChangePass] = useState(false);
@@ -77,13 +80,21 @@ function SettingsMain({ user, enablePass, enableEdit }) {
   return (
     <div className="body setting-body">
       {showMessage && <Message />}
-      <UserNavigation user={user} />
+      <UserNavigation
+        user={user}
+        showSuggestions={() => setShowSearchResults(true)}
+        closeSuggestions={() => setShowSearchResults(false)}
+        resultsArr={setSearchResults}
+      />
       {showModalChangePic && (
         <ChangeProfilePicture
           user={user}
           close={() => setShowModalChangePic(false)}
           changePicture={changeProfilePic}
         />
+      )}
+      {showSearchResults && (
+        <SearchResults suggestions={searchResults} user={user} />
       )}
       <div className="cont-center mp-0">
         <div className="container-settings b-1-g bg-white">

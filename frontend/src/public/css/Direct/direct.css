@@ -27,7 +27,7 @@ body {
   width: 100%;
   text-align: center;
   background-color: #fff;
-  border: 1px solid #dfdfdf;
+  border: 1px solid #dbdbdb;
   border-radius: 3px;
 }
 
@@ -43,7 +43,7 @@ input,
 textarea {
   padding: 0.6em;
   background-color: #fafafa;
-  border: 1px solid #dfdfdf;
+  border: 1px solid #dbdbdb;
   margin: 0.2em 0;
   border-radius: 3px;
 }
@@ -51,7 +51,7 @@ textarea {
 input:active, input:focus,
 textarea:active,
 textarea:focus {
-  border: 1px solid #dfdfdf;
+  border: 1px solid #dbdbdb;
 }
 
 ::-webkit-input-placeholder {
@@ -123,7 +123,7 @@ textarea {
 
 .input-bg-transparent:focus {
   background-color: #fafafa;
-  border: 1px solid #dfdfdf;
+  border: 1px solid #dbdbdb;
 }
 
 .input-transparent::-webkit-input-placeholder {
@@ -215,7 +215,7 @@ textarea {
 }
 
 .b-bottom-1 {
-  border-bottom: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dbdbdb;
 }
 
 .b-bottom-1-light {
@@ -223,7 +223,7 @@ textarea {
 }
 
 .b-1-g {
-  border: 1px solid #dfdfdf;
+  border: 1px solid #dbdbdb;
 }
 
 .b-left-bold {
@@ -295,7 +295,7 @@ button:disabled, .bt-small:disabled {
   padding: 0 auto;
   margin: 0;
   background-color: transparent;
-  border: 1px solid #dfdfdf;
+  border: 1px solid #dbdbdb;
   color: #000;
 }
 
@@ -573,7 +573,7 @@ button:disabled, .bt-small:disabled {
 .separator {
   margin-top: 0.5em;
   width: 100%;
-  color: #dfdfdf;
+  color: #dbdbdb;
   font-weight: 700;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -592,7 +592,7 @@ button:disabled, .bt-small:disabled {
 
 .separator > .line {
   width: 70%;
-  border-top: 1px solid #dfdfdf;
+  border-top: 1px solid #dbdbdb;
   margin: 0 0.3em;
   padding: 0;
 }
@@ -2179,7 +2179,7 @@ html {
   height: 90%;
   overflow: hidden;
   background-color: #fff;
-  border: 1px solid #dfdfdf;
+  border: 1px solid #dbdbdb;
   border-radius: 4px;
   padding: 0;
   margin-top: 50px;
@@ -2200,7 +2200,7 @@ html {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  border-right: 1px solid #dfdfdf;
+  border-right: 1px solid #dbdbdb;
   overflow: hidden;
 }
 
@@ -2215,7 +2215,7 @@ html {
       grid-template-rows: 1;
   grid-gap: 0.5em;
   text-align: center;
-  border-bottom: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dbdbdb;
 }
 
 .direct-body > .direct-body__wrapper > .d-wrapper__col1 > .col1__header > p {

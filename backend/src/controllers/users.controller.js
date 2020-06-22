@@ -177,7 +177,6 @@ userCtrl.deleteUser = async (req, res) => {
 userCtrl.changePass = async (req, res) => {
   try {
     const { newPass, userId } = req.params;
-    console.log(req.params);
 
     const salt = await bcrypt.genSalt(10);
     await bcrypt.hash(newPass, salt, async (err1, hash) => {
