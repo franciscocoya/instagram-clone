@@ -18,7 +18,6 @@ export async function search(
         .then((res) => {
           const results = res.data.users;
           const resultsFilt = results.filter((u: any) => u._id !== userId);
-          console.log(resultsFilt);
           callback1(resultsFilt);
         })
         .catch((err1) =>

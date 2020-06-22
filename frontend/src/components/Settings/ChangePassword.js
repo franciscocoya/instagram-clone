@@ -20,19 +20,20 @@ import "../../public/css/settings/changePassword.css";
 
 function ChangePassword({ user }) {
   const defaultPicURL = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
-  const { register, handleSubmit, watch, errors } = useForm();
-  const onSubmit = async (data) => {
-    console.log(data);
-    if (checkPasswords()) {
-      await changeUserPass(newPass, user._id, console.log("FIN"));
-    }
-  };
 
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [repeatedNewPass, setRepeatedNewPass] = useState("");
   const [strengthLevel, setStrengthLevel] = useState(-1);
   const [strengthLevelRep, setStrengthLevelRep] = useState(-1);
+  const [isValidPass, setIsValidPass] = useState(false);
+
+  const { register, handleSubmit, watch, errors } = useForm();
+  const onSubmit = async (data) => {
+    if (isValidPass && checkPasswords()) {
+      await changeUserPass(data.newPassword, user._id);
+    }
+  };
 
   const handleChangeOldPassword = async (e) => {
     setOldPass(e.target.value);
@@ -69,6 +70,7 @@ function ChangePassword({ user }) {
   const handleCheckOldPass = async (value) => {
     const result = await checkOldPasswordValid(user._id, value);
     if (result) {
+      setIsValidPass(true);
       enableNewPasswordFields();
       $("#oldPassword").css({
         border: "2px solid #54DB5F",
@@ -76,6 +78,7 @@ function ChangePassword({ user }) {
       });
       $("#newPassword").focus();
     } else {
+      setIsValidPass(false);
       $("#oldPassword").css({
         border: "2px solid #F25D30",
         backgroundColor: "#fdece7",
