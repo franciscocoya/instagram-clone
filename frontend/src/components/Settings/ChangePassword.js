@@ -9,9 +9,11 @@ import {
   checkOldPasswordValid,
 } from "../../queries/user_queries";
 import { checkValidField, disableInputField } from "../../queries/aux_queries";
+import { checkStrength } from "../../queries/passwordStrengthMeter";
 
 //Components
 import ShowPassword from "./ShowPassword";
+import StrengthPassBars from "./StrengthPassBars";
 
 //static files
 import "../../public/css/settings/changePassword.css";
@@ -30,18 +32,30 @@ function ChangePassword({ user }) {
       await changeUserPass(data.newPassword, user._id);
     }
   };
+  const [strengthLevel, setStrengthLevel] = useState(-1);
+  const [strengthLevelRep, setStrengthLevelRep] = useState(-1);
 
   const handleChangeOldPassword = async (e) => {
     setOldPass(e.target.value);
     await handleCheckOldPass(e.target.value);
   };
 
-  const handleChangeNewPassword = async (e) => {
-    setNewPass(e.target.value);
+  const handleCheckPassStrength = (val, type) => {
+    if (val.length === 0) {
+      type === 0 ? setStrengthLevel(-1) : setStrengthLevelRep(-1);
+    } else {
+      return checkStrength(val);
+    }
   };
 
-  const handleChangeRepeatedNewPassword = async (e) => {
+  const handleChangeNewPassword = (e) => {
+    setNewPass(e.target.value);
+    setStrengthLevel(handleCheckPassStrength(e.target.value, 0));
+  };
+
+  const handleChangeRepeatedNewPassword = (e) => {
     setRepeatedNewPass(e.target.value);
+    setStrengthLevelRep(handleCheckPassStrength(e.target.value, 1));
   };
 
   const checkPasswords = () => {
@@ -128,6 +142,7 @@ function ChangePassword({ user }) {
             hide={handleShowPassword.bind(this, "oldPassword", false)}
           />
         </div>
+
         <div className="form-control p-relative">
           <label htmlFor="newPassword" className="bold-black">
             Contraseña nueva
@@ -147,6 +162,9 @@ function ChangePassword({ user }) {
             hide={handleShowPassword.bind(this, "newPassword", false)}
           />
         </div>
+
+        <StrengthPassBars level={strengthLevel} />
+
         <div className="form-control p-relative">
           <label htmlFor="confirmNewPassword" className="bold-black">
             Confirmar nueva contraseña
@@ -166,6 +184,9 @@ function ChangePassword({ user }) {
             hide={handleShowPassword.bind(this, "confirmNewPassword", false)}
           />
         </div>
+
+        <StrengthPassBars level={strengthLevelRep} />
+
         <button type="submit">Cambiar contraseña</button>
       </form>
       <Link
