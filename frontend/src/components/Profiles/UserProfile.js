@@ -62,7 +62,6 @@ function UserProfile({ match, user }) {
 
   const handleCheckUserType = async () => {
     const result = await checkUserType(user._id, otherUsername);
-    console.log(result);
     setIsFollowing(result);
   };
 

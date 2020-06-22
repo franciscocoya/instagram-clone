@@ -734,12 +734,12 @@ html {
 }
 
 .w-userProfile > .user-profile-body > .header-profile > .profile-info > .c-username > .bt-unfollow > .glyphsSpriteFriend_Follow {
-  background-color: transparent;
-  background-image: url("../../assets/glyphs.png");
-  background-repeat: no-repeat;
-  background-position: -286px -336px;
   height: 24px;
   width: 24px;
+  background-image: url("../../assets/glyphs.png");
+  background-repeat: no-repeat;
+  background-size: 431px 430px;
+  background-position: -404px -207px;
 }
 
 .w-userProfile > .user-profile-body > .header-profile > .profile-info > .c-username > .bt-block-user {
