@@ -19,7 +19,6 @@ function Mention({ username, user }) {
         .get(`http://localhost:4000/accounts/user/username/${username}`)
         .then(async (res) => {
           let userRet = res.data.user;
-          console.log(userRet._id, user._id);
           if (userRet._id === user._id) {
             history.push(`/${user.username}/`);
           } else if (userRet !== null && userRet !== undefined) {
