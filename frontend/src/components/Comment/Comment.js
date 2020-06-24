@@ -7,31 +7,87 @@ import "moment/locale/es";
 import $ from "jquery";
 
 //Queries
+import { getUserById } from "../../queries/user_queries";
 import { loadCommentUser } from "../../queries/comment_queries";
 
 //Components
 import CommentReplies from "./CommentReplies";
+import Mention from "../Mention/Mention";
 
 //Static files
 import "../../public/css/Comment/comment.css";
 
-function Comment({ description, userId, sendComment }) {
+function Comment({ description, userId, currentUser }) {
   const [uName, setUname] = useState("");
+  const [descriptionWithMention, setDescriptionWithMention] = useState("");
+  // const [mention, setMention] = useState({
+  //   username: "",
+  // });
+  const [mention, setMention] = useState([]);
+  const [hashtag, setHashTag] = useState([]);
 
   const handleLoadUser = async () => {
-    const result = await loadCommentUser(userId);
-    setUname(result.username);
+    try {
+      if (userId !== undefined) {
+        const result = await loadCommentUser(userId);
+        setUname(result.username);
+      }
+    } catch (err) {
+      console.log(`An error ocurred loading the user ${userId}. ${err}`);
+    }
+  };
+
+  const checkComment = () => {
+    const splitted = description.split(" ");
+    const regex1 = new RegExp("[@]{1}[a-zA-Z0-9]");
+
+    if (splitted.length === 1) {
+      if (regex1.test(splitted[0])) {
+        setMention([...mention, splitted[0].split("@")[1]]);
+        splitted[0] = "**.**";
+      }
+    } else {
+      splitted.map((c, i) => {
+        if (regex1.test(c)) {
+          let content = {
+            username: c.split("@")[1],
+            index: i,
+          };
+          setMention([...mention, content]);
+          splitted[i] = "**.**";
+        }
+      });
+    }
+    setDescriptionWithMention(splitted.join(" "));
+  };
+
+  const checkHashtag = () => {
+    const splitted = description.split(" ");
+    const regex1 = new RegExp("[#]{1}[a-zA-Z0-9]");
   };
 
   useEffect(() => {
     handleLoadUser();
+    checkComment();
   }, []);
 
   return (
     <li className="w-100 mp-0 list-style-none">
       <p className="mp-0 w-100">
         <span>{uName}</span>
-        {description}
+        {descriptionWithMention.length > 0
+          ? descriptionWithMention.split(" ").map((w, index) => {
+              return w.includes("**.**") ? (
+                <Mention
+                  key={index}
+                  username={mention.find((e) => e.index === index).username}
+                  user={currentUser}
+                />
+              ) : (
+                w + " "
+              );
+            })
+          : description}
       </p>
     </li>
   );
@@ -98,7 +154,7 @@ export function AdvanceComment({
     return () => {
       setReplyOutputData(null);
     };
-  }, []);
+  }, [currentUser]);
 
   return (
     <li className="list-style-none mp-0">
