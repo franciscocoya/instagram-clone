@@ -9,6 +9,7 @@ import { getPostsByUsername } from "../../queries/posts_queries";
 import {
   getFollowsCount,
   getFollowersCount,
+  follow,
 } from "../../queries/follow_queries";
 
 //Components
@@ -77,6 +78,14 @@ function UserProfile({ match, user }) {
   const handleClickUnfollow = (e) => {
     e.preventDefault();
     setShowUnfollowModal(true);
+  };
+
+  const handleClickFollow = async (e) => {
+    e.preventDefault();
+    setSendFollow(false);
+    await follow(otherUser._id, user._id).then(() => {
+      setSendFollow(true);
+    });
   };
 
   useEffect(() => {
@@ -162,7 +171,9 @@ function UserProfile({ match, user }) {
                   </>
                 ) : (
                   <>
-                    <button className="bt-follow">Seguir</button>
+                    <button className="bt-follow" onClick={handleClickFollow}>
+                      Seguir
+                    </button>
                     <button
                       className="bt-showSuggestions"
                       onClick={toogleSuggestions}
