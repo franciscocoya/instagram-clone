@@ -20,14 +20,14 @@ import $ from "jquery";
 
 //Queries
 import { getPostsByUserId, getSavedPosts } from "../../queries/posts_queries";
-import { uploadProfileImage } from "../../queries/image_queries";
+import { uploadProfileImage, getImageUrl } from "../../queries/image_queries";
 
 //Components
 import UserNavigation from "../Navigations/UserNavigation";
 import Grid from "../Grid/Grid";
 import SettingsMain from "../Settings/SettingsMain";
 import Loader from "../Loader/Loader";
-import CircleProgressBar from "../Loader/CircleProgressBar";
+//import CircleProgressBar from "../Loader/CircleProgressBar";
 import ProfilePicture from "./ProfilePicture";
 
 //Modals
@@ -122,6 +122,15 @@ function PersonalProfile({ user, logout, match }) {
   const loadSavedPosts = async () => {
     const result = await getSavedPosts(user._id);
     setSaves(result);
+  };
+
+  /**
+   * Return the download URL from a firebase static url like:
+   *     gs://instagram-clone-v3-9c396.appspot.com/posts/post_22.jpg
+   * @param {*} url
+   */
+  const getImage = async (url) => {
+    await getImageUrl(url);
   };
 
   useEffect(() => {

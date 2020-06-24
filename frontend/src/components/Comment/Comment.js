@@ -7,12 +7,12 @@ import "moment/locale/es";
 import $ from "jquery";
 
 //Queries
-import { getUserById } from "../../queries/user_queries";
 import { loadCommentUser } from "../../queries/comment_queries";
 
 //Components
 import CommentReplies from "./CommentReplies";
 import Mention from "../Mention/Mention";
+import Hashtag from "../Hashtag/Hashtag";
 
 //Static files
 import "../../public/css/Comment/comment.css";
@@ -35,7 +35,10 @@ function Comment({ description, userId, currentUser }) {
   };
 
   const checkComment = () => {
-    const splitted = description.split(" ");
+    const splitted =
+      descriptionWithMention.length > 0
+        ? descriptionWithMention.split(" ")
+        : description.split(" ");
     const regex1 = new RegExp("[@]{1}[a-zA-Z0-9]");
 
     if (splitted.length === 1) {
@@ -50,22 +53,45 @@ function Comment({ description, userId, currentUser }) {
             username: c.split("@")[1],
             index: i,
           };
-          setMention([...mention, content]);
+          //mention.push(content);
           splitted[i] = "**.**";
+          setMention([...mention, content]);
         }
       });
     }
-    setDescriptionWithMention(splitted.join(" "));
+    const setDescription = () => {
+      description = splitted.join(" ");
+    };
+
+    descriptionWithMention.length > 0
+      ? setDescriptionWithMention(...descriptionWithMention, splitted.join(" "))
+      : setDescription();
   };
 
   const checkHashtag = () => {
-    const splitted = description.split(" ");
-    const regex1 = new RegExp("[#]{1}[a-zA-Z0-9]");
+    const splitted =
+      descriptionWithMention.length > 0
+        ? descriptionWithMention.split(" ")
+        : description.split(" ");
+    const regex = new RegExp("[#]{1}[a-zA-Z0-9]");
+    splitted.map((h, i) => {
+      if (regex.test(h)) {
+        let content = {
+          name: h.split("#")[1],
+          index: i,
+        };
+
+        hashtag.push(content);
+        splitted[i] = "**__**";
+      }
+    });
+    setDescriptionWithMention(...descriptionWithMention, splitted.join(" "));
   };
 
   useEffect(() => {
     handleLoadUser();
     checkComment();
+    checkHashtag(); //Important! Do not change the order.
   }, []);
 
   return (
@@ -74,15 +100,27 @@ function Comment({ description, userId, currentUser }) {
         <span>{uName}</span>
         {descriptionWithMention.length > 0
           ? descriptionWithMention.split(" ").map((w, index) => {
-              return w.includes("**.**") ? (
-                <Mention
-                  key={index}
-                  username={mention.find((e) => e.index === index).username}
-                  user={currentUser}
-                />
-              ) : (
-                w + " "
-              );
+              if (w.includes("**.**")) {
+                return (
+                  <Mention
+                    key={index}
+                    username={mention.find((e) => e.index === index).username}
+                    user={currentUser}
+                  />
+                );
+              }
+
+              if (w.includes("**__**")) {
+                return (
+                  //TODO:
+                  <Hashtag
+                    key={index}
+                    hashtagName={hashtag.find((h) => h.index === index).name}
+                  />
+                );
+              }
+
+              return w + " ";
             })
           : description}
       </p>
