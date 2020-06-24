@@ -20,10 +20,11 @@ export async function search(
           const resultsFilt = results.filter((u: any) => u._id !== userId);
           callback1(resultsFilt);
         })
-        .catch((err1) =>
-          console.log(
-            `An error ocurred while searching for the passed text as parameter . ${err1}`
-          )
+        .catch(
+          (err1) => {}
+          // console.log(
+          //   `An error ocurred while searching for the passed text as parameter . ${err1}`
+          // )
         );
     } else {
       console.log(`Invalid input.`);
