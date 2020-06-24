@@ -93,3 +93,13 @@ export async function uploadPostImage(
     console.log(`An error ocurred while uploading the temporal image. ${err}`);
   }
 }
+
+export async function getImageUrl(url: string): Promise<any> {
+  await storage
+    .refFromURL(url)
+    .getDownloadURL()
+    .then((res) => {
+      console.log(res);
+    });
+  //const result = await storageRef.getDownloadURL();
+}
