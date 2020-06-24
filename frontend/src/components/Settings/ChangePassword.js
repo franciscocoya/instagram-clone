@@ -24,8 +24,11 @@ function ChangePassword({ user }) {
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [repeatedNewPass, setRepeatedNewPass] = useState("");
+<<<<<<< HEAD
   const [strengthLevel, setStrengthLevel] = useState(-1);
   const [strengthLevelRep, setStrengthLevelRep] = useState(-1);
+=======
+>>>>>>> 4cc683b72beb1d450659e4eb2044d675a5a43aa9
   const [isValidPass, setIsValidPass] = useState(false);
 
   const { register, handleSubmit, watch, errors } = useForm();
@@ -34,6 +37,11 @@ function ChangePassword({ user }) {
       await changeUserPass(data.newPassword, user._id);
     }
   };
+<<<<<<< HEAD
+=======
+  const [strengthLevel, setStrengthLevel] = useState(-1);
+  const [strengthLevelRep, setStrengthLevelRep] = useState(-1);
+>>>>>>> 4cc683b72beb1d450659e4eb2044d675a5a43aa9
 
   const handleChangeOldPassword = async (e) => {
     setOldPass(e.target.value);
