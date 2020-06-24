@@ -27,7 +27,7 @@ import UserNavigation from "../Navigations/UserNavigation";
 import Grid from "../Grid/Grid";
 import SettingsMain from "../Settings/SettingsMain";
 import Loader from "../Loader/Loader";
-import CircleProgressBar from "../Loader/CircleProgressBar";
+//import CircleProgressBar from "../Loader/CircleProgressBar";
 import ProfilePicture from "./ProfilePicture";
 
 //Modals
@@ -124,6 +124,11 @@ function PersonalProfile({ user, logout, match }) {
     setSaves(result);
   };
 
+  /**
+   * Return the download URL from a firebase static url like:
+   *     gs://instagram-clone-v3-9c396.appspot.com/posts/post_22.jpg
+   * @param {*} url
+   */
   const getImage = async (url) => {
     await getImageUrl(url);
   };
@@ -133,9 +138,6 @@ function PersonalProfile({ user, logout, match }) {
     loadUserPosts();
     loadSavedPosts();
     checkProfilePicture();
-    getImage(
-      "gs://instagram-clone-v3-9c396.appspot.com/profiles/empty-profile-picture.png"
-    );
     setTimeout(() => {
       setLoading(false);
     }, 500);
