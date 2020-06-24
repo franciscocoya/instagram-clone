@@ -11,7 +11,6 @@ import React, { useState, useEffect } from "react";
 import { withRouter, useHistory, Link } from "react-router-dom";
 import Moment from "react-moment";
 import "moment/locale/es";
-import axios from "axios";
 import $ from "jquery";
 import Skeleton from "react-loading-skeleton";
 
@@ -244,6 +243,7 @@ function VerticalPost({
     const MAX_WORDS = 17;
     let wordsArr = [];
     let count = countDescriptionWords();
+
     if (count > MAX_WORDS) {
       wordsArr.push(text.split(" ").slice(0, MAX_WORDS));
       wordsArr.push(text.split(" ").slice(MAX_WORDS + 1, count));
@@ -330,9 +330,9 @@ function VerticalPost({
 
   useEffect(() => {
     try {
-      handleCheckIsFollowing();
-      handleShortUrl();
       setLoadingVertPost(true);
+      handleShortUrl();
+      handleCheckIsFollowing();
       loadComments();
       handleGetUserById();
       listLikes();
@@ -341,10 +341,6 @@ function VerticalPost({
       resetCommentInput();
       splitDescription();
       setLoadingVertPost(false);
-
-      return () => {
-        setRefreshLikesCount(false);
-      };
     } catch (err) {
       console.log(`An error ocurred while loading the post... ${err}`);
       setLoadingVertPost(false);
@@ -363,13 +359,13 @@ function VerticalPost({
           ) : (
             <img
               className={`b-1-g ${
-                user.id !== pUser.id ? "cursor-pointer" : ""
+                user._id !== pUser.id ? "cursor-pointer" : ""
               }`}
               src={pUser.profile_picture}
               alt={pUser.username}
               loading="lazy"
               onClick={() => {
-                if (user.id !== pUser.id) {
+                if (user._id !== pUser.id) {
                   history.push(`/u/${pUser.username}`);
                 }
               }}
@@ -382,7 +378,7 @@ function VerticalPost({
             ) : (
               <p
                 className={`mp-0 ${
-                  user.id !== pUser.id ? "cursor-pointer" : ""
+                  user._id !== pUser.id ? "cursor-pointer" : ""
                 }`}
                 onClick={() => {
                   if (user.id !== pUser.id) {
@@ -503,10 +499,10 @@ function VerticalPost({
                 <>
                   <span
                     className={`${
-                      user.id !== pUser.id ? "cursor-pointer" : ""
+                      user._id !== pUser.id ? "cursor-pointer" : ""
                     }`}
                     onClick={() => {
-                      if (user.id !== pUser.id) {
+                      if (user._id !== pUser.id) {
                         history.push(`/u/${pUser.username}`);
                       }
                     }}
@@ -517,6 +513,7 @@ function VerticalPost({
                     <pre className="pre-style">
                       {breakLongDescriptionArr[0].map((w, index) => {
                         return w.includes("**") ? (
+                          //TODO:
                           <Mention
                             key={index}
                             username={w.split("_")[1]}
@@ -603,12 +600,13 @@ function VerticalPost({
             ) : (
               <>
                 {commentsArr.map(
-                  (c) =>
+                  (c, index) =>
                     c !== null &&
                     c !== undefined && (
                       <Comment
-                        key={c._id}
+                        key={index}
                         userId={c.user_id}
+                        currentUser={user}
                         description={c.text}
                         sendComment={commentHasBeenSent}
                       />
