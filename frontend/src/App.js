@@ -33,6 +33,7 @@ import Explore from "./components/Explore/Explore";
 import SettingsMain from "./components/Settings/SettingsMain";
 import Nametag from "./components/Settings/NameTag";
 import DirectInbox from "./components/Direct/Direct";
+import TagPosts from "./components/Explore/TagPosts";
 
 import Location from "./components/Location/Location";
 
@@ -128,6 +129,12 @@ function LoginRoutes({ user, logout }) {
         exact
         path="/explore/locations/:placeId/:place"
         render={(props) => <Location {...props} user={user} />}
+      />
+
+      <Route
+        exact
+        path="/explore/tags/:hashtag"
+        render={(props) => <TagPosts {...props} user={user} />}
       />
 
       <Route

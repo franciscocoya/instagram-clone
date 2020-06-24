@@ -1,0 +1,10 @@
+@import "../partials/generales";
+
+@use 'generales/flex';
+
+.hashtag {
+  text-decoration: none;
+  cursor: pointer;
+  color: map-get($colors, hashtag-color);
+  font-weight: 400;
+} //fin hashtag

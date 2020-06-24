@@ -10,8 +10,8 @@
  */
 
 import React, { useState, useEffect, Suspense } from "react";
+import { Helmet } from "react-helmet";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 
 //Queries
 import { getFollowingPosts } from "../../queries/posts_queries";
@@ -89,6 +89,10 @@ function Home({ user, match }) {
         <Loader />
       ) : (
         <>
+          <Helmet>
+            <meta charSet="utf-8" />
+            <title>Instagram Clone</title>
+          </Helmet>
           {posts.length === 0 ? (
             <>
               <UserNavigation

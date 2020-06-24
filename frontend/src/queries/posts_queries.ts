@@ -217,6 +217,17 @@ export async function searchMention(
 }
 
 /**
+ * TODO:
+ * @param hashtag
+ */
+export async function getPostsByHashtag(hashtag: string): Promise<any> {
+  try {
+  } catch (err) {
+    console.log(`An error ocurred getting the posts by hashtag. ${err}`);
+  }
+}
+
+/**
  *** SAVE POST ***
  */
 

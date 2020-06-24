@@ -184,7 +184,11 @@ function PersonalProfile({ user, logout, match }) {
             />
           )}
           {showSearchResults && (
-            <SearchResults suggestions={searchResults} user={user} />
+            <SearchResults
+              suggestions={searchResults}
+              user={user}
+              close={() => setShowSearchResults(false)}
+            />
           )}
 
           <div className="header-profile">
