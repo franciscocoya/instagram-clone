@@ -17,8 +17,9 @@ function Mention({ username, user }) {
     try {
       await axios
         .get(`http://localhost:4000/accounts/user/username/${username}`)
-        .then((res) => {
+        .then(async (res) => {
           let userRet = res.data.user;
+          console.log(userRet, user);
           if (userRet._id === user._id) {
             history.push(`/${user.username}/`);
           } else if (userRet !== null && userRet !== undefined) {
@@ -26,7 +27,6 @@ function Mention({ username, user }) {
           } else {
             history.push("/error/404");
           }
-          console.log(res.data);
         })
         .catch((err1) => {
           console.log(

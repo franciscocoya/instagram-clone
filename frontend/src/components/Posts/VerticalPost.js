@@ -611,6 +611,7 @@ function VerticalPost({
                         userId={c.user_id}
                         description={c.text}
                         sendComment={commentHasBeenSent}
+                        currentUser={user}
                       />
                     )
                 )}

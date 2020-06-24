@@ -20,9 +20,6 @@ import "../../public/css/Comment/comment.css";
 function Comment({ description, userId, currentUser }) {
   const [uName, setUname] = useState("");
   const [descriptionWithMention, setDescriptionWithMention] = useState("");
-  // const [mention, setMention] = useState({
-  //   username: "",
-  // });
   const [mention, setMention] = useState([]);
   const [hashtag, setHashTag] = useState([]);
 
