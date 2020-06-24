@@ -20,7 +20,7 @@ import $ from "jquery";
 
 //Queries
 import { getPostsByUserId, getSavedPosts } from "../../queries/posts_queries";
-import { uploadProfileImage } from "../../queries/image_queries";
+import { uploadProfileImage, getImageUrl } from "../../queries/image_queries";
 
 //Components
 import UserNavigation from "../Navigations/UserNavigation";
@@ -124,11 +124,18 @@ function PersonalProfile({ user, logout, match }) {
     setSaves(result);
   };
 
+  const getImage = async (url) => {
+    await getImageUrl(url);
+  };
+
   useEffect(() => {
     setLoading(true);
     loadUserPosts();
     loadSavedPosts();
     checkProfilePicture();
+    getImage(
+      "gs://instagram-clone-v3-9c396.appspot.com/profiles/empty-profile-picture.png"
+    );
     setTimeout(() => {
       setLoading(false);
     }, 500);
