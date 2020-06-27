@@ -187,7 +187,7 @@ export async function getPostsByLocation(place: string): Promise<any> {
 }
 
 /**
- *** MENTION & HASHTAG***
+ *** MENTION & HASHTAG ***
  */
 
 export async function searchMention(
