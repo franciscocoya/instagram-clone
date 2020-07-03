@@ -2,6 +2,7 @@ const postCtrl = {};
 
 const Post = require("../models/Post/Post");
 const PostLike = require("../models/Like/PostLike");
+const { hash } = require("bcryptjs");
 
 postCtrl.addPost = async (req, res) => {
   try {
@@ -255,6 +256,38 @@ postCtrl.listPostsByLocation = async (req, res) => {
     console.log(
       `Se ha producido un error al obtener los posts de la localización. ${err}`
     );
+  }
+};
+
+postCtrl.listPostsByHashtag = async (req, res) => {
+  try {
+    const { hashtagName } = req.params;
+    console.log(hashtagName);
+    // let ft = "añlskdfklasfd #".concat(hashtagName).concat(" adslñkfjañlksdfja");
+    let ft = "lkasdñjfka #DrinkResponsibly alksdjfñsakdjf";
+
+    let rgxHashtag = new RegExp(`[#]{1}(\\b(\W*${hashtagName}\W*)\\b)`);
+    //console.log(ft);
+    //res.send(rgxHashtag.test(ft));
+    await Post.find({ description: { $regex: rgxHashtag } }, (err1, result) => {
+      if (err1) {
+        res.status(500).json({
+          msg: `A server-side error ocurred while getting the posts. ${err1}`,
+        });
+      }
+
+      if (!result) {
+        res.status(404).json({
+          msg: "There are no posts that include the hashtag in the description",
+        });
+      }
+
+      res.status(201).json({
+        posts: result,
+      });
+    });
+  } catch (err) {
+    console.log(`An error ocurred searching the hashtag posts. ${err}`);
   }
 };
 

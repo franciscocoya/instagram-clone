@@ -34,6 +34,7 @@ const {
   getAllLocations,
   getCoordinatesByLocation,
   getFeaturePostByLocation,
+  listPostsByHashtag,
 } = require("../controllers/posts.controller");
 
 //Likes
@@ -131,6 +132,7 @@ router.get("/posts", isAuth, listPosts);
 router.get("/posts/:userId", isAuth, listPostByUserId);
 router.get("/posts/coords/:placeName", isAuth, getCoordinatesByLocation);
 router.get("/posts/place/:placeName", isAuth, listPostsByLocation);
+router.get("/posts/hashtag/get/:hashtagName", isAuth, listPostsByHashtag);
 router.get("/posts/c", isAuth, countPosts);
 router.get("/posts/likes/:postId", isAuth, getLikesByPostId);
 router.get("/posts/related/:userId", isAuth, listLastRelatedPostsByUserId); //Return the last posts (max: 6)

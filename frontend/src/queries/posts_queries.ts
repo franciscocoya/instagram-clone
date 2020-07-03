@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { decodeUrl } from "./url_queries";
+import Post from "../components/Posts/Post";
 
 /**
  * Load the post whose id is passed as a parameter.
