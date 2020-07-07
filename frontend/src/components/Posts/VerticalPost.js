@@ -24,7 +24,7 @@ import {
 import { getTotalLikes } from "../../queries/likes_queries";
 import { getUserById } from "../../queries/user_queries";
 import { checkIsFollowing } from "../../queries/follow_queries";
-import { searchMention } from "../../queries/posts_queries";
+import { searchMention, checkHashtags } from "../../queries/posts_queries";
 
 //Components
 import Comment from "../Comment/Comment";
@@ -33,6 +33,7 @@ import LikeCount from "../Like/LikeCount";
 import SearchResults from "../Modals/SearchResults";
 import Mention from "../Mention/Mention";
 import Save from "../Save/Save";
+import Hashtag from "../Hashtag/Hashtag";
 
 //Static files
 import "../../public/css/Post/verticalPost.css";
@@ -79,6 +80,8 @@ function VerticalPost({
   const [searchMentionResults, setSearchMentionResults] = useState([]);
   const [suggestedMention, setSuggestedMention] = useState(null);
   const [commentHasBeenChanged, setCommentHasBeenChanged] = useState(false);
+
+  const [modDescriptionArr, setModDescriptionArr] = useState([]);
 
   const [urlCode, setUrlCode] = useState("");
 
@@ -237,22 +240,32 @@ function VerticalPost({
   };
 
   /**
-   * Divide the text of the description if it contains more than 17 words.
+   * TODO: Divide the text of the description if it contains more than 17 words.
    */
   const splitDescription = () => {
     const MAX_WORDS = 17;
     let wordsArr = [];
     let count = countDescriptionWords();
 
+    let hashArr = handleCheckHashtags(text);
+
     if (count > MAX_WORDS) {
-      wordsArr.push(text.split(" ").slice(0, MAX_WORDS));
-      wordsArr.push(text.split(" ").slice(MAX_WORDS + 1, count));
+      if (hashArr.length > 0) {
+        wordsArr.push(hashArr.slice(0, MAX_WORDS));
+        wordsArr.push(hashArr.slice(MAX_WORDS + 1, count));
+      } else {
+        wordsArr.push(text.split(" ").slice(0, MAX_WORDS));
+        wordsArr.push(text.split(" ").slice(MAX_WORDS + 1, count));
+      }
     } else {
-      wordsArr.push(text.split(" "));
+      if (hashArr.length > 0) {
+        wordsArr.push(hashArr);
+      } else {
+        wordsArr.push(text.split(" "));
+      }
     }
 
     setBreakLongDescriptionArr(wordsArr);
-
     checkMentionComponent(wordsArr);
   };
 
@@ -328,6 +341,13 @@ function VerticalPost({
     }
   };
 
+  /**
+   * TODO:
+   */
+  const handleCheckHashtags = () => {
+    return checkHashtags(text);
+  };
+
   useEffect(() => {
     try {
       setLoadingVertPost(true);
@@ -340,11 +360,16 @@ function VerticalPost({
       convertDate();
       resetCommentInput();
       splitDescription();
+
       setLoadingVertPost(false);
     } catch (err) {
       console.log(`An error ocurred while loading the post... ${err}`);
       setLoadingVertPost(false);
     }
+
+    return () => {
+      setModDescriptionArr([]);
+    };
   }, [commentHasBeenSent, suggestedMention, refreshLikesCount]);
 
   return (
@@ -509,6 +534,7 @@ function VerticalPost({
                   >
                     {pUser.username}
                   </span>
+                  {/* TODO: */}
                   {descriptionWordsCount > 17 ? (
                     <pre className="pre-style">
                       {breakLongDescriptionArr[0].map((w, index) => {
@@ -519,6 +545,8 @@ function VerticalPost({
                             username={w.split("_")[1]}
                             user={user}
                           />
+                        ) : w.includes("..$$..") ? (
+                          <Hashtag key={index} hashtagName={w.split("_")[1]} />
                         ) : (
                           w + " "
                         );
@@ -543,6 +571,11 @@ function VerticalPost({
                                     username={w.split("_")[1]}
                                     user={user}
                                   />
+                                ) : w.includes("..$$..") ? (
+                                  <Hashtag
+                                    key={index}
+                                    hashtagName={w.split("_")[1]}
+                                  />
                                 ) : (
                                   w + " "
                                 );
@@ -561,6 +594,8 @@ function VerticalPost({
                             username={w.split("_")[1]}
                             user={user}
                           />
+                        ) : w.includes("..$$..") ? (
+                          <Hashtag key={index} hashtagName={w.split("_")[1]} />
                         ) : (
                           w + " "
                         );

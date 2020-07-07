@@ -138,7 +138,6 @@ export function AdvanceComment({
 }) {
   const defaultPicURL = process.env.REACT_APP_FB_DEFAULT_PROF_PIC;
   let history = useHistory();
-  //--
   const [commentUser, setCommentUser] = useState({
     username: "",
     profile_picture: "",

@@ -262,13 +262,8 @@ postCtrl.listPostsByLocation = async (req, res) => {
 postCtrl.listPostsByHashtag = async (req, res) => {
   try {
     const { hashtagName } = req.params;
-    console.log(hashtagName);
-    // let ft = "añlskdfklasfd #".concat(hashtagName).concat(" adslñkfjañlksdfja");
-    let ft = "lkasdñjfka #DrinkResponsibly alksdjfñsakdjf";
 
     let rgxHashtag = new RegExp(`[#]{1}(\\b(\W*${hashtagName}\W*)\\b)`);
-    //console.log(ft);
-    //res.send(rgxHashtag.test(ft));
     await Post.find({ description: { $regex: rgxHashtag } }, (err1, result) => {
       if (err1) {
         res.status(500).json({

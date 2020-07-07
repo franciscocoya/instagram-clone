@@ -317,3 +317,18 @@ function reduceSavedPosts(arr: Array<any>): any {
     return [...acc, save.postId];
   }, []);
 }
+
+export function checkHashtags(text: string): any {
+  let arr = text.split(" ");
+  const regex = new RegExp("[#]{1}[a-zA-Z0-9]");
+
+  for (let i = 0; i < arr.length; i++) {
+    if (regex.test(arr[i])) {
+      arr[i] = `..$$.._${arr[i].split("#")[1]}`;
+    }
+  }
+
+  return arr;
+}
+
+export function checkUserMentions(text: string): any {}
